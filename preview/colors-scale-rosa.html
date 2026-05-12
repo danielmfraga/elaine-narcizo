@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Escala Rosa-chiclete — par de Laranja</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-50); }
+  .card { width: 700px; padding: 28px 32px; box-sizing: border-box; }
+  .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; height: 88px; border-radius: var(--radius-2); overflow: hidden; }
+  .step { position: relative; }
+  .step .label { position: absolute; inset: auto 0 8px 0; text-align: center; font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-900); opacity: 0.6; }
+  .step.dark .label { color: var(--cream-100); opacity: 0.85; }
+  .row-title { font-family: var(--font-display); font-size: 18px; color: var(--ink-900); margin: 0 0 10px; }
+  .row-sub { font-family: var(--font-body); font-size: 12px; color: var(--ink-500); margin: 0 0 16px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="row-title">Rosa-chiclete — par de Laranja</div>
+    <div class="row-sub">Pareia com Laranja. Usar como fundo suave (100) ou acento (300/500).</div>
+    <div class="scale">
+      <div class="step" style="background: var(--rosa-100)"><span class="label">100</span></div>
+      <div class="step" style="background: var(--rosa-300)"><span class="label">300</span></div>
+      <div class="step" style="background: var(--rosa-500)"><span class="label">500</span></div>
+      <div class="step dark" style="background: var(--rosa-700)"><span class="label">700</span></div>
+      <div class="step dark" style="background: var(--rosa-900)"><span class="label">900</span></div>
+    </div>
+  </div>
+</body>
+</html>

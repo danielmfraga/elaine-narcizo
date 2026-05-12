@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Campo de reflexão</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 28px 40px; box-sizing: border-box; }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .label { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-900); letter-spacing: 0.01em; }
+  .hint { font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--ink-500); line-height: 1.4; max-width: 56ch; margin: -2px 0 6px; }
+  .input {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink-900);
+    background: var(--cream-50);
+    border: 1px solid var(--line);
+    border-bottom: 1.5px solid var(--ink-900);
+    border-radius: var(--radius-2);
+    padding: 14px 18px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 96px;
+    resize: vertical;
+    transition: border-color var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out);
+  }
+  .input:focus { outline: none; border-color: var(--verde-700); background: #fff; }
+  .input::placeholder { color: var(--ink-300); font-style: italic; }
+
+  .footer { display: flex; justify-content: space-between; margin-top: 8px; font-family: var(--font-body); font-size: 11px; color: var(--ink-500); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="field">
+      <label class="label">Saúde</label>
+      <p class="hint">Reflita sobre o estado atual de sua saúde física e mental. Quais hábitos auxiliam na manutenção do seu bem-estar?</p>
+      <textarea class="input" placeholder="Escreva à mão, se possível. Ou aqui mesmo, sem pressa…"></textarea>
+      <div class="footer"><span>Guardado automaticamente</span><span>0 palavras</span></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Paletas (Pares)</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-50); }
+  .card {
+    width: 700px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    box-sizing: border-box;
+  }
+  .pair {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 6px;
+    height: 96px;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+  }
+  .swatches .a { border-radius: 8px 2px 2px 8px; }
+  .swatches .b { border-radius: 2px 8px 8px 2px; }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .meta .name {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--ink-900);
+  }
+  .meta .stage {
+    font-family: var(--font-body);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-500);
+  }
+  .hex {
+    display: flex;
+    justify-content: space-between;
+    font-family: ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-500);
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="pair">
+      <div class="swatches">
+        <div class="a" style="background: var(--verde-500)"></div>
+        <div class="b" style="background: var(--cream-100)"></div>
+      </div>
+      <div class="meta"><span class="name">Verde · Creme</span><span class="stage">Presente</span></div>
+      <div class="hex"><span>#A8B73F</span><span>#F5EBDE</span></div>
+    </div>
+    <div class="pair">
+      <div class="swatches">
+        <div class="a" style="background: var(--amarelo-500)"></div>
+        <div class="b" style="background: var(--lilas-500)"></div>
+      </div>
+      <div class="meta"><span class="name">Amarelo · Lilás</span><span class="stage">Futuro</span></div>
+      <div class="hex"><span>#F5D731</span><span>#A89AF0</span></div>
+    </div>
+    <div class="pair">
+      <div class="swatches">
+        <div class="a" style="background: var(--laranja-500)"></div>
+        <div class="b" style="background: var(--rosa-500)"></div>
+      </div>
+      <div class="meta"><span class="name">Laranja · Rosa</span><span class="stage">Ponte</span></div>
+      <div class="hex"><span>#E87A32</span><span>#EC8FE0</span></div>
+    </div>
+  </div>
+</body>
+</html>

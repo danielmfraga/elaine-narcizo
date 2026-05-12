@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Neutros</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-50); }
+  .card { width: 700px; padding: 28px 32px; box-sizing: border-box; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .col h4 { font-family: var(--font-display); font-size: 18px; margin: 0 0 4px; color: var(--ink-900); font-weight: 400; }
+  .col p { font-family: var(--font-body); font-size: 12px; color: var(--ink-500); margin: 0 0 14px; }
+  .scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; height: 72px; border-radius: var(--radius-2); overflow: hidden; border: 1px solid var(--line); }
+  .step { position: relative; }
+  .step .label { position: absolute; inset: auto 0 6px 0; text-align: center; font-family: ui-monospace, monospace; font-size: 10px; opacity: 0.7; }
+  .dark .label { color: var(--cream-100); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="col">
+      <h4>Cream — o papel</h4>
+      <p>Nunca branco puro. O fundo padrão da marca.</p>
+      <div class="scale">
+        <div class="step" style="background: var(--cream-50)"><span class="label">50</span></div>
+        <div class="step" style="background: var(--cream-100)"><span class="label">100</span></div>
+        <div class="step" style="background: var(--cream-200)"><span class="label">200</span></div>
+        <div class="step" style="background: var(--cream-300)"><span class="label">300</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Ink — a tinta</h4>
+      <p>Quase-preto quente. Nunca #000.</p>
+      <div class="scale">
+        <div class="step" style="background: var(--ink-100)"><span class="label">100</span></div>
+        <div class="step" style="background: var(--ink-300)"><span class="label">300</span></div>
+        <div class="step dark" style="background: var(--ink-500)"><span class="label">500</span></div>
+        <div class="step dark" style="background: var(--ink-900)"><span class="label">900</span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

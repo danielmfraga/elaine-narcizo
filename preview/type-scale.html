@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Escala tipográfica</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 28px 40px; box-sizing: border-box; }
+  .row { display: grid; grid-template-columns: 64px 1fr 110px; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+  .row:last-child { border-bottom: none; }
+  .tok { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-500); letter-spacing: 0.04em; }
+  .px { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-500); text-align: right; }
+  .h1 { font-family: var(--font-display); font-weight: 400; font-size: 44px; line-height: 1; letter-spacing: -0.02em; color: var(--ink-900); }
+  .h2 { font-family: var(--font-display); font-weight: 400; font-size: 32px; line-height: 1.05; color: var(--ink-900); }
+  .h3 { font-family: var(--font-display); font-weight: 500; font-size: 22px; line-height: 1.2; color: var(--ink-900); }
+  .lede { font-family: var(--font-display); font-weight: 300; font-size: 18px; color: var(--ink-700); }
+  .body { font-family: var(--font-body); font-size: 16px; color: var(--ink-700); }
+  .small { font-family: var(--font-body); font-size: 13px; color: var(--ink-500); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="row"><span class="tok">step-4</span><span class="h1">Atravessar</span><span class="px">~44/clamp</span></div>
+    <div class="row"><span class="tok">step-3</span><span class="h2">a presença</span><span class="px">~32/clamp</span></div>
+    <div class="row"><span class="tok">step-2</span><span class="h3">Por que isso importa?</span><span class="px">~22</span></div>
+    <div class="row"><span class="tok">step-1</span><span class="lede">Reflita com carinho.</span><span class="px">~18</span></div>
+    <div class="row"><span class="tok">step-0</span><span class="body">Aqui e agora, sem pressa.</span><span class="px">16</span></div>
+    <div class="row"><span class="tok">step--1</span><span class="small">eyebrow · meta · legenda</span><span class="px">13</span></div>
+  </div>
+</body>
+</html>

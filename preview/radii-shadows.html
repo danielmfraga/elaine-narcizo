@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Raios + Sombras</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-50); }
+  .card { width: 700px; padding: 24px 32px; box-sizing: border-box; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .col h4 { font-family: var(--font-display); font-weight: 400; font-size: 16px; color: var(--ink-900); margin: 0 0 16px; }
+  .radii { display: flex; align-items: flex-end; gap: 12px; }
+  .radii .swatch { width: 56px; height: 56px; background: var(--verde-500); }
+  .radii .lab { font-family: ui-monospace, monospace; font-size: 10px; color: var(--ink-500); margin-top: 6px; text-align: center; }
+  .shadows { display: flex; gap: 16px; }
+  .shadows .swatch { width: 80px; height: 56px; background: var(--cream-50); border-radius: 10px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; font-family: ui-monospace, monospace; font-size: 10px; color: var(--ink-500); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="col">
+      <h4>Raios</h4>
+      <div class="radii">
+        <div><div class="swatch" style="border-radius: var(--radius-1)"></div><div class="lab">4 · token-1</div></div>
+        <div><div class="swatch" style="border-radius: var(--radius-2)"></div><div class="lab">10 · token-2</div></div>
+        <div><div class="swatch" style="border-radius: var(--radius-3)"></div><div class="lab">18 · token-3</div></div>
+        <div><div class="swatch" style="border-radius: var(--radius-4)"></div><div class="lab">28 · token-4</div></div>
+        <div><div class="swatch" style="border-radius: var(--radius-pill)"></div><div class="lab">pill</div></div>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Sombras (quentes)</h4>
+      <div class="shadows">
+        <div class="swatch" style="box-shadow: var(--shadow-1)">sh-1</div>
+        <div class="swatch" style="box-shadow: var(--shadow-2)">sh-2</div>
+        <div class="swatch" style="box-shadow: var(--shadow-3)">sh-3</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

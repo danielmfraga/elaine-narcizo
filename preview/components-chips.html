@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Áreas da vida (chips)</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 28px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+  .chip {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--ink-900);
+    background: var(--cream-50);
+    border: 1px solid var(--line);
+    padding: 8px 16px;
+    border-radius: var(--radius-pill);
+    transition: all var(--dur-2) var(--ease-out);
+    cursor: default;
+  }
+  .chip:hover { background: var(--verde-100); border-color: var(--verde-500); }
+  .chip[data-on="true"] { background: var(--verde-500); color: var(--cream-50); border-color: var(--verde-700); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="chip" data-on="true">saúde</div>
+    <div class="chip" data-on="true">família</div>
+    <div class="chip">amizades</div>
+    <div class="chip">emprego</div>
+    <div class="chip">sonho</div>
+    <div class="chip">vida financeira</div>
+    <div class="chip">educação e desenvolvimento</div>
+    <div class="chip">lazer e recreação</div>
+    <div class="chip">engajamento comunitário</div>
+    <div class="chip">equilíbrio e autocuidado</div>
+    <div class="chip">tecnologia e conexão social</div>
+  </div>
+</body>
+</html>

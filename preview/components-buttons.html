@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Botões</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 30px 40px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 14px 16px; align-items: center; }
+
+  .btn {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    padding: 12px 22px;
+    border: none;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), background var(--dur-2) var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-primary { background: var(--verde-700); color: var(--cream-100); }
+  .btn-primary:hover { background: var(--verde-900); transform: translateY(-1px); box-shadow: var(--shadow-2); }
+  .btn-secondary { background: var(--cream-50); color: var(--ink-900); border: 1px solid var(--line-strong); }
+  .btn-secondary:hover { background: var(--cream-200); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--ink-900); padding: 12px 14px; }
+  .btn-ghost:hover { color: var(--verde-700); }
+  .btn-hand {
+    font-family: var(--font-hand);
+    font-size: 28px;
+    background: transparent;
+    color: var(--laranja-700);
+    padding: 6px 12px;
+    transform: rotate(-3deg);
+    border: none;
+    cursor: pointer;
+  }
+  .btn-hand:hover { color: var(--laranja-500); }
+
+  .arrow { font-size: 18px; line-height: 1; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <button class="btn btn-primary">Vamos começar?<span class="arrow">→</span></button>
+    <button class="btn btn-secondary">Voltar</button>
+    <button class="btn btn-ghost">Pular esta etapa</button>
+    <button class="btn-hand">com&nbsp;carinho ↗</button>
+  </div>
+</body>
+</html>

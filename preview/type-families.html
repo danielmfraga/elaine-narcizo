@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Famílias</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 28px 40px; box-sizing: border-box; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+  .fam { display: flex; flex-direction: column; gap: 10px; }
+  .fam .glyph { line-height: 0.9; color: var(--ink-900); }
+  .fam .name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--ink-900); }
+  .fam .role { font-family: var(--font-body); font-size: 11px; color: var(--ink-500); letter-spacing: 0.1em; text-transform: uppercase; }
+  .fam .desc { font-family: var(--font-body); font-size: 12px; color: var(--ink-500); line-height: 1.4; }
+  .glyph.display { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: 86px; }
+  .glyph.body { font-family: var(--font-body); font-weight: 400; font-size: 80px; letter-spacing: -0.02em; }
+  .glyph.hand { font-family: var(--font-hand); font-weight: 500; font-size: 86px; color: var(--laranja-700); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="fam">
+      <div class="glyph display">Eg</div>
+      <div>
+        <div class="role">display</div>
+        <div class="name">Newsreader</div>
+      </div>
+      <div class="desc">Serifa humanista variável (opsz, ital, wght). Títulos, dispatchs, citações.</div>
+    </div>
+    <div class="fam">
+      <div class="glyph body">Eg</div>
+      <div>
+        <div class="role">body / ui</div>
+        <div class="name">DM Sans</div>
+      </div>
+      <div class="desc">Sans neutra, humanista-geométrica. Corpo, formulários, navegação.</div>
+    </div>
+    <div class="fam">
+      <div class="glyph hand">Eg</div>
+      <div>
+        <div class="role">acento</div>
+        <div class="name">Caveat <em style="color:var(--laranja-700);font-style:normal">⚑</em></div>
+      </div>
+      <div class="desc">Substituição flagged. Aguardando arquivo da fonte manuscrita real.</div>
+    </div>
+  </div>
+</body>
+</html>

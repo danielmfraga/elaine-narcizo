@@ -1,0 +1,248 @@
+/* =========================================================
+   Elaine Narcizo — PONTE Design System
+   Tokens: colors + type
+   ========================================================= */
+
+/* -- Webfonts (Google Fonts) -----------------------------
+   Display:  Newsreader      — humanist serif, intimate, contemplative
+   Body:     DM Sans          — warm geometric sans
+   Accent:   Caveat           — looped hand-script (stand-in for the
+                                 painterly hand letterforms on the
+                                 brand backgrounds — FLAGGED, ask
+                                 Elaine for the real script file)
+   --------------------------------------------------------- */
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=DM+Sans:opsz,wght@9..40,300..700&family=Caveat:wght@400..700&display=swap");
+
+:root {
+  /* ----- Palette ------------------------------------------
+     Pulled directly from the three "Fundo" backgrounds.
+     Three warm/cool pairs that the brand uses
+     interchangeably — never mix more than one pair at a time. */
+
+  /* Cream — the resting state, the paper */
+  --cream-50:  #FBF5EE;
+  --cream-100: #F5EBDE;   /* base paper */
+  --cream-200: #EFDFCB;
+  --cream-300: #E6CFB1;
+
+  /* Verde-oliva — Presença / grounded */
+  --verde-100: #E9EBC8;
+  --verde-300: #C9D26C;
+  --verde-500: #A8B73F;   /* signature */
+  --verde-700: #7B872B;
+  --verde-900: #444B18;
+
+  /* Laranja — Ponte / action */
+  --laranja-100: #FBE0CC;
+  --laranja-300: #F1A874;
+  --laranja-500: #E87A32;   /* signature */
+  --laranja-700: #B45414;
+  --laranja-900: #5E2A07;
+
+  /* Rosa-chiclete — pairs with Laranja */
+  --rosa-100: #FBE3F6;
+  --rosa-300: #F4B7EB;
+  --rosa-500: #EC8FE0;   /* signature */
+  --rosa-700: #B95AB0;
+  --rosa-900: #61264F;
+
+  /* Amarelo — Futuro / ancestral */
+  --amarelo-100: #FCF3B7;
+  --amarelo-300: #F8E26B;
+  --amarelo-500: #F5D731;   /* signature */
+  --amarelo-700: #C2A40C;
+  --amarelo-900: #5C4D03;
+
+  /* Lilás — pairs with Amarelo */
+  --lilas-100: #E5E0FB;
+  --lilas-300: #C1B6F5;
+  --lilas-500: #A89AF0;   /* signature */
+  --lilas-700: #6B5DC9;
+  --lilas-900: #2F2670;
+
+  /* Ink (text) — never pure black, always warm */
+  --ink-900: #1E1B16;     /* almost-black, warm */
+  --ink-700: #3C3730;
+  --ink-500: #6C645A;
+  --ink-300: #A89F92;
+  --ink-100: #D8D1C5;
+
+  /* ----- Semantic surfaces -------------------------------- */
+  --bg:          var(--cream-100);
+  --bg-elevated: var(--cream-50);
+  --bg-sunk:     var(--cream-200);
+
+  --fg:    var(--ink-900);
+  --fg-2:  var(--ink-700);
+  --fg-3:  var(--ink-500);
+  --fg-mute: var(--ink-300);
+
+  --line:  rgba(30, 27, 22, 0.12);
+  --line-strong: rgba(30, 27, 22, 0.22);
+
+  /* Per-stage accent — overridden per page/section */
+  --accent:        var(--verde-500);
+  --accent-soft:   var(--verde-100);
+  --accent-deep:   var(--verde-900);
+  --accent-paper:  var(--cream-100);
+
+  /* ----- Type families ------------------------------------ */
+  --font-display: "Newsreader", "Lora", Georgia, serif;
+  --font-body:    "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-hand:    "Caveat", "Reenie Beanie", "Bradley Hand", cursive;
+
+  /* ----- Type scale (fluid, generous) --------------------- */
+  --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
+  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.13rem);     /* body */
+  --step-1:  clamp(1.20rem, 1.12rem + 0.40vw, 1.40rem);     /* lede */
+  --step-2:  clamp(1.50rem, 1.35rem + 0.70vw, 1.85rem);     /* h3 */
+  --step-3:  clamp(2.00rem, 1.70rem + 1.40vw, 2.75rem);     /* h2 */
+  --step-4:  clamp(2.80rem, 2.20rem + 2.80vw, 4.25rem);     /* h1 */
+  --step-5:  clamp(4.00rem, 3.00rem + 5.00vw, 7.50rem);     /* display */
+
+  /* ----- Spacing (8pt base, but breathing room) ----------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  72px;
+  --space-9:  112px;
+  --space-10: 160px;
+
+  /* ----- Radii -------------------------------------------- */
+  --radius-1: 4px;
+  --radius-2: 10px;
+  --radius-3: 18px;
+  --radius-4: 28px;
+  --radius-pill: 999px;
+
+  /* ----- Motion ------------------------------------------- */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);     /* generous, contemplative */
+  --ease-in-out: cubic-bezier(0.7, 0, 0.3, 1);
+  --dur-1: 180ms;
+  --dur-2: 320ms;
+  --dur-3: 560ms;
+  --dur-4: 900ms;
+
+  /* ----- Elevation (very light, paper-like) --------------- */
+  --shadow-1: 0 1px 0 rgba(30,27,22,0.04), 0 2px 6px -2px rgba(30,27,22,0.06);
+  --shadow-2: 0 2px 0 rgba(30,27,22,0.04), 0 12px 30px -16px rgba(30,27,22,0.18);
+  --shadow-3: 0 4px 0 rgba(30,27,22,0.04), 0 30px 60px -30px rgba(30,27,22,0.28);
+}
+
+/* =========================================================
+   Per-stage theme variants
+   ========================================================= */
+[data-theme="verde"] {
+  --accent: var(--verde-500);
+  --accent-soft: var(--verde-100);
+  --accent-deep: var(--verde-900);
+  --accent-paper: var(--cream-100);
+}
+[data-theme="laranja"] {
+  --accent: var(--laranja-500);
+  --accent-soft: var(--rosa-100);
+  --accent-deep: var(--laranja-900);
+  --accent-paper: var(--rosa-100);
+}
+[data-theme="amarelo"] {
+  --accent: var(--amarelo-500);
+  --accent-soft: var(--lilas-100);
+  --accent-deep: var(--lilas-900);
+  --accent-paper: var(--lilas-100);
+}
+
+/* =========================================================
+   Base type
+   ========================================================= */
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--fg);
+  background: var(--bg);
+  font-feature-settings: "ss01", "ss02";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); font-weight: 500; line-height: 1.2; }
+h4 { font-size: var(--step-1); font-weight: 500; line-height: 1.3; }
+
+.display {
+  font-size: var(--step-5);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+}
+.display em, .lede em, h1 em, h2 em {
+  font-style: italic;
+  font-variation-settings: "opsz" 16;
+  color: var(--accent-deep);
+}
+
+.lede {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--fg-2);
+  text-wrap: pretty;
+  max-width: 58ch;
+}
+
+p, li { text-wrap: pretty; max-width: 64ch; }
+
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+code, .mono {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.92em;
+  background: var(--bg-sunk);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-1);
+}
+
+a {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-1) var(--ease-out);
+}
+a:hover { color: var(--accent); }
+
+::selection { background: var(--accent); color: var(--accent-paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

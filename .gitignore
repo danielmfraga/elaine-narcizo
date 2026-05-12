@@ -1,0 +1,25 @@
+# macOS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+
+# Node (just in case)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vercel
+.vercel
+.env*.local
+
+# Build artefacts
+dist/
+build/
+.cache/
+
+# Working files from this project that don't need to ship
+ponte_raw.txt
+uploads/

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Card — Espaçamento</title>
+<link rel="stylesheet" href="../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--cream-100); }
+  .card { width: 700px; padding: 28px 40px; box-sizing: border-box; }
+  .row { display: grid; grid-template-columns: 80px 1fr 80px; align-items: center; gap: 16px; padding: 6px 0; }
+  .name { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-500); }
+  .bar { background: var(--verde-300); height: 14px; border-radius: 4px; }
+  .px { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-700); text-align: right; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="row"><span class="name">--space-1</span><div class="bar" style="width:4px"></div><span class="px">4px</span></div>
+    <div class="row"><span class="name">--space-2</span><div class="bar" style="width:8px"></div><span class="px">8px</span></div>
+    <div class="row"><span class="name">--space-3</span><div class="bar" style="width:12px"></div><span class="px">12px</span></div>
+    <div class="row"><span class="name">--space-4</span><div class="bar" style="width:16px"></div><span class="px">16px</span></div>
+    <div class="row"><span class="name">--space-5</span><div class="bar" style="width:24px"></div><span class="px">24px</span></div>
+    <div class="row"><span class="name">--space-6</span><div class="bar" style="width:32px"></div><span class="px">32px</span></div>
+    <div class="row"><span class="name">--space-7</span><div class="bar" style="width:48px"></div><span class="px">48px</span></div>
+    <div class="row"><span class="name">--space-8</span><div class="bar" style="width:72px"></div><span class="px">72px</span></div>
+    <div class="row"><span class="name">--space-9</span><div class="bar" style="width:112px"></div><span class="px">112px</span></div>
+    <div class="row"><span class="name">--space-10</span><div class="bar" style="width:160px"></div><span class="px">160px</span></div>
+  </div>
+</body>
+</html>

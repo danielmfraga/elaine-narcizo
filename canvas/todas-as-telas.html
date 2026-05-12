@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>PONTE — todas as telas</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    html, body { margin: 0; padding: 0; background: var(--cream-200); font-family: var(--font-body); color: var(--ink-900); }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+      background: var(--cream-100);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar h1 {
+      font-family: var(--font-display); font-style: italic; font-weight: 300;
+      font-size: 22px; margin: 0; color: var(--ink-900);
+    }
+    .topbar p {
+      font-size: 13px; color: var(--ink-500); margin: 0;
+      max-width: 60ch;
+    }
+    .topbar a {
+      font-size: 13px; color: var(--ink-900); padding: 8px 14px;
+      border: 1px solid var(--line-strong); border-radius: 999px; text-decoration: none;
+    }
+    .topbar a:hover { background: var(--cream-50); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 28px;
+      padding: 28px;
+    }
+    .board {
+      background: var(--cream-50);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(30,27,22,0.04), 0 12px 30px -16px rgba(30,27,22,0.18);
+      display: flex; flex-direction: column;
+    }
+    .board header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 14px 18px 12px;
+      border-bottom: 1px dashed var(--line);
+      gap: 12px;
+    }
+    .board header .n {
+      font-family: var(--font-display); font-style: italic; font-weight: 300;
+      font-size: 14px; color: var(--ink-500);
+    }
+    .board header .t {
+      font-family: var(--font-display); font-weight: 400; font-style: italic;
+      font-size: 17px; color: var(--ink-900);
+      line-height: 1.1; letter-spacing: -0.01em;
+    }
+    .board header .a {
+      font-size: 11px; color: var(--ink-700);
+      padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line);
+      text-decoration: none; white-space: nowrap;
+    }
+    .board header .a:hover { background: var(--cream-200); }
+    .frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--cream-100);
+      overflow: hidden;
+    }
+    .frame iframe {
+      border: none;
+      width: 1440px; height: 900px;
+      transform: scale(calc(420 / 1440));
+      transform-origin: top left;
+      position: absolute; inset: 0;
+      pointer-events: auto;
+    }
+    .frame::after {
+      content: ""; position: absolute; inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(30,27,22,0.06);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div>
+      <h1>PONTE — todas as telas</h1>
+      <p>As 9 telas da experiência guiada, lado a lado. Clica em "abrir →" pra entrar em qualquer uma em tela cheia e interagir.</p>
+    </div>
+    <a href="../ui_kits/ponte/index.html">Abrir o fluxo completo →</a>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const screens = [
+      { n: "01", t: "Olá — boas-vindas",                 q: "screen=welcome" },
+      { n: "02", t: "Mapa do percurso",                  q: "screen=about" },
+      { n: "03", t: "Capa — Presença (verde)",           q: "screen=stage-cover&stage=0" },
+      { n: "04", t: "Exercício 1 — inventário",          q: "screen=presente" },
+      { n: "05", t: "Capa — Futuro (amarelo+lilás)",     q: "screen=stage-cover&stage=1" },
+      { n: "06", t: "Exercício 2 — o que não desejo",    q: "screen=futuro" },
+      { n: "07", t: "Capa — Ponte (laranja)",            q: "screen=stage-cover&stage=2" },
+      { n: "08", t: "Três fundamentos",                  q: "screen=ponte-prefacio" },
+      { n: "09", t: "Exercício 3 — ações da Ponte",      q: "screen=ponte" },
+      { n: "10", t: "Compromisso",                       q: "screen=compromisso" },
+    ];
+    const grid = document.getElementById("grid");
+    for (const s of screens) {
+      const href = "../ui_kits/ponte/index.html?" + s.q;
+      const board = document.createElement("div");
+      board.className = "board";
+      board.innerHTML = `
+        <header>
+          <div>
+            <div class="n">${s.n}</div>
+            <div class="t">${s.t}</div>
+          </div>
+          <a class="a" href="${href}" target="_blank" rel="noopener">abrir →</a>
+        </header>
+        <div class="frame">
+          <iframe src="${href}" loading="lazy" scrolling="no"></iframe>
+        </div>
+      `;
+      grid.appendChild(board);
+    }
+  </script>
+</body>
+</html>
