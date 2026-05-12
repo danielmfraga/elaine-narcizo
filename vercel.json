@@ -16,7 +16,7 @@
     }
   ],
   "redirects": [
-    { "source": "/ponte", "destination": "/ui_kits/ponte/", "permanent": false },
+    { "source": "/ponte", "destination": "/ui_kits/ponte/index.html", "permanent": false },
     { "source": "/telas", "destination": "/canvas/todas-as-telas.html", "permanent": false }
   ]
 }
