@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Repertórios Sensíveis para a Clínica — Elaine Narcizo</title>
+  <meta name="description" content="Uma formação para psicólogas que combina arteterapia, corpo, dança, teatro, pintura e psicologia simbólica." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Repertórios Sensíveis para a Clínica" />
+  <meta property="og:description" content="Uma formação para psicólogas que querem ampliar a clínica a partir do corpo, da matéria, do devaneio. 2026." />
+  <meta property="og:image" content="og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Repertórios Sensíveis para a Clínica" />
+  <meta name="twitter:description" content="Uma formação para psicólogas. 2026." />
+  <meta name="twitter:image" content="og.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    /* =========================================================
+       Repertórios Sensíveis — identidade B&W
+       Standalone. Não compartilha tokens com a oficina PONTE.
+       ========================================================= */
+
+    :root {
+      --ink:        #0A0A0A;
+      --ink-soft:   #2A2A2A;
+      --mute:       #6B6B6B;
+      --line:       #DCDCDC;
+      --line-soft:  #EDEDED;
+      --paper:      #FFFFFF;
+      --paper-warm: #F8F7F4;
+
+      --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+
+      --container: 1180px;
+      --gutter: clamp(20px, 5vw, 64px);
+
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font);
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "ss01";
+    }
+
+    a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    a:hover { text-decoration-thickness: 1.5px; }
+
+    ::selection { background: var(--ink); color: var(--paper); }
+
+    /* ---------- Layout ----------------------------------- */
+    .wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+    section { padding: clamp(72px, 12vh, 160px) 0; }
+    section + section { border-top: 1px solid var(--line); }
+
+    /* ---------- Nav -------------------------------------- */
+    nav.top {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: saturate(180%) blur(10px);
+      -webkit-backdrop-filter: saturate(180%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav.top .row {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 18px var(--gutter);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+    nav.top .brand {
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    nav.top .brand .dot { width: 6px; height: 6px; background: var(--ink); border-radius: 50%; }
+    nav.top .links { display: flex; gap: 28px; }
+    nav.top .links a { text-decoration: none; color: var(--ink-soft); }
+    nav.top .links a:hover { color: var(--ink); }
+
+    /* ---------- Hero ------------------------------------- */
+    .hero {
+      padding: clamp(96px, 18vh, 200px) 0 clamp(96px, 16vh, 180px);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero .stamp {
+      position: absolute;
+      top: clamp(40px, 8vh, 80px);
+      right: clamp(-40px, -2vw, -20px);
+      width: clamp(180px, 26vw, 320px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: url('bg-orange.jpg') center/cover no-repeat;
+      transform: rotate(-8deg);
+      opacity: 0.92;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin: 0 0 32px;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .hero .eyebrow::before {
+      content: ""; display: inline-block;
+      width: 32px; height: 1px; background: var(--ink);
+    }
+    .hero .eyebrow::after {
+      content: ""; display: inline-block;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #A8B73F;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 1.4rem + 5.5vw, 6.5rem);
+      font-weight: 200;
+      letter-spacing: -0.035em;
+      line-height: 0.98;
+      margin: 0 0 40px;
+      max-width: 18ch;
+      text-wrap: balance;
+      color: var(--ink);
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+    .hero .lede {
+      font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 48ch;
+      text-wrap: pretty;
+      font-weight: 300;
+      margin: 0;
+    }
+
+    /* ---------- "O que é" -------------------------------- */
+    .twocol {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(40px, 8vw, 96px);
+      align-items: start;
+    }
+    .twocol .head {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      position: sticky; top: 90px;
+    }
+    .twocol .body p {
+      font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+      line-height: 1.6;
+      color: var(--ink);
+      font-weight: 300;
+      margin: 0 0 24px;
+      max-width: 56ch;
+      text-wrap: pretty;
+    }
+    .twocol .body p:last-child { margin-bottom: 0; }
+    @media (max-width: 720px) {
+      .twocol { grid-template-columns: 1fr; gap: 32px; }
+      .twocol .head { position: static; }
+    }
+
+    /* ---------- Temas (coração) -------------------------- */
+    .temas {
+      padding: clamp(96px, 18vh, 200px) 0;
+    }
+    .temas .head {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 56px;
+      display: flex; align-items: baseline; gap: 16px;
+    }
+    .temas .head::before {
+      content: ""; display: inline-block;
+      width: 32px; height: 1px; background: var(--ink);
+    }
+    .temas h2 {
+      font-size: clamp(2rem, 1.3rem + 3vw, 3.6rem);
+      font-weight: 200;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin: 0 0 64px;
+      max-width: 22ch;
+      color: var(--ink);
+    }
+    .temas h2 em { font-style: italic; font-weight: 300; }
+
+    .tema-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .tema {
+      display: grid;
+      grid-template-columns: 80px 1fr 200px;
+      gap: 32px;
+      align-items: baseline;
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      transition: padding-left .35s var(--ease);
+      position: relative;
+    }
+    .tema:hover { padding-left: 18px; }
+    .tema:last-child { border-bottom: 1px solid var(--line); }
+    .tema .n {
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      color: var(--mute);
+      font-variant-numeric: tabular-nums;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .tema .n::before {
+      content: "";
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--dot, #A8B73F);
+      flex-shrink: 0;
+    }
+    .tema:nth-child(3n+1) { --dot: #A8B73F; } /* verde */
+    .tema:nth-child(3n+2) { --dot: #E87A32; } /* laranja */
+    .tema:nth-child(3n)   { --dot: #F5D731; } /* amarelo */
+    .tema .name {
+      font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .tema .blurb {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--mute);
+      font-weight: 400;
+      max-width: 30ch;
+      text-wrap: pretty;
+    }
+    @media (max-width: 880px) {
+      .tema {
+        grid-template-columns: 56px 1fr;
+        gap: 24px;
+        padding: 24px 0;
+      }
+      .tema .blurb { grid-column: 2; margin-top: 8px; }
+    }
+
+    /* ---------- Como funciona ---------------------------- */
+    .modulos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      margin-top: 40px;
+    }
+    .modulo {
+      border-right: 1px solid var(--line);
+      padding: 36px 32px 36px 0;
+    }
+    .modulo:last-child { border-right: none; padding-right: 0; }
+    .modulo .num {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 16px;
+    }
+    .modulo .titulo {
+      font-size: clamp(1.3rem, 1rem + 1vw, 1.7rem);
+      font-weight: 300;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin: 0 0 12px;
+    }
+    .modulo .atmosphere {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+      font-weight: 300;
+      font-style: italic;
+      margin: 0 0 20px;
+      max-width: 26ch;
+      text-wrap: pretty;
+    }
+    .modulo .meta {
+      font-size: 14px;
+      color: var(--mute);
+      line-height: 1.5;
+    }
+    .modulo .meta strong { color: var(--ink); font-weight: 500; }
+    @media (max-width: 720px) {
+      .modulos { grid-template-columns: 1fr; }
+      .modulo { border-right: none; border-bottom: 1px solid var(--line); padding: 28px 0; }
+      .modulo:last-child { border-bottom: none; }
+    }
+
+    .schedule {
+      margin-top: 56px;
+      display: flex; flex-wrap: wrap; gap: 32px 48px;
+      font-size: 14px;
+    }
+    .schedule .item .label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 4px;
+    }
+    .schedule .item .value {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--ink);
+    }
+
+    /* ---------- Investimento ----------------------------- */
+    .invest {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(40px, 8vw, 96px);
+      align-items: start;
+    }
+    .invest .head {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      position: sticky; top: 90px;
+    }
+    .invest .price-line {
+      display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .invest .price {
+      font-size: clamp(2.6rem, 2rem + 3vw, 4.5rem);
+      font-weight: 200;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .invest .price-meta {
+      font-size: 14px;
+      color: var(--mute);
+    }
+    .invest .terms {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 44ch;
+      margin: 0;
+    }
+    .invest .terms strong { font-weight: 500; color: var(--ink); }
+    .invest .fineprint {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--mute);
+      padding-top: 20px;
+      border-top: 1px solid var(--line-soft);
+      max-width: 44ch;
+    }
+    @media (max-width: 720px) {
+      .invest { grid-template-columns: 1fr; gap: 32px; }
+      .invest .head { position: static; }
+    }
+
+    /* ---------- Quem facilita ---------------------------- */
+    .bio {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(40px, 8vw, 96px);
+      align-items: start;
+    }
+    .bio .head {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      position: sticky; top: 90px;
+    }
+    .bio .body-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: clamp(28px, 5vw, 56px);
+      align-items: start;
+    }
+    .bio .portrait-wrap {
+      position: relative;
+    }
+    .bio .portrait {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.03);
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .bio .portrait-wrap::before {
+      content: "";
+      position: absolute;
+      bottom: -16px; right: -16px;
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: url('bg-green.jpg') center/cover no-repeat;
+      z-index: 0;
+    }
+    .bio h3 {
+      font-size: clamp(2rem, 1.5rem + 1.5vw, 2.8rem);
+      font-weight: 200;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin: 0 0 24px;
+      color: var(--ink);
+    }
+    .bio p {
+      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 300;
+      margin: 0 0 18px;
+      max-width: 48ch;
+      text-wrap: pretty;
+    }
+    .bio ul {
+      margin: 24px 0 0; padding: 0;
+      list-style: none;
+      display: flex; flex-wrap: wrap; gap: 8px 12px;
+    }
+    .bio ul li {
+      font-size: 13px;
+      color: var(--ink);
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+    }
+    @media (max-width: 880px) {
+      .bio .body-grid { grid-template-columns: 1fr; gap: 28px; }
+      .bio .portrait { max-width: 320px; aspect-ratio: 4/5; }
+    }
+    @media (max-width: 720px) {
+      .bio { grid-template-columns: 1fr; gap: 32px; }
+      .bio .head { position: static; }
+    }
+
+    /* ---------- FAQ -------------------------------------- */
+    .faq {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: clamp(40px, 8vw, 96px);
+      align-items: start;
+    }
+    .faq .head {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--mute);
+      position: sticky; top: 90px;
+    }
+    .faq h2 {
+      font-size: clamp(2rem, 1.3rem + 3vw, 3.2rem);
+      font-weight: 200;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      margin: 0 0 48px;
+      max-width: 18ch;
+      color: var(--ink);
+    }
+    .faq h2 em { font-style: italic; font-weight: 300; }
+    .faq details {
+      border-top: 1px solid var(--line);
+      padding: 24px 0;
+    }
+    .faq details:last-of-type { border-bottom: 1px solid var(--line); }
+    .faq summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+      font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      transition: padding-left .3s var(--ease);
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      font-size: 24px;
+      font-weight: 200;
+      color: var(--mute);
+      transition: transform .3s var(--ease);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .faq details[open] summary::after {
+      transform: rotate(45deg);
+      color: var(--ink);
+    }
+    .faq details:hover summary { padding-left: 12px; }
+    .faq .answer {
+      padding: 18px 0 4px;
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 56ch;
+      text-wrap: pretty;
+    }
+    @media (max-width: 720px) {
+      .faq { grid-template-columns: 1fr; gap: 32px; }
+      .faq .head { position: static; }
+    }
+
+    .cta {
+      background: var(--paper-warm);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('bg-purple.jpg') center/cover no-repeat;
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+    .cta .wrap { position: relative; z-index: 1; }
+    .cta .wrap {
+      padding-top: clamp(96px, 18vh, 180px);
+      padding-bottom: clamp(96px, 18vh, 180px);
+      text-align: left;
+    }
+    .cta h2 {
+      font-size: clamp(2.2rem, 1.5rem + 3.5vw, 4.5rem);
+      font-weight: 200;
+      letter-spacing: -0.028em;
+      line-height: 1;
+      margin: 0 0 32px;
+      max-width: 16ch;
+      text-wrap: balance;
+    }
+    .cta h2 em { font-style: italic; font-weight: 300; }
+    .cta .sub {
+      font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+      color: var(--ink-soft);
+      font-weight: 300;
+      max-width: 48ch;
+      margin: 0 0 48px;
+      line-height: 1.55;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 18px 32px;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+      transition: background .25s var(--ease), color .25s var(--ease);
+      cursor: pointer;
+    }
+    .btn:hover { background: transparent; color: var(--ink); }
+    .btn .arrow { display: inline-block; transition: transform .35s var(--ease); }
+    .btn:hover .arrow { transform: translateX(6px); }
+
+    .cta .ways {
+      margin-top: 32px;
+      display: flex; flex-wrap: wrap; gap: 24px 36px;
+      font-size: 14px;
+      color: var(--mute);
+    }
+    .cta .ways a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+    .cta .ways a:hover { border-bottom-width: 2px; }
+
+    /* ---------- Footer ----------------------------------- */
+    footer {
+      padding: 40px 0 56px;
+      font-size: 13px;
+      color: var(--mute);
+    }
+    footer .row {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* ---------- Reduced motion --------------------------- */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="top">
+    <div class="row">
+      <a href="#topo" class="brand"><span class="dot"></span>Elaine Narcizo</a>
+      <div class="links">
+        <a href="#temas">Temas</a>
+        <a href="#como">Como funciona</a>
+        <a href="#investimento">Investimento</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="topo">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <span class="stamp" aria-hidden="true"></span>
+      <div class="wrap">
+        <p class="eyebrow">Formação para psicólogas · 2026</p>
+        <h1>Há um tipo de escuta que <em>nenhuma técnica</em> ensina.</h1>
+        <p class="lede">Repertórios Sensíveis para a Clínica é uma formação para psicólogas que querem ampliar a própria clínica a partir de outro lugar — a sensibilidade, o corpo, a matéria, o devaneio.</p>
+      </div>
+    </section>
+
+    <!-- ============ O QUE É ============ -->
+    <section>
+      <div class="wrap twocol">
+        <div class="head">Sobre a formação</div>
+        <div class="body">
+          <p>Três módulos, dez temas, uma só pergunta: o que acontece com a sua escuta clínica quando ela passa pelo corpo, pela cor, pela imagem, pelo gesto?</p>
+          <p>Combinamos arteterapia, dança, teatro, pintura e psicologia simbólica em encontros lentos, densos, sem demonstração. O que se aprende aqui não é mais uma técnica para somar — é uma forma de estar com o outro que muda o resto do trabalho.</p>
+          <p>É para psicólogas que já não cabem nas formações genéricas. Que pressentem que falta algo, mas resistem ao que grita.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TEMAS (coração) ============ -->
+    <section class="temas" id="temas">
+      <div class="wrap">
+        <div class="head">Os dez temas</div>
+        <h2>Não são tópicos. São <em>convites</em> a um modo de presença.</h2>
+
+        <div class="tema-list">
+
+          <div class="tema">
+            <span class="n">01</span>
+            <span class="name">Atenção e presença expandida</span>
+            <span class="blurb">Aprender a estar onde se está, mesmo durante a sessão.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">02</span>
+            <span class="name">Repouso psíquico ativo</span>
+            <span class="blurb">A pausa que não é desligar — é uma forma de escuta.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">03</span>
+            <span class="name">Devaneio criador como autoconhecimento</span>
+            <span class="blurb">O que aparece quando a mente afrouxa, e por que isso importa clinicamente.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">04</span>
+            <span class="name">Transformação pela matéria</span>
+            <span class="blurb">Tinta, barro, papel — o que muda em quem trabalha quando o trabalho passa pelas mãos.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">05</span>
+            <span class="name">Linguagens do sensível</span>
+            <span class="blurb">Imagem, som, gesto. As outras gramáticas com que a clínica acontece.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">06</span>
+            <span class="name">Curiosidade como potência clínica</span>
+            <span class="blurb">Não saber, perguntar de verdade — e por que essa é uma escolha técnica.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">07</span>
+            <span class="name">O corpo que sonha</span>
+            <span class="blurb">Movimento, dança, postura. O que o corpo diz antes da fala.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">08</span>
+            <span class="name">O prazer da autenticidade</span>
+            <span class="blurb">A diferença entre fazer certo e fazer com verdade.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">09</span>
+            <span class="name">Inaugurar contextos</span>
+            <span class="blurb">Como criar, dentro da sessão, um espaço que ainda não existia.</span>
+          </div>
+
+          <div class="tema">
+            <span class="n">10</span>
+            <span class="name">Retomar a capacidade de surpreender-se consigo mesma</span>
+            <span class="blurb">O ponto onde a formação volta para a vida — e fica.</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMO FUNCIONA ============ -->
+    <section id="como">
+      <div class="wrap">
+        <div class="head" style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mute);display:flex;align-items:baseline;gap:16px;">
+          <span style="display:inline-block;width:32px;height:1px;background:var(--ink);"></span>
+          Como funciona
+        </div>
+        <h2 style="font-size:clamp(2rem,1.3rem+3vw,3.6rem);font-weight:200;letter-spacing:-0.025em;line-height:1;margin:24px 0 12px;max-width:22ch;">Três módulos. Um arco.</h2>
+        <p style="font-size:clamp(1rem,0.95rem+0.3vw,1.15rem);color:var(--ink-soft);font-weight:300;max-width:52ch;margin:0;line-height:1.55;">Cada módulo tem sua atmosfera própria. Eles se conversam, mas funcionam também sozinhos para quem precisar.</p>
+
+        <div class="modulos">
+          <div class="modulo">
+            <div class="num">Módulo 01 · presencial</div>
+            <h3 class="titulo">A matéria sensível</h3>
+            <p class="atmosphere">O módulo onde algo entra antes da palavra — tinta, gesto, peso.</p>
+            <p class="meta"><strong>Junho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+          </div>
+          <div class="modulo">
+            <div class="num">Módulo 02 · presencial</div>
+            <h3 class="titulo">O corpo na escuta</h3>
+            <p class="atmosphere">Aqui a escuta desce da cabeça e atravessa o tronco inteiro.</p>
+            <p class="meta"><strong>Julho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+          </div>
+          <div class="modulo">
+            <div class="num">Módulo 03 · online</div>
+            <h3 class="titulo">A clínica que volta</h3>
+            <p class="atmosphere">O encontro online onde tudo isso retorna ao consultório, traduzido.</p>
+            <p class="meta"><strong>Agosto de 2026</strong><br>Encontro online ao vivo<br>Sábado e domingo, 9h às 17h</p>
+          </div>
+        </div>
+
+        <div class="schedule">
+          <div class="item">
+            <div class="label">Carga horária total</div>
+            <div class="value">48 horas</div>
+          </div>
+          <div class="item">
+            <div class="label">Encontros</div>
+            <div class="value">6 dias · 3 fins de semana</div>
+          </div>
+          <div class="item">
+            <div class="label">Grupo mínimo</div>
+            <div class="value">5 participantes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INVESTIMENTO ============ -->
+    <section id="investimento">
+      <div class="wrap invest">
+        <div class="head">Investimento</div>
+        <div>
+          <div class="price-line">
+            <span class="price">R$ 620</span>
+            <span class="price-meta">por participante · em 3x sem juros</span>
+          </div>
+          <p class="terms">Equivale a <strong>R$ 103 por encontro</strong>. O valor cobre os três módulos da formação. Materiais artísticos básicos inclusos.</p>
+          <p class="fineprint">A turma abre com o mínimo de 5 participantes. Caso o número não seja atingido, o valor é integralmente devolvido.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ QUEM FACILITA ============ -->
+    <section>
+      <div class="wrap bio">
+        <div class="head">Quem facilita</div>
+        <div>
+          <div class="body-grid">
+            <div class="portrait-wrap">
+              <img class="portrait" src="elaine.jpg" alt="Retrato de Elaine Narcizo" />
+            </div>
+            <div>
+              <h3>Elaine Narcizo</h3>
+              <p>Mestra em Serviço Social, especialista em dança, música e teatro para educadores, arteterapeuta e artista.</p>
+              <p>Trabalha na intersecção entre clínica, arte e educação, conduzindo processos formativos em consultório, em projetos comunitários e em formação continuada para profissionais da saúde e da educação.</p>
+              <ul>
+                <li>Mestra em Serviço Social</li>
+                <li>Arteterapeuta</li>
+                <li>Dança · música · teatro</li>
+                <li>Artista</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq">
+      <div class="wrap faq">
+        <div class="head">Perguntas</div>
+        <div>
+          <h2>O que costuma <em>vir antes</em> da decisão.</h2>
+
+          <details>
+            <summary>Tem certificado?</summary>
+            <div class="answer">Sim. Ao final da formação é emitido um certificado de participação com a carga horária total — 48 horas — e os temas trabalhados. O certificado é válido como formação continuada.</div>
+          </details>
+
+          <details>
+            <summary>E se eu não puder ir a um dos módulos?</summary>
+            <div class="answer">A presença é parte essencial da experiência — o que acontece nos encontros não se reproduz em gravação. Se uma ausência for inevitável, conversamos caso a caso. O que não queremos é que alguém entre sem poder realmente estar.</div>
+          </details>
+
+          <details>
+            <summary>Como funciona o módulo online (Módulo 03)?</summary>
+            <div class="answer">O módulo online acontece ao vivo, por videochamada, com a mesma dinâmica dos presenciais — vivência, elaboração, troca. Não é uma aula gravada nem um webinar. A diferença é só o meio; a presença segue sendo pedida da mesma forma.</div>
+          </details>
+
+          <details>
+            <summary>Preciso ter experiência com arte ou já ter feito arteterapia?</summary>
+            <div class="answer">Não. A formação é para psicólogas, não para artistas. O que se pede não é habilidade técnica — é disponibilidade para experimentar. Quem nunca pegou em um pincel vai estar tão bem colocada quanto quem já frequentou ateliê.</div>
+          </details>
+
+          <details>
+            <summary>Como é feita a seleção das participantes?</summary>
+            <div class="answer">Antes de confirmar a inscrição, fazemos uma conversa breve — por WhatsApp ou chamada. Não é uma entrevista formal; é só garantir que a formação faz sentido para o momento de quem está chegando. A turma é pequena por escolha, e isso importa.</div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="contato">
+      <div class="wrap">
+        <h2>Se algo aqui te parou por um momento, <em>esse já é o primeiro sinal</em>.</h2>
+        <p class="sub">A turma é pequena, e a conversa antes de entrar é parte importante do processo. Me escreva e a gente conversa.</p>
+        <a class="btn" href="https://wa.me/5516991595707?text=Ol%C3%A1%20Elaine%2C%20vi%20a%20p%C3%A1gina%20dos%20Repert%C3%B3rios%20Sens%C3%ADveis%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener">
+          Quero conversar
+          <span class="arrow">→</span>
+        </a>
+        <div class="ways">
+          <span>Também por aqui:</span>
+          <a href="https://instagram.com/elaine.c.narcizo" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://medium.com/@elainenarcizo" target="_blank" rel="noopener">Medium</a>
+          <a href="https://open.spotify.com/user/31l7kdto2ycrcq6sewqp2cjawcna?si=7acf9e1a2cae483c" target="_blank" rel="noopener">Spotify</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="row">
+      <span>© 2026 Elaine Narcizo</span>
+      <span>Repertórios Sensíveis para a Clínica · turma 2026</span>
+    </div>
+  </footer>
+
+</body>
+</html>
