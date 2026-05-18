@@ -69,20 +69,16 @@
 
     /* === Hero =========================================== */
     .hero {
-      padding: 64px var(--p) 56px;
+      padding: 72px var(--p) 56px;
       position: relative;
       overflow: hidden;
-      min-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
     }
     .hero .stamp {
       position: absolute;
-      top: clamp(160px, 36vh, 300px); /* desce até cobrir "escuta" */
-      right: -16px;
-      width: 52vw;
-      max-width: 220px;
+      top: clamp(72px, 18vw, 130px);
+      right: clamp(-16px, -3vw, -8px);
+      width: 58vw;
+      max-width: 240px;
       aspect-ratio: 1;
       border-radius: 50%;
       background: url("bg-orange.jpg") center/cover no-repeat;
