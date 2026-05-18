@@ -193,7 +193,11 @@
     }
     .twocol .body p:last-child { margin-bottom: 0; }
     @media (max-width: 720px) {
-      .hero .stamp { display: none; }
+      .hero .stamp {
+        width: clamp(100px, 32vw, 150px);
+        top: clamp(20px, 5vh, 50px);
+        right: clamp(-20px, -5vw, -10px);
+      }
       .twocol { grid-template-columns: 1fr; gap: 32px; }
       .twocol .head { position: static; }
     }
