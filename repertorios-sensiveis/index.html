@@ -641,12 +641,20 @@
     .hero h1       { animation: fade-up 0.75s var(--ease) 0.08s both; }
     .hero .lede    { animation: fade-up 0.75s var(--ease) 0.18s both; }
 
-    /* 2. Stamp drift */
+    /* 2. Stamp: fios emergem do centro + drift */
+    @keyframes stamp-appear {
+      from { clip-path: circle(0% at 50% 50%); }
+      to   { clip-path: circle(75% at 50% 50%); }
+    }
     @keyframes stamp-drift {
       0%, 100% { transform: rotate(-8deg) translateY(0); }
       50%       { transform: rotate(-5deg) translateY(-11px); }
     }
-    .hero .stamp { animation: stamp-drift 9s ease-in-out infinite; }
+    .hero .stamp {
+      animation:
+        stamp-appear 1.6s cubic-bezier(0.1, 0, 0.2, 1) 0.3s both,
+        stamp-drift  9s  ease-in-out                    1.9s infinite;
+    }
 
     /* 3. Bola verde spin suave */
     @keyframes spin-slow { to { transform: rotate(360deg); } }
