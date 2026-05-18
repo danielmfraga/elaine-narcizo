@@ -69,16 +69,15 @@
 
     /* === Hero =========================================== */
     .hero {
-      padding: 72px var(--p) 56px;
+      padding: clamp(230px, 62vw, 290px) var(--p) 56px; /* espaço para a bola acima do texto */
       position: relative;
-      /* sem overflow:hidden — stamp emerge acima da borda */
     }
     .hero .stamp {
       position: absolute;
-      top: 8px; /* margem pequena abaixo do cabeçalho, bola inteira visível */
+      top: 10px; /* margem pequena abaixo do cabeçalho */
       right: clamp(-16px, -3vw, -8px);
-      width: 64vw;
-      max-width: 260px;
+      width: 55vw;
+      max-width: 220px;
       aspect-ratio: 1;
       border-radius: 50%;
       background: url("bg-orange.jpg") center/cover no-repeat;
