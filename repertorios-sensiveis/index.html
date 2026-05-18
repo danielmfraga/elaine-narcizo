@@ -288,38 +288,72 @@
       .tema .blurb { grid-column: 2; margin-top: 8px; }
     }
 
-    /* ---------- Como funciona ---------------------------- */
-    .modulos {
+    /* ---------- Como funciona — painel sticky ----------- */
+    .modulos-scroll {
+      height: 280vh;
+      position: relative;
+    }
+    .modulos-sticky {
+      position: sticky;
+      top: 57px;
+      height: calc(100vh - 57px);
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 40px;
+      align-items: center;
+      background: var(--paper);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .modulos-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+    .step {
+      background: none;
+      border: none;
+      padding: 0 0 14px 0;
+      margin-right: 36px;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      color: var(--mute);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.35s var(--ease);
+    }
+    .step::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--ink);
+      transition: width 0.4s var(--ease);
+    }
+    .step.active { color: var(--ink); }
+    .step.active::after { width: 100%; }
+
+    .modulos {
+      display: grid;
     }
     .modulo {
+      grid-area: 1 / 1;
       display: grid;
       grid-template-columns: 1fr auto;
       grid-template-rows: auto auto auto;
-      gap: 0 clamp(32px, 6vw, 80px);
+      gap: 0 clamp(40px, 8vw, 120px);
       align-items: start;
-      padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 44px);
-      background: var(--paper);
-      border: 1px solid var(--line);
-      /* scroll-ativação */
-      opacity: 0.42;
-      transform: scale(0.977);
-      transform-origin: center top;
-      box-shadow: none;
-      transition:
-        opacity    0.55s var(--ease),
-        transform  0.55s var(--ease),
-        box-shadow 0.55s var(--ease),
-        border-color 0.55s var(--ease);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+      pointer-events: none;
     }
     .modulo.active {
       opacity: 1;
-      transform: scale(1);
-      box-shadow: 0 6px 40px rgba(0,0,0,0.09), 0 1px 6px rgba(0,0,0,0.05);
-      border-color: var(--line-soft);
+      transform: none;
+      pointer-events: auto;
     }
     .modulo .num {
       grid-column: 1; grid-row: 1;
@@ -327,40 +361,54 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--mute);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .modulo .titulo {
       grid-column: 1; grid-row: 2;
-      font-size: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
+      font-size: clamp(2rem, 1.4rem + 3vw, 3.8rem);
       font-weight: 200;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin: 0 0 16px;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin: 0 0 20px;
     }
     .modulo .atmosphere {
       grid-column: 1; grid-row: 3;
-      font-size: 15px;
+      font-size: clamp(1rem, 0.9rem + 0.5vw, 1.2rem);
       line-height: 1.55;
       color: var(--ink-soft);
       font-weight: 300;
       font-style: italic;
       margin: 0;
-      max-width: 40ch;
+      max-width: 42ch;
       text-wrap: pretty;
     }
     .modulo .meta {
-      grid-column: 2;
-      grid-row: 1 / 4;
-      align-self: center;
+      grid-column: 2; grid-row: 1 / 4;
+      align-self: end;
       font-size: 14px;
       color: var(--mute);
-      line-height: 1.6;
+      line-height: 1.7;
       text-align: right;
+      padding-bottom: 4px;
     }
-    .modulo .meta strong { color: var(--ink); font-weight: 500; display: block; }
+    .modulo .meta strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; }
+
     @media (max-width: 720px) {
-      .modulo { grid-template-columns: 1fr; }
+      .modulos-scroll { height: auto; }
+      .modulos-sticky {
+        position: static;
+        height: auto;
+        border: none;
+        padding: clamp(48px, 8vh, 80px) 0;
+      }
+      .modulos { display: flex; flex-direction: column; gap: 40px; }
+      .modulo {
+        grid-area: unset;
+        opacity: 1; transform: none; pointer-events: auto;
+        grid-template-columns: 1fr;
+      }
       .modulo .meta { grid-column: 1; grid-row: 4; text-align: left; margin-top: 16px; }
+      .modulos-steps { display: none; }
     }
 
     .schedule {
@@ -840,30 +888,43 @@
           <span style="display:inline-block;width:32px;height:1px;background:var(--ink);"></span>
           Como funciona
         </div>
-        <h2 style="font-size:clamp(2rem,1.3rem+3vw,3.6rem);font-weight:200;letter-spacing:-0.025em;line-height:1;margin:24px 0 12px;max-width:22ch;">Três módulos. Um arco.</h2>
-        <p style="font-size:clamp(1rem,0.95rem+0.3vw,1.15rem);color:var(--ink-soft);font-weight:300;max-width:52ch;margin:0;line-height:1.55;">Cada módulo tem sua atmosfera própria. Eles se conversam, mas funcionam também sozinhos para quem precisar.</p>
+        <h2 style="font-size:clamp(2rem,1.3rem+3vw,3.6rem);font-weight:200;letter-spacing:-0.025em;line-height:1;margin:24px 0 0;max-width:22ch;">Três módulos. Um arco.</h2>
+      </div>
 
-        <div class="modulos">
-          <div class="modulo">
-            <div class="num">Módulo 01 · presencial</div>
-            <h3 class="titulo">A matéria sensível</h3>
-            <p class="atmosphere">O módulo onde algo entra antes da palavra — tinta, gesto, peso.</p>
-            <p class="meta"><strong>Junho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
-          </div>
-          <div class="modulo">
-            <div class="num">Módulo 02 · presencial</div>
-            <h3 class="titulo">O corpo na escuta</h3>
-            <p class="atmosphere">Aqui a escuta desce da cabeça e atravessa o tronco inteiro.</p>
-            <p class="meta"><strong>Julho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
-          </div>
-          <div class="modulo">
-            <div class="num">Módulo 03 · online</div>
-            <h3 class="titulo">A clínica que volta</h3>
-            <p class="atmosphere">O encontro online onde tudo isso retorna ao consultório, traduzido.</p>
-            <p class="meta"><strong>Agosto de 2026</strong><br>Encontro online ao vivo<br>Sábado e domingo, 9h às 17h</p>
+      <!-- painel sticky -->
+      <div class="modulos-scroll">
+        <div class="modulos-sticky">
+          <div class="wrap">
+            <div class="modulos-steps">
+              <button class="step active" data-mod="0">01</button>
+              <button class="step" data-mod="1">02</button>
+              <button class="step" data-mod="2">03</button>
+            </div>
+            <div class="modulos">
+              <div class="modulo active">
+                <div class="num">Módulo 01 · presencial</div>
+                <h3 class="titulo">A matéria sensível</h3>
+                <p class="atmosphere">O módulo onde algo entra antes da palavra — tinta, gesto, peso.</p>
+                <p class="meta"><strong>Junho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+              </div>
+              <div class="modulo">
+                <div class="num">Módulo 02 · presencial</div>
+                <h3 class="titulo">O corpo na escuta</h3>
+                <p class="atmosphere">Aqui a escuta desce da cabeça e atravessa o tronco inteiro.</p>
+                <p class="meta"><strong>Julho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+              </div>
+              <div class="modulo">
+                <div class="num">Módulo 03 · online</div>
+                <h3 class="titulo">A clínica que volta</h3>
+                <p class="atmosphere">O encontro online onde tudo isso retorna ao consultório, traduzido.</p>
+                <p class="meta"><strong>Agosto de 2026</strong><br>Encontro online ao vivo<br>Sábado e domingo, 9h às 17h</p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
+      <div class="wrap">
         <div class="schedule">
           <div class="item">
             <div class="label">Carga horária total</div>
@@ -1002,14 +1063,38 @@
 
     els.forEach(function (el) { io.observe(el); });
 
-    // Módulos — acende o que está no centro do viewport
-    var modIo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        e.target.classList.toggle('active', e.isIntersecting);
-      });
-    }, { threshold: 0, rootMargin: '-28% 0px -28% 0px' });
+    // Módulos — painel sticky, troca por scroll
+    var modScroll = document.querySelector('.modulos-scroll');
+    if (modScroll) {
+      var modItems = document.querySelectorAll('.modulo');
+      var modSteps = document.querySelectorAll('.step');
+      var modN = modItems.length;
+      var modCur = 0;
 
-    document.querySelectorAll('.modulo').forEach(function (el) { modIo.observe(el); });
+      function setMod(idx) {
+        if (idx === modCur) return;
+        modCur = idx;
+        modItems.forEach(function (el, i) { el.classList.toggle('active', i === idx); });
+        modSteps.forEach(function (el, i) { el.classList.toggle('active', i === idx); });
+      }
+
+      window.addEventListener('scroll', function () {
+        var rect = modScroll.getBoundingClientRect();
+        var scrollable = rect.height - window.innerHeight;
+        if (scrollable <= 0) return;
+        var p = Math.max(0, Math.min(0.999, -rect.top / scrollable));
+        setMod(Math.floor(p * modN));
+      }, { passive: true });
+
+      modSteps.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var idx = parseInt(btn.dataset.mod);
+          var top = modScroll.getBoundingClientRect().top + window.pageYOffset;
+          var scrollable = modScroll.offsetHeight - window.innerHeight;
+          window.scrollTo({ top: top + (idx / modN) * scrollable, behavior: 'smooth' });
+        });
+      });
+    }
   }());
   </script>
 
