@@ -79,7 +79,7 @@
     }
     .hero .stamp {
       position: absolute;
-      top: 16px;
+      top: clamp(160px, 36vh, 300px); /* desce até cobrir "escuta" */
       right: -16px;
       width: 52vw;
       max-width: 220px;
@@ -124,18 +124,20 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--mute);
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: center; gap: 12px;
     }
+    .hero .scroll-hint strong { color: var(--ink-soft); font-weight: 700; }
     .hero .scroll-hint::after {
       content: "";
       display: block;
-      width: 32px; height: 1px;
-      background: var(--line);
-      animation: scroll-line 2s var(--ease) infinite;
+      width: 28px; height: 1.5px;
+      background: var(--mute);
+      animation: scroll-line 2.2s var(--ease) infinite;
     }
     @keyframes scroll-line {
-      0%   { width: 32px; opacity: 1; }
-      100% { width: 56px; opacity: 0; }
+      0%   { width: 20px; opacity: 0.4; }
+      55%  { width: 52px; opacity: 1; }
+      100% { width: 68px; opacity: 0; }
     }
 
     /* === Seções base ==================================== */
@@ -178,7 +180,7 @@
       flex: 1;
       padding: 12px 0;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--mute);
@@ -233,21 +235,32 @@
     .mod-panel .mod-meta strong { color: var(--ink); font-weight: 500; display: block; }
 
     /* === Temas ========================================== */
+    .temas-intro {
+      font-size: 1.05rem;
+      font-weight: 200;
+      font-style: italic;
+      color: var(--ink-soft);
+      line-height: 1.5;
+      margin-bottom: 32px;
+      max-width: 32ch;
+    }
     .tema-item {
-      padding: 20px 0;
+      padding: 18px 0;
       border-bottom: 1px solid var(--line);
       display: flex;
-      align-items: baseline;
-      gap: 16px;
+      align-items: center;
+      gap: 14px;
     }
     .tema-item:first-child { border-top: 1px solid var(--line); }
-    .tema-item .tn {
-      font-size: 11px;
-      color: var(--mute);
-      letter-spacing: 0.08em;
+    .tema-item .tdot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--dot, #A8B73F);
       flex-shrink: 0;
-      width: 20px;
     }
+    .tema-item:nth-child(3n+1) { --dot: #A8B73F; }
+    .tema-item:nth-child(3n+2) { --dot: #E87A32; }
+    .tema-item:nth-child(3n)   { --dot: #F5D731; }
     .tema-item .tname {
       font-size: 1rem;
       font-weight: 300;
@@ -285,6 +298,30 @@
     }
 
     /* === Facilitadora =================================== */
+    .bio-img-wrap {
+      position: relative;
+      margin: 0 calc(-1 * var(--p)) 32px; /* sangra nas margens */
+    }
+    .bio-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(1) contrast(1.03);
+      display: block;
+    }
+    .bio-img-wrap::after {
+      content: "";
+      position: absolute;
+      bottom: -14px; right: 20px;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: url("bg-green.jpg") center/cover no-repeat;
+      animation: spin-slow 22s linear infinite;
+      transform-origin: center;
+      z-index: 1;
+    }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
     .bio-nome {
       font-size: 2rem;
       font-weight: 200;
@@ -347,11 +384,23 @@
 
     /* === CTA ============================================ */
     .cta {
-      background: var(--ink);
-      color: var(--paper);
+      background: var(--paper-warm);
+      color: var(--ink);
       padding: 64px var(--p);
-      border-top: none;
+      border-top: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
     }
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("bg-purple.jpg") center/cover no-repeat;
+      opacity: 0.18;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+    }
+    .cta > * { position: relative; z-index: 1; }
     .cta h2 {
       font-size: clamp(1.8rem, 7vw, 2.4rem);
       font-weight: 200;
@@ -359,12 +408,13 @@
       line-height: 1.1;
       margin-bottom: 20px;
       max-width: 22ch;
+      color: var(--ink);
     }
     .cta h2 em { font-style: italic; font-weight: 300; }
     .cta .sub {
       font-size: 15px;
       line-height: 1.6;
-      color: rgba(255,255,255,0.6);
+      color: var(--ink-soft);
       font-weight: 300;
       margin-bottom: 40px;
       max-width: 36ch;
@@ -373,8 +423,8 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: var(--paper);
-      color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
       font-family: var(--font);
       font-size: 14px;
       font-weight: 500;
@@ -389,12 +439,12 @@
     }
     .cta .alt {
       font-size: 13px;
-      color: rgba(255,255,255,0.4);
+      color: var(--mute);
       text-align: center;
     }
     .cta .alt a {
-      color: rgba(255,255,255,0.7);
-      border-bottom: 1px solid rgba(255,255,255,0.3);
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
       padding-bottom: 1px;
       margin: 0 8px;
     }
@@ -460,7 +510,7 @@
     <p class="eyebrow">Formação para psicólogas · 2026</p>
     <h1>Há um tipo de escuta que <em>nenhuma técnica</em> ensina.</h1>
     <p class="lede">Uma formação para psicólogas que querem ampliar a clínica a partir do corpo, da matéria e do devaneio.</p>
-    <p class="scroll-hint">Role para ver</p>
+    <p class="scroll-hint">Role para <strong>ver</strong></p>
   </section>
 
   <!-- SOBRE -->
@@ -513,17 +563,18 @@
   <!-- TEMAS -->
   <section class="reveal">
     <p class="label">Os dez temas</p>
+    <p class="temas-intro">Não são tópicos. São convites a um modo de presença.</p>
     <div class="tema-list">
-      <div class="tema-item"><span class="tn">01</span><span class="tname">Atenção e presença expandida</span></div>
-      <div class="tema-item"><span class="tn">02</span><span class="tname">Repouso psíquico ativo</span></div>
-      <div class="tema-item"><span class="tn">03</span><span class="tname">Devaneio criador como autoconhecimento</span></div>
-      <div class="tema-item"><span class="tn">04</span><span class="tname">Transformação pela matéria</span></div>
-      <div class="tema-item"><span class="tn">05</span><span class="tname">Linguagens do sensível</span></div>
-      <div class="tema-item"><span class="tn">06</span><span class="tname">Curiosidade como potência clínica</span></div>
-      <div class="tema-item"><span class="tn">07</span><span class="tname">O corpo que sonha</span></div>
-      <div class="tema-item"><span class="tn">08</span><span class="tname">O prazer da autenticidade</span></div>
-      <div class="tema-item"><span class="tn">09</span><span class="tname">Inaugurar contextos</span></div>
-      <div class="tema-item"><span class="tn">10</span><span class="tname">Retomar a capacidade de surpreender-se consigo mesma</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Atenção e presença expandida</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Repouso psíquico ativo</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Devaneio criador como autoconhecimento</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Transformação pela matéria</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Linguagens do sensível</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Curiosidade como potência clínica</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">O corpo que sonha</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">O prazer da autenticidade</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Inaugurar contextos</span></div>
+      <div class="tema-item"><span class="tdot"></span><span class="tname">Retomar a capacidade de surpreender-se consigo mesma</span></div>
     </div>
   </section>
 
@@ -538,6 +589,9 @@
 
   <!-- FACILITADORA -->
   <section class="reveal">
+    <div class="bio-img-wrap">
+      <img class="bio-img" src="elaine.png" alt="Retrato de Elaine Narcizo">
+    </div>
     <p class="label">Quem facilita</p>
     <h2 class="bio-nome">Elaine Narcizo</h2>
     <p class="bio-texto">Mestra em Serviço Social, especialista em dança, música e teatro para educadores, arteterapeuta e artista.</p>
@@ -552,7 +606,7 @@
 
   <!-- FAQ -->
   <section class="reveal">
-    <p class="label">Perguntas</p>
+    <p class="label"><strong>Perguntas comuns</strong></p>
     <details>
       <summary>Tem certificado?</summary>
       <div class="answer">Sim. Certificado de participação com 48h e temas trabalhados, válido como formação continuada.</div>
