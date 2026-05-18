@@ -290,51 +290,74 @@
 
     /* ---------- Como funciona ---------------------------- */
     .modulos {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
+      display: flex;
+      flex-direction: column;
       border-top: 1px solid var(--line);
       margin-top: 40px;
     }
     .modulo {
-      border-right: 1px solid var(--line);
-      padding: 36px 32px 36px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto auto;
+      gap: 0 clamp(32px, 6vw, 80px);
+      align-items: start;
+      padding: 52px 0 52px 0;
+      border-bottom: 1px solid var(--line);
+      border-left: 2px solid transparent;
+      /* scroll-ativação */
+      opacity: 0.35;
+      transition:
+        opacity      0.6s var(--ease),
+        border-color 0.5s var(--ease),
+        padding-left 0.5s var(--ease);
     }
-    .modulo:last-child { border-right: none; padding-right: 0; }
+    .modulo:last-child { border-bottom: none; }
+    .modulo.active {
+      opacity: 1;
+      border-left-color: var(--ink);
+      padding-left: 28px;
+    }
     .modulo .num {
+      grid-column: 1; grid-row: 1;
       font-size: 12px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--mute);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
     .modulo .titulo {
-      font-size: clamp(1.3rem, 1rem + 1vw, 1.7rem);
-      font-weight: 300;
-      letter-spacing: -0.015em;
-      line-height: 1.15;
-      margin: 0 0 12px;
+      grid-column: 1; grid-row: 2;
+      font-size: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 16px;
     }
     .modulo .atmosphere {
-      font-size: 14px;
+      grid-column: 1; grid-row: 3;
+      font-size: 15px;
       line-height: 1.55;
-      color: var(--ink);
+      color: var(--ink-soft);
       font-weight: 300;
       font-style: italic;
-      margin: 0 0 20px;
-      max-width: 26ch;
+      margin: 0;
+      max-width: 40ch;
       text-wrap: pretty;
     }
     .modulo .meta {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      align-self: center;
       font-size: 14px;
       color: var(--mute);
-      line-height: 1.5;
+      line-height: 1.6;
+      text-align: right;
     }
-    .modulo .meta strong { color: var(--ink); font-weight: 500; }
+    .modulo .meta strong { color: var(--ink); font-weight: 500; display: block; }
     @media (max-width: 720px) {
-      .modulos { grid-template-columns: 1fr; }
-      .modulo { border-right: none; border-bottom: 1px solid var(--line); padding: 28px 0; }
-      .modulo:last-child { border-bottom: none; }
+      .modulo { grid-template-columns: 1fr; padding: 36px 0; }
+      .modulo.active { padding-left: 20px; }
+      .modulo .meta { grid-column: 1; grid-row: 4; text-align: left; margin-top: 16px; }
     }
 
     .schedule {
@@ -975,6 +998,15 @@
     }, { threshold: 0.1 });
 
     els.forEach(function (el) { io.observe(el); });
+
+    // Módulos — acende o que está no centro do viewport
+    var modIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        e.target.classList.toggle('active', e.isIntersecting);
+      });
+    }, { threshold: 0, rootMargin: '-28% 0px -28% 0px' });
+
+    document.querySelectorAll('.modulo').forEach(function (el) { modIo.observe(el); });
   }());
   </script>
 
