@@ -71,14 +71,14 @@
     .hero {
       padding: 72px var(--p) 56px;
       position: relative;
-      overflow: hidden;
+      /* sem overflow:hidden — stamp emerge acima da borda */
     }
     .hero .stamp {
       position: absolute;
-      top: clamp(72px, 18vw, 130px);
+      top: -70px; /* começa acima do hero, atrás da nav */
       right: clamp(-16px, -3vw, -8px);
-      width: 58vw;
-      max-width: 240px;
+      width: 64vw;
+      max-width: 260px;
       aspect-ratio: 1;
       border-radius: 50%;
       background: url("bg-orange.jpg") center/cover no-repeat;
