@@ -286,6 +286,18 @@
       max-width: 30ch;
       text-wrap: pretty;
     }
+    /* Ícone accordion: escondido no desktop */
+    .tema-icon {
+      display: none;
+      font-size: 22px;
+      font-weight: 200;
+      color: var(--mute);
+      align-self: center;
+      line-height: 1;
+      transition: transform 0.3s var(--ease), color 0.25s var(--ease);
+      user-select: none;
+      flex-shrink: 0;
+    }
 
     /* ---------- Módulos ---------------------------------- */
     /* Tabs: escondidas no desktop, visíveis no mobile */
@@ -708,9 +720,13 @@
       .twocol { grid-template-columns: 1fr; gap: 32px; }
       .twocol .head { position: static; }
 
-      /* Temas: esconde blurb, simplifica grid */
-      .tema { grid-template-columns: 48px 1fr; gap: 16px; padding: 20px 0; }
-      .tema .blurb { display: none; }
+      /* Temas: accordion no mobile */
+      .tema { grid-template-columns: 48px 1fr auto; gap: 16px; padding: 20px 0; cursor: pointer; }
+      .tema:active { background: var(--paper-warm); }
+      .tema .blurb { display: none; grid-column: 1 / -1; padding-top: 10px; font-size: 14px; line-height: 1.6; font-weight: 300; color: var(--ink-soft); max-width: none; text-wrap: pretty; }
+      .tema.open .blurb { display: block; }
+      .tema-icon { display: block; }
+      .tema.open .tema-icon { transform: rotate(45deg); color: var(--ink); }
       .tema:hover { padding-left: 0; }
 
       /* Módulos: ativa tabs */
@@ -817,51 +833,61 @@
           <div class="tema">
             <span class="n">01</span>
             <span class="name">Atenção e presença expandida</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Reativar uma qualidade de atenção que se desloca do controle e da vigilância para a interação com o presente.</span>
           </div>
           <div class="tema">
             <span class="n">02</span>
             <span class="name">Repouso psíquico ativo</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Experimentar como descansar no campo da criação, como modo de suspender o cotidiano e experimentar uma forma de regeneração psíquica.</span>
           </div>
           <div class="tema">
             <span class="n">03</span>
             <span class="name">Devaneio criador como autoconhecimento</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Mobilizar a potência imaginativa como mediação para ampliação de perspectivas sobre a vida.</span>
           </div>
           <div class="tema">
             <span class="n">04</span>
             <span class="name">Transformação pela matéria</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Utilizar materiais expressivos como mediadores de processos de elaboração, simbolização e criação de sentidos.</span>
           </div>
           <div class="tema">
             <span class="n">05</span>
             <span class="name">Linguagens do sensível</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Vivenciar experiências com dança, teatro, pintura e outras práticas artísticas que podem ampliar a expressão subjetiva.</span>
           </div>
           <div class="tema">
             <span class="n">06</span>
             <span class="name">Curiosidade como potência clínica</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Retomar a curiosidade como força que desloca a centralidade da compreensão e abre novas formas de percepção.</span>
           </div>
           <div class="tema">
             <span class="n">07</span>
             <span class="name">O corpo que sonha</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Ativar a criatividade corporal como recurso para integração psíquica.</span>
           </div>
           <div class="tema">
             <span class="n">08</span>
             <span class="name">O prazer da autenticidade</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Sustentar a espontaneidade como abertura para o prazer de habitar a própria singularidade.</span>
           </div>
           <div class="tema">
             <span class="n">09</span>
             <span class="name">Inaugurar contextos</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Ressignificar as formas de se relacionar com os contextos de vida, através da investigação de novos modos de habitar a experiência.</span>
           </div>
           <div class="tema">
             <span class="n">10</span>
             <span class="name">Retomar a capacidade de surpreender-se consigo mesmo</span>
+            <span class="tema-icon" aria-hidden="true">+</span>
             <span class="blurb">Criar condições para reencontrar aspectos da experiência subjetiva ainda não automatizados, ampliando abertura ao inesperado e ao novo.</span>
           </div>
         </div>
@@ -1053,6 +1079,15 @@
       });
     }, { threshold: 0, rootMargin: '-28% 0px -28% 0px' });
     document.querySelectorAll('.modulo').forEach(function (el) { modIo.observe(el); });
+
+    /* --- Accordion temas (mobile) --- */
+    document.querySelectorAll('.tema').forEach(function (tema) {
+      tema.addEventListener('click', function () {
+        if (window.innerWidth <= 720) {
+          tema.classList.toggle('open');
+        }
+      });
+    });
 
     /* --- Tabs (mobile) --- */
     document.querySelectorAll('.mod-tab').forEach(function (tab) {
