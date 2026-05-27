@@ -755,16 +755,15 @@
       .invest { grid-template-columns: 1fr; gap: 32px; }
       .invest .head { position: static; }
 
-      /* Bio: foto sangrada */
+      /* Bio: foto com margem */
       .bio { grid-template-columns: 1fr; gap: 32px; }
       .bio .head { position: static; }
       .bio .body-grid { grid-template-columns: 1fr; gap: 0; }
       .bio .portrait-wrap {
-        margin: 0 calc(-1 * var(--gutter)) 32px;
-        width: calc(100% + 2 * var(--gutter));
+        margin: 0 0 32px;
       }
-      .bio .portrait { max-width: 100%; width: 100%; aspect-ratio: 4/5; }
-      .bio .portrait-wrap::before { width: 56px; height: 56px; bottom: -14px; right: 20px; }
+      .bio .portrait { max-width: 100%; width: 100%; aspect-ratio: 4/5; border-radius: 16px; }
+      .bio .portrait-wrap::before { width: 56px; height: 56px; bottom: -34px; right: 20px; }
 
       /* FAQ */
       .faq { grid-template-columns: 1fr; gap: 32px; }
