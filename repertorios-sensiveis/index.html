@@ -1,14 +1,13 @@
-﻿<!DOCTYPE html>
-<html lang="pt-BR"><head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Repertórios Sensíveis para a Clínica — Elaine Narcizo</title>
   <meta name="description" content="Uma formação voltada a psicólogas que desejam ampliar o manejo clínico a partir da criatividade, do corpo e da experiência simbólica.">
 
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Repertórios Sensíveis para a Clínica">
   <meta property="og:description" content="Uma formação voltada a psicólogas que desejam ampliar o manejo clínico a partir da criatividade, do corpo e da experiência simbólica.">
   <meta property="og:image" content="og.png">
@@ -17,23 +16,20 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
 
-  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Repertórios Sensíveis para a Clínica">
   <meta name="twitter:description" content="Uma formação para psicólogas. 2026.">
   <meta name="twitter:image" content="og.png">
 
-  
-
-
   <base href="/repertorios-sensiveis/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
   <style>
     /* =========================================================
        Repertórios Sensíveis — identidade B&W
-       Standalone. Não compartilha tokens com a oficina PONTE.
+       Standalone. Desktop + mobile em arquivo único.
        ========================================================= */
 
     :root {
@@ -44,12 +40,9 @@
       --line-soft:  #EDEDED;
       --paper:      #FFFFFF;
       --paper-warm: #F8F7F4;
-
       --font: "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-
       --container: 1180px;
       --gutter: clamp(20px, 5vw, 64px);
-
       --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
@@ -69,7 +62,6 @@
 
     a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
     a:hover { text-decoration-thickness: 1.5px; }
-
     ::selection { background: var(--ink); color: var(--paper); }
 
     /* ---------- Layout ----------------------------------- */
@@ -103,9 +95,21 @@
       display: inline-flex; align-items: center; gap: 10px;
     }
     nav.top .brand .dot { width: 6px; height: 6px; background: var(--ink); border-radius: 50%; }
-    nav.top .links { display: flex; gap: 28px; }
-    nav.top .links a { text-decoration: none; color: var(--ink-soft); }
-    nav.top .links a:hover { color: var(--ink); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { text-decoration: none; color: var(--ink-soft); }
+    .nav-links a:hover { color: var(--ink); }
+    /* CTA mobile: escondido no desktop */
+    .nav-cta {
+      display: none;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+    }
 
     /* ---------- Hero ------------------------------------- */
     .hero {
@@ -154,10 +158,7 @@
       text-wrap: balance;
       color: var(--ink);
     }
-    .hero h1 em {
-      font-style: italic;
-      font-weight: 300;
-    }
+    .hero h1 em { font-style: italic; font-weight: 300; }
     .hero .lede {
       font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
       line-height: 1.5;
@@ -166,6 +167,29 @@
       text-wrap: pretty;
       font-weight: 300;
       margin: 0;
+    }
+    /* Scroll hint: escondido no desktop, visível no mobile */
+    .scroll-hint {
+      display: none;
+      margin-top: 48px;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+      align-items: center; gap: 12px;
+    }
+    .scroll-hint strong { color: var(--ink-soft); font-weight: 700; }
+    .scroll-hint::after {
+      content: "";
+      display: block;
+      width: 28px; height: 1.5px;
+      background: var(--mute);
+      animation: scroll-line 2.2s var(--ease) infinite;
+    }
+    @keyframes scroll-line {
+      0%   { width: 20px; opacity: 0.4; }
+      55%  { width: 52px; opacity: 1; }
+      100% { width: 68px; opacity: 0; }
     }
 
     /* ---------- "O que é" -------------------------------- */
@@ -192,20 +216,9 @@
       text-wrap: pretty;
     }
     .twocol .body p:last-child { margin-bottom: 0; }
-    @media (max-width: 720px) {
-      .hero .stamp {
-        width: clamp(100px, 32vw, 150px);
-        top: clamp(20px, 5vh, 50px);
-        right: clamp(-20px, -5vw, -10px);
-      }
-      .twocol { grid-template-columns: 1fr; gap: 32px; }
-      .twocol .head { position: static; }
-    }
 
-    /* ---------- Temas (coração) -------------------------- */
-    .temas {
-      padding: clamp(96px, 18vh, 200px) 0;
-    }
+    /* ---------- Temas ------------------------------------ */
+    .temas { padding: clamp(96px, 18vh, 200px) 0; }
     .temas .head {
       font-size: 12px;
       letter-spacing: 0.22em;
@@ -228,11 +241,7 @@
       color: var(--ink);
     }
     .temas h2 em { font-style: italic; font-weight: 300; }
-
-    .tema-list {
-      display: flex;
-      flex-direction: column;
-    }
+    .tema-list { display: flex; flex-direction: column; }
     .tema {
       display: grid;
       grid-template-columns: 80px 1fr 200px;
@@ -241,7 +250,6 @@
       padding: 32px 0;
       border-top: 1px solid var(--line);
       transition: padding-left .35s var(--ease);
-      position: relative;
     }
     .tema:hover { padding-left: 18px; }
     .tema:last-child { border-bottom: 1px solid var(--line); }
@@ -249,7 +257,6 @@
       font-size: 14px;
       letter-spacing: 0.06em;
       color: var(--mute);
-      font-variant-numeric: tabular-nums;
       display: inline-flex; align-items: center; gap: 12px;
     }
     .tema .n::before {
@@ -260,9 +267,9 @@
       background: var(--dot, #A8B73F);
       flex-shrink: 0;
     }
-    .tema:nth-child(3n+1) { --dot: #A8B73F; } /* verde */
-    .tema:nth-child(3n+2) { --dot: #E87A32; } /* laranja */
-    .tema:nth-child(3n)   { --dot: #F5D731; } /* amarelo */
+    .tema:nth-child(3n+1) { --dot: #A8B73F; }
+    .tema:nth-child(3n+2) { --dot: #E87A32; }
+    .tema:nth-child(3n)   { --dot: #F5D731; }
     .tema .name {
       font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
       font-weight: 300;
@@ -279,16 +286,33 @@
       max-width: 30ch;
       text-wrap: pretty;
     }
-    @media (max-width: 880px) {
-      .tema {
-        grid-template-columns: 56px 1fr;
-        gap: 24px;
-        padding: 24px 0;
-      }
-      .tema .blurb { grid-column: 2; margin-top: 8px; }
-    }
 
-    /* ---------- Como funciona ---------------------------- */
+    /* ---------- Módulos ---------------------------------- */
+    /* Tabs: escondidas no desktop, visíveis no mobile */
+    .mod-tabs {
+      display: none;
+      border-bottom: 1px solid var(--line);
+      gap: 0;
+      margin-top: 8px;
+    }
+    .mod-tab {
+      flex: 1;
+      padding: 12px 0;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--mute);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .mod-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
     .modulos {
       display: flex;
       flex-direction: column;
@@ -301,22 +325,14 @@
       grid-template-rows: auto auto auto;
       gap: 0 clamp(32px, 6vw, 80px);
       align-items: start;
-      padding: 52px 0 52px 0;
+      padding: 52px 0;
       border-bottom: 1px solid var(--line);
       border-left: 2px solid transparent;
-      /* scroll-ativação */
       opacity: 0.35;
-      transition:
-        opacity      0.6s var(--ease),
-        border-color 0.5s var(--ease),
-        padding-left 0.5s var(--ease);
+      transition: opacity 0.6s var(--ease), border-color 0.5s var(--ease), padding-left 0.5s var(--ease);
     }
     .modulo:last-child { border-bottom: none; }
-    .modulo.active {
-      opacity: 1;
-      border-left-color: var(--ink);
-      padding-left: 28px;
-    }
+    .modulo.active { opacity: 1; border-left-color: var(--ink); padding-left: 28px; }
     .modulo .num {
       grid-column: 1; grid-row: 1;
       font-size: 12px;
@@ -354,11 +370,6 @@
       text-align: right;
     }
     .modulo .meta strong { color: var(--ink); font-weight: 500; display: block; }
-    @media (max-width: 720px) {
-      .modulo { grid-template-columns: 1fr; padding: 36px 0; }
-      .modulo.active { padding-left: 20px; }
-      .modulo .meta { grid-column: 1; grid-row: 4; text-align: left; margin-top: 16px; }
-    }
 
     .schedule {
       margin-top: 56px;
@@ -372,11 +383,7 @@
       color: var(--mute);
       margin-bottom: 4px;
     }
-    .schedule .item .value {
-      font-size: 18px;
-      font-weight: 300;
-      color: var(--ink);
-    }
+    .schedule .item .value { font-size: 18px; font-weight: 300; color: var(--ink); }
 
     /* ---------- Investimento ----------------------------- */
     .invest {
@@ -403,10 +410,7 @@
       line-height: 1;
       color: var(--ink);
     }
-    .invest .price-meta {
-      font-size: 14px;
-      color: var(--mute);
-    }
+    .invest .price-meta { font-size: 14px; color: var(--mute); }
     .invest .terms {
       font-size: 16px;
       line-height: 1.6;
@@ -424,12 +428,8 @@
       border-top: 1px solid var(--line-soft);
       max-width: 44ch;
     }
-    @media (max-width: 720px) {
-      .invest { grid-template-columns: 1fr; gap: 32px; }
-      .invest .head { position: static; }
-    }
 
-    /* ---------- Quem facilita ---------------------------- */
+    /* ---------- Bio -------------------------------------- */
     .bio {
       display: grid;
       grid-template-columns: 220px 1fr;
@@ -449,17 +449,14 @@
       gap: clamp(28px, 5vw, 56px);
       align-items: start;
     }
-    .bio .portrait-wrap {
-      position: relative;
-    }
+    .bio .portrait-wrap { position: relative; }
     .bio .portrait {
       width: 100%;
       aspect-ratio: 4/5;
       object-fit: cover;
       filter: grayscale(1) contrast(1.03);
       display: block;
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
     }
     .bio .portrait-wrap::before {
       content: "";
@@ -499,14 +496,6 @@
       border: 1px solid var(--line);
       border-radius: 999px;
     }
-    @media (max-width: 880px) {
-      .bio .body-grid { grid-template-columns: 1fr; gap: 28px; }
-      .bio .portrait { max-width: 320px; aspect-ratio: 4/5; }
-    }
-    @media (max-width: 720px) {
-      .bio { grid-template-columns: 1fr; gap: 32px; }
-      .bio .head { position: static; }
-    }
 
     /* ---------- FAQ -------------------------------------- */
     .faq {
@@ -532,10 +521,7 @@
       color: var(--ink);
     }
     .faq h2 em { font-style: italic; font-weight: 300; }
-    .faq details {
-      border-top: 1px solid var(--line);
-      padding: 24px 0;
-    }
+    .faq details { border-top: 1px solid var(--line); padding: 24px 0; }
     .faq details:last-of-type { border-bottom: 1px solid var(--line); }
     .faq summary {
       list-style: none;
@@ -557,10 +543,7 @@
       flex-shrink: 0;
       line-height: 1;
     }
-    .faq details[open] summary::after {
-      transform: rotate(45deg);
-      color: var(--ink);
-    }
+    .faq details[open] summary::after { transform: rotate(45deg); color: var(--ink); }
     .faq details:hover summary { padding-left: 12px; }
     .faq .answer {
       padding: 18px 0 4px;
@@ -571,11 +554,8 @@
       max-width: 56ch;
       text-wrap: pretty;
     }
-    @media (max-width: 720px) {
-      .faq { grid-template-columns: 1fr; gap: 32px; }
-      .faq .head { position: static; }
-    }
 
+    /* ---------- CTA -------------------------------------- */
     .cta {
       background: var(--paper-warm);
       border-top: 1px solid var(--line);
@@ -585,8 +565,7 @@
     }
     .cta::before {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: url("bg-purple.jpg") center/cover no-repeat;
       opacity: 0.18;
       mix-blend-mode: multiply;
@@ -596,7 +575,6 @@
     .cta .wrap {
       padding-top: clamp(96px, 18vh, 180px);
       padding-bottom: clamp(96px, 18vh, 180px);
-      text-align: left;
     }
     .cta h2 {
       font-size: clamp(2.2rem, 1.5rem + 3.5vw, 4.5rem);
@@ -634,7 +612,6 @@
     .btn:hover { background: transparent; color: var(--ink); }
     .btn .arrow { display: inline-block; transition: transform .35s var(--ease); }
     .btn:hover .arrow { transform: translateX(6px); }
-
     .cta .ways {
       margin-top: 32px;
       display: flex; flex-wrap: wrap; gap: 24px 36px;
@@ -645,11 +622,7 @@
     .cta .ways a:hover { border-bottom-width: 2px; }
 
     /* ---------- Footer ----------------------------------- */
-    footer {
-      padding: 40px 0 56px;
-      font-size: 13px;
-      color: var(--mute);
-    }
+    footer { padding: 40px 0 56px; font-size: 13px; color: var(--mute); }
     footer .row {
       display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px;
       max-width: var(--container);
@@ -657,9 +630,9 @@
       padding: 0 var(--gutter);
     }
 
-    /* ---------- Movimento -------------------------------- */
-
-    /* 1. Hero entrance */
+    /* =========================================================
+       ANIMAÇÕES
+       ========================================================= */
     @keyframes fade-up {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -667,8 +640,8 @@
     .hero .eyebrow { animation: fade-up 0.75s var(--ease) both; }
     .hero h1       { animation: fade-up 0.75s var(--ease) 0.08s both; }
     .hero .lede    { animation: fade-up 0.75s var(--ease) 0.18s both; }
+    .scroll-hint   { animation: fade-up 0.75s var(--ease) 0.28s both; }
 
-    /* 2. Stamp: fios emergem do centro + drift */
     @keyframes stamp-appear {
       from { clip-path: circle(0% at 50% 50%); }
       to   { clip-path: circle(75% at 50% 50%); }
@@ -680,26 +653,14 @@
     .hero .stamp {
       animation:
         stamp-appear 1.6s cubic-bezier(0.1, 0, 0.2, 1) 0.3s both,
-        stamp-drift  9s  ease-in-out                    1.9s infinite;
+        stamp-drift  9s  ease-in-out 1.9s infinite;
     }
 
-    /* 3. Bola verde spin suave */
     @keyframes spin-slow { to { transform: rotate(360deg); } }
-    .bio .portrait-wrap::before {
-      animation: spin-slow 22s linear infinite;
-      transform-origin: center;
-    }
+    .bio .portrait-wrap::before { animation: spin-slow 22s linear infinite; transform-origin: center; }
+    .bio .portrait { transition: transform 0.55s var(--ease), filter 0.55s var(--ease); }
+    .bio .portrait:hover { transform: scale(1.025); filter: grayscale(0.5) contrast(1.03); }
 
-    /* 4. Portrait hover */
-    .bio .portrait {
-      transition: transform 0.55s var(--ease), filter 0.55s var(--ease);
-    }
-    .bio .portrait:hover {
-      transform: scale(1.025);
-      filter: grayscale(0.5) contrast(1.03);
-    }
-
-    /* 5. Scroll reveal */
     .reveal {
       opacity: 0;
       transform: translateY(22px);
@@ -708,12 +669,99 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ---------- Reduced motion --------------------------- */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        transition: none !important;
-        animation: none !important;
+    /* =========================================================
+       RESPONSIVO — 880px (tablets)
+       ========================================================= */
+    @media (max-width: 880px) {
+      .tema { grid-template-columns: 56px 1fr; gap: 24px; padding: 24px 0; }
+      .tema .blurb { grid-column: 2; margin-top: 8px; }
+      .bio .body-grid { grid-template-columns: 1fr; gap: 28px; }
+      .bio .portrait { max-width: 320px; aspect-ratio: 4/5; }
+    }
+
+    /* =========================================================
+       RESPONSIVO — 720px (mobile)
+       ========================================================= */
+    @media (max-width: 720px) {
+
+      /* Nav */
+      .nav-links { display: none; }
+      .nav-cta   { display: inline-block; }
+
+      /* Hero: espaço extra no topo para a bola */
+      .hero {
+        padding-top: clamp(220px, 60vw, 280px);
+        padding-bottom: 56px;
       }
+      .hero .stamp {
+        width: 58vw;
+        max-width: 230px;
+        top: 58px;
+        right: clamp(-16px, -3vw, -8px);
+      }
+      .scroll-hint { display: flex; }
+
+      /* Seções */
+      section { padding: 56px 0; }
+
+      /* Twocol */
+      .twocol { grid-template-columns: 1fr; gap: 32px; }
+      .twocol .head { position: static; }
+
+      /* Temas: esconde blurb, simplifica grid */
+      .tema { grid-template-columns: 48px 1fr; gap: 16px; padding: 20px 0; }
+      .tema .blurb { display: none; }
+      .tema:hover { padding-left: 0; }
+
+      /* Módulos: ativa tabs */
+      .mod-tabs { display: flex; }
+      .modulos { border-top: none; margin-top: 0; }
+      .modulo {
+        display: none !important;
+        opacity: 1 !important;
+        border-left: none !important;
+        padding-left: 0 !important;
+        grid-template-columns: 1fr;
+        border-bottom: none;
+        padding: 32px 0 0;
+      }
+      .modulo.active { display: grid !important; }
+      .modulo .meta {
+        grid-column: 1; grid-row: 4;
+        text-align: left;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      /* Investimento */
+      .invest { grid-template-columns: 1fr; gap: 32px; }
+      .invest .head { position: static; }
+
+      /* Bio: foto sangrada */
+      .bio { grid-template-columns: 1fr; gap: 32px; }
+      .bio .head { position: static; }
+      .bio .body-grid { grid-template-columns: 1fr; gap: 0; }
+      .bio .portrait-wrap {
+        margin: 0 calc(-1 * var(--gutter)) 32px;
+        width: calc(100% + 2 * var(--gutter));
+      }
+      .bio .portrait { max-width: 100%; width: 100%; aspect-ratio: 4/5; }
+      .bio .portrait-wrap::before { width: 56px; height: 56px; bottom: -14px; right: 20px; }
+
+      /* FAQ */
+      .faq { grid-template-columns: 1fr; gap: 32px; }
+      .faq .head { position: static; }
+
+      /* CTA */
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
   </style>
@@ -724,13 +772,14 @@
   <nav class="top">
     <div class="row">
       <a href="#topo" class="brand"><span class="dot"></span>Elaine Narcizo</a>
-      <div class="links">
+      <div class="nav-links">
         <a href="#temas">Temas</a>
         <a href="#como">Como funciona</a>
         <a href="#investimento">Investimento</a>
         <a href="#faq">Perguntas</a>
         <a href="#contato">Contato</a>
       </div>
+      <a class="nav-cta" href="#contato">Inscrição</a>
     </div>
   </nav>
 
@@ -743,6 +792,7 @@
         <p class="eyebrow">Formação para psicólogas · 2026</p>
         <h1>Repertórios <em>Sensíveis</em> para a Clínica</h1>
         <p class="lede">Uma formação voltada a psicólogas que desejam ampliar o manejo clínico a partir da criatividade, do corpo e da experiência simbólica. Um espaço de experimentação de novas formas de escuta, presença e atuação na clínica contemporânea.</p>
+        <p class="scroll-hint">Role para <strong>ver</strong></p>
       </div>
     </section>
 
@@ -758,74 +808,62 @@
       </div>
     </section>
 
-    <!-- ============ TEMAS (coração) ============ -->
+    <!-- ============ TEMAS ============ -->
     <section class="temas" id="temas">
       <div class="wrap">
         <div class="head">Os dez temas</div>
         <h2>Não são tópicos. São <em>convites</em> a um modo de presença.</h2>
-
         <div class="tema-list">
-
           <div class="tema">
             <span class="n">01</span>
             <span class="name">Atenção e presença expandida</span>
             <span class="blurb">Aprender a estar onde se está, mesmo durante a sessão.</span>
           </div>
-
           <div class="tema">
             <span class="n">02</span>
             <span class="name">Repouso psíquico ativo</span>
             <span class="blurb">A pausa que não é desligar — é uma forma de escuta.</span>
           </div>
-
           <div class="tema">
             <span class="n">03</span>
             <span class="name">Devaneio criador como autoconhecimento</span>
             <span class="blurb">O que aparece quando a mente afrouxa, e por que isso importa clinicamente.</span>
           </div>
-
           <div class="tema">
             <span class="n">04</span>
             <span class="name">Transformação pela matéria</span>
             <span class="blurb">Tinta, barro, papel — o que muda em quem trabalha quando o trabalho passa pelas mãos.</span>
           </div>
-
           <div class="tema">
             <span class="n">05</span>
             <span class="name">Linguagens do sensível</span>
             <span class="blurb">Imagem, som, gesto. As outras gramáticas com que a clínica acontece.</span>
           </div>
-
           <div class="tema">
             <span class="n">06</span>
             <span class="name">Curiosidade como potência clínica</span>
             <span class="blurb">Não saber, perguntar de verdade — e por que essa é uma escolha técnica.</span>
           </div>
-
           <div class="tema">
             <span class="n">07</span>
             <span class="name">O corpo que sonha</span>
             <span class="blurb">Movimento, dança, postura. O que o corpo diz antes da fala.</span>
           </div>
-
           <div class="tema">
             <span class="n">08</span>
             <span class="name">O prazer da autenticidade</span>
             <span class="blurb">A diferença entre fazer certo e fazer com verdade.</span>
           </div>
-
           <div class="tema">
             <span class="n">09</span>
             <span class="name">Inaugurar contextos</span>
             <span class="blurb">Como criar, dentro da sessão, um espaço que ainda não existia.</span>
           </div>
-
           <div class="tema">
             <span class="n">10</span>
             <span class="name">Retomar a capacidade de surpreender-se consigo mesma</span>
             <span class="blurb">O ponto onde a formação volta para a vida — e fica.</span>
           </div>
-
         </div>
       </div>
     </section>
@@ -833,31 +871,38 @@
     <!-- ============ COMO FUNCIONA ============ -->
     <section id="como">
       <div class="wrap">
-        <div class="head" style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mute);display:flex;align-items:baseline;gap:16px;">
-          <span style="display:inline-block;width:32px;height:1px;background:var(--ink);"></span>
+        <div style="font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mute);display:flex;align-items:baseline;gap:16px;margin-bottom:24px;">
+          <span style="display:inline-block;width:32px;height:1px;background:var(--ink);flex-shrink:0;"></span>
           Como funciona
         </div>
-        <h2 style="font-size:clamp(2rem,1.3rem+3vw,3.6rem);font-weight:200;letter-spacing:-0.025em;line-height:1;margin:24px 0 12px;max-width:22ch;">Três módulos. Um arco.</h2>
-        <p style="font-size:clamp(1rem,0.95rem+0.3vw,1.15rem);color:var(--ink-soft);font-weight:300;max-width:52ch;margin:0;line-height:1.55;">Cada módulo tem sua atmosfera própria. Eles se conversam, mas funcionam também sozinhos para quem precisar.</p>
+        <h2 style="font-size:clamp(2rem,1.3rem+3vw,3.6rem);font-weight:200;letter-spacing:-0.025em;line-height:1;margin:0 0 12px;max-width:22ch;color:var(--ink);">Três módulos. Um arco.</h2>
+        <p style="font-size:clamp(1rem,0.95rem+0.3vw,1.15rem);color:var(--ink-soft);font-weight:300;max-width:52ch;margin:0 0 8px;line-height:1.55;">Cada módulo tem sua atmosfera própria. Eles se conversam, mas funcionam também sozinhos para quem precisar.</p>
+
+        <!-- Tabs: visíveis apenas no mobile -->
+        <div class="mod-tabs">
+          <button class="mod-tab active" data-panel="0">01</button>
+          <button class="mod-tab" data-panel="1">02</button>
+          <button class="mod-tab" data-panel="2">03</button>
+        </div>
 
         <div class="modulos">
-          <div class="modulo">
+          <div class="modulo active" data-panel="0">
             <div class="num">Módulo 01 · presencial</div>
             <h3 class="titulo">A matéria sensível</h3>
             <p class="atmosphere">O módulo onde algo entra antes da palavra — tinta, gesto, peso.</p>
-            <p class="meta"><strong>Junho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+            <p class="meta"><strong>Junho de 2026</strong>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
           </div>
-          <div class="modulo">
+          <div class="modulo" data-panel="1">
             <div class="num">Módulo 02 · presencial</div>
             <h3 class="titulo">O corpo na escuta</h3>
             <p class="atmosphere">Aqui a escuta desce da cabeça e atravessa o tronco inteiro.</p>
-            <p class="meta"><strong>Julho de 2026</strong><br>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
+            <p class="meta"><strong>Julho de 2026</strong>Ribeirão Preto · SP<br>Sábado e domingo, 9h às 17h</p>
           </div>
-          <div class="modulo">
+          <div class="modulo" data-panel="2">
             <div class="num">Módulo 03 · online</div>
             <h3 class="titulo">A clínica que volta</h3>
             <p class="atmosphere">O encontro online onde tudo isso retorna ao consultório, traduzido.</p>
-            <p class="meta"><strong>Agosto de 2026</strong><br>Encontro online ao vivo<br>Sábado e domingo, 9h às 17h</p>
+            <p class="meta"><strong>Agosto de 2026</strong>Encontro online ao vivo<br>Sábado e domingo, 9h às 17h</p>
           </div>
         </div>
 
@@ -885,7 +930,7 @@
         <div>
           <div class="price-line">
             <span class="price">R$ 620</span>
-            <span class="price-meta">por participante · em 3x sem juros</span>
+            <span class="price-meta">por participante · em 3× sem juros</span>
           </div>
           <p class="terms">Equivale a <strong>R$ 103 por encontro</strong>. O valor cobre os três módulos da formação. Materiais artísticos básicos inclusos.</p>
           <p class="fineprint">A turma abre com o mínimo de 5 participantes. Caso o número não seja atingido, o valor é integralmente devolvido.</p>
@@ -924,32 +969,26 @@
         <div class="head">Perguntas</div>
         <div>
           <h2>O que costuma <em>vir antes</em> da decisão.</h2>
-
           <details>
             <summary>Tem certificado?</summary>
             <div class="answer">Sim. Ao final da formação é emitido um certificado de participação com a carga horária total — 48 horas — e os temas trabalhados. O certificado é válido como formação continuada.</div>
           </details>
-
           <details>
             <summary>E se eu não puder ir a um dos módulos?</summary>
             <div class="answer">A presença é parte essencial da experiência — o que acontece nos encontros não se reproduz em gravação. Se uma ausência for inevitável, conversamos caso a caso. O que não queremos é que alguém entre sem poder realmente estar.</div>
           </details>
-
           <details>
             <summary>Como funciona o módulo online (Módulo 03)?</summary>
             <div class="answer">O módulo online acontece ao vivo, por videochamada, com a mesma dinâmica dos presenciais — vivência, elaboração, troca. Não é uma aula gravada nem um webinar. A diferença é só o meio; a presença segue sendo pedida da mesma forma.</div>
           </details>
-
           <details>
             <summary>Preciso ter experiência com arte ou já ter feito arteterapia?</summary>
             <div class="answer">Não. A formação é para psicólogas, não para artistas. O que se pede não é habilidade técnica — é disponibilidade para experimentar. Quem nunca pegou em um pincel vai estar tão bem colocada quanto quem já frequentou ateliê.</div>
           </details>
-
           <details>
             <summary>Como é feita a seleção das participantes?</summary>
             <div class="answer">Antes de confirmar a inscrição, fazemos uma conversa breve — por WhatsApp ou chamada. Não é uma entrevista formal; é só garantir que a formação faz sentido para o momento de quem está chegando. A turma é pequena por escolha, e isso importa.</div>
           </details>
-
         </div>
       </div>
     </section>
@@ -973,43 +1012,6 @@
 
   </main>
 
-  <script>
-  (function () {
-    if (!('IntersectionObserver' in window)) return;
-
-    var sel = [
-      '.twocol', '.temas h2', '.tema', '.modulo',
-      '.schedule', '.invest', '.body-grid',
-      '.faq h2', 'details', '.cta h2', '.cta .sub', '.cta .btn'
-    ].join(',');
-
-    var els = document.querySelectorAll(sel);
-    els.forEach(function (el) { el.classList.add('reveal'); });
-
-    // Temas em cascata
-    document.querySelectorAll('.tema').forEach(function (el, i) {
-      el.style.setProperty('--i', i);
-    });
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.1 });
-
-    els.forEach(function (el) { io.observe(el); });
-
-    // Módulos — acende o que está no centro do viewport
-    var modIo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        e.target.classList.toggle('active', e.isIntersecting);
-      });
-    }, { threshold: 0, rootMargin: '-28% 0px -28% 0px' });
-
-    document.querySelectorAll('.modulo').forEach(function (el) { modIo.observe(el); });
-  }());
-  </script>
-
   <footer>
     <div class="row">
       <span>© 2026 Elaine Narcizo</span>
@@ -1017,6 +1019,53 @@
     </div>
   </footer>
 
+  <script>
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
 
+    /* --- Scroll reveal --- */
+    var revealSel = [
+      '.twocol', '.temas h2', '.tema', '.modulo',
+      '.schedule', '.invest', '.body-grid',
+      '.faq h2', 'details', '.cta h2', '.cta .sub', '.cta .btn'
+    ].join(',');
 
-</body></html>
+    var revealEls = document.querySelectorAll(revealSel);
+    revealEls.forEach(function (el) { el.classList.add('reveal'); });
+
+    document.querySelectorAll('.tema').forEach(function (el, i) {
+      el.style.setProperty('--i', i);
+    });
+
+    var revealIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealIo.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { revealIo.observe(el); });
+
+    /* --- Módulos: intersection highlight (desktop) --- */
+    var modIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (window.innerWidth > 720) {
+          e.target.classList.toggle('active', e.isIntersecting);
+        }
+      });
+    }, { threshold: 0, rootMargin: '-28% 0px -28% 0px' });
+    document.querySelectorAll('.modulo').forEach(function (el) { modIo.observe(el); });
+
+    /* --- Tabs (mobile) --- */
+    document.querySelectorAll('.mod-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var idx = tab.dataset.panel;
+        document.querySelectorAll('.mod-tab').forEach(function (t) { t.classList.remove('active'); });
+        document.querySelectorAll('.modulo').forEach(function (m) { m.classList.remove('active'); });
+        tab.classList.add('active');
+        document.querySelector('.modulo[data-panel="' + idx + '"]').classList.add('active');
+      });
+    });
+  }());
+  </script>
+
+</body>
+</html>
