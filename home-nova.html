@@ -1,404 +1,433 @@
 <!doctype html>
-<html lang="pt-BR" data-season="verde">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Elaine Narcizo — um espaço sendo construído</title>
-<meta name="description" content="O espaço de Elaine Narcizo: oficinas, formações e encontros que cabem na vida real. Um lugar sendo construído — e que um dia vira escola." />
+<title>Elaine Narcizo</title>
+<meta name="description" content="Educadora, arteterapeuta e pesquisadora. Formações, oficinas e pensamento sobre mulheres, corpo e presença." />
 
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
 
-<meta property="og:title" content="Elaine Narcizo — um espaço sendo construído" />
-<meta property="og:description" content="Oficinas, formações e encontros que cabem na vida real. Um lugar sendo construído — e que um dia vira escola." />
+<meta property="og:title" content="Elaine Narcizo" />
+<meta property="og:description" content="Quem controla as perguntas controla os limites do possível." />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="pt_BR" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=DM+Sans:opsz,wght@9..40,300..700&family=Caveat:wght@500..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=DM+Sans:opsz,wght@9..40,300..700&display=swap" rel="stylesheet">
 
 <style>
-/* =========================================================
-   Elaine Narcizo — Página inicial
-   Editorial discipline + brega-brasil soul.
-   Tokens mirrored from the PONTE design system (standalone).
-   ========================================================= */
+/* === TOKENS === */
 :root{
-  /* paper */
   --cream-50:#FBF5EE; --cream-100:#F5EBDE; --cream-200:#EFDFCB; --cream-300:#E6CFB1;
-  /* verde */
-  --verde-100:#E9EBC8; --verde-300:#C9D26C; --verde-500:#A8B73F; --verde-700:#7B872B; --verde-900:#444B18;
-  /* laranja */
-  --laranja-100:#FBE0CC; --laranja-300:#F1A874; --laranja-500:#E87A32; --laranja-700:#B45414; --laranja-900:#5E2A07;
-  /* rosa */
-  --rosa-100:#FBE3F6; --rosa-300:#F4B7EB; --rosa-500:#EC8FE0; --rosa-700:#B95AB0; --rosa-900:#61264F;
-  /* amarelo */
-  --amarelo-100:#FCF3B7; --amarelo-300:#F8E26B; --amarelo-500:#F5D731; --amarelo-700:#C2A40C; --amarelo-900:#5C4D03;
-  /* lilas */
-  --lilas-100:#E5E0FB; --lilas-300:#C1B6F5; --lilas-500:#A89AF0; --lilas-700:#6B5DC9; --lilas-900:#2F2670;
-  /* ink */
-  --ink-900:#1E1B16; --ink-700:#3C3730; --ink-500:#6C645A; --ink-300:#A89F92; --ink-100:#D8D1C5;
+  --ink-900:#1E1B16; --ink-700:#3C3730; --ink-500:#6C645A; --ink-300:#A89F92;
+  --verde-500:#A8B73F; --verde-900:#444B18;
+  --laranja-500:#E87A32;
+  --amarelo-300:#F8E26B; --amarelo-700:#C2A40C;
+  --brega-roxo:#5B2D8E;
+  --brega-amarelo:#F2C200;
 
-  --bg:var(--cream-100); --bg-elevated:var(--cream-50); --bg-sunk:var(--cream-200);
+  --bg:var(--cream-100); --bg-elevated:var(--cream-50);
   --fg:var(--ink-900); --fg-2:var(--ink-700); --fg-3:var(--ink-500); --fg-mute:var(--ink-300);
-  --line:rgba(30,27,22,0.12); --line-strong:rgba(30,27,22,0.22);
+  --line:rgba(30,27,22,0.10); --line-med:rgba(30,27,22,0.18); --line-strong:rgba(30,27,22,0.28);
 
   --font-display:"Newsreader","Lora",Georgia,serif;
-  --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --font-hand:"Caveat","Bradley Hand",cursive;
+  --font-body:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
 
-  --step--1:clamp(0.80rem, 0.78rem + 0.12vw, 0.88rem);
-  --step-0:clamp(1.00rem, 0.96rem + 0.20vw, 1.13rem);
-  --step-1:clamp(1.20rem, 1.12rem + 0.40vw, 1.42rem);
-  --step-2:clamp(1.50rem, 1.35rem + 0.70vw, 1.95rem);
-  --step-3:clamp(2.00rem, 1.65rem + 1.50vw, 3.00rem);
-  --step-4:clamp(2.80rem, 2.10rem + 3.10vw, 4.75rem);
-  --step-5:clamp(3.40rem, 2.30rem + 5.40vw, 7.75rem);
+  --step--1:clamp(0.80rem,0.78rem + 0.12vw,0.88rem);
+  --step-0:clamp(1.00rem,0.96rem + 0.20vw,1.13rem);
+  --step-1:clamp(1.20rem,1.12rem + 0.40vw,1.42rem);
+  --step-2:clamp(1.50rem,1.35rem + 0.70vw,1.95rem);
+  --step-3:clamp(2.00rem,1.65rem + 1.50vw,3.00rem);
 
   --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px;
-  --space-7:48px; --space-8:72px; --space-9:112px; --space-10:160px;
+  --space-7:48px; --space-8:72px; --space-9:112px;
 
-  --radius-2:10px; --radius-3:18px; --radius-4:28px; --radius-pill:999px;
+  --radius-pill:999px;
   --ease-out:cubic-bezier(0.16,1,0.3,1);
   --dur-1:180ms; --dur-2:320ms; --dur-3:560ms; --dur-4:900ms;
   --shadow-2:0 2px 0 rgba(30,27,22,0.04),0 12px 30px -16px rgba(30,27,22,0.18);
   --shadow-3:0 4px 0 rgba(30,27,22,0.04),0 30px 60px -30px rgba(30,27,22,0.28);
 
-  /* season accent (the cromatic journey) — swapped by [data-season] */
-  --accent:var(--verde-500); --accent-deep:var(--verde-900); --accent-soft:var(--verde-100);
-  --accent-pair:var(--cream-300);
   --container:1180px;
   --gutter:clamp(20px,5vw,72px);
 }
-[data-season="verde"]   {--accent:var(--verde-500);   --accent-deep:var(--verde-900);   --accent-soft:var(--verde-100);   --accent-pair:#EDE7D6;}
-[data-season="laranja"] {--accent:var(--laranja-500); --accent-deep:var(--laranja-900); --accent-soft:var(--laranja-100); --accent-pair:var(--rosa-300);}
-[data-season="amarelo"] {--accent:var(--amarelo-500); --accent-deep:var(--lilas-900);   --accent-soft:var(--amarelo-100); --accent-pair:var(--lilas-300);}
 
 *{box-sizing:border-box;}
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth;}
 body{
   margin:0; font-family:var(--font-body); font-size:var(--step-0);
   line-height:1.6; color:var(--fg); background:var(--bg);
-  font-feature-settings:"ss01","ss02"; -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden;
 }
-::selection{background:var(--accent); color:var(--ink-900);}
-
-h1,h2,h3,h4{font-family:var(--font-display); font-weight:400; line-height:1.04; letter-spacing:-0.018em; margin:0; text-wrap:balance;}
-em{font-style:italic;}
-h1 em,h2 em{font-variation-settings:"opsz" 18; color:var(--accent-deep);}
+::selection{background:var(--brega-amarelo); color:var(--ink-900);}
+h1,h2,h3,h4{font-family:var(--font-display); font-weight:300; line-height:1.04; letter-spacing:-0.022em; margin:0; text-wrap:balance;}
 p{margin:0; text-wrap:pretty;}
 a{color:inherit; text-decoration:none;}
 img{display:block; max-width:100%;}
 
 .wrap{max-width:var(--container); margin:0 auto; padding:0 var(--gutter);}
 .eyebrow{
-  font-size:var(--step--1); font-weight:600; letter-spacing:0.20em;
-  text-transform:uppercase; color:var(--fg-3);
-  display:inline-flex; align-items:center; gap:14px;
+  font-size:var(--step--1); font-weight:600; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--fg-3); display:inline-flex; align-items:center; gap:14px;
 }
-.eyebrow::before{content:""; width:34px; height:2px; background:var(--accent); display:inline-block;}
-.hand{font-family:var(--font-hand); font-weight:600; line-height:1;}
+.eyebrow::before{content:""; width:28px; height:1px; background:currentColor; display:inline-block;}
 
-/* provisional copy marker ------------------------------------ */
-.wip{
-  background-image:linear-gradient(var(--accent),var(--accent));
-  background-size:100% 2px; background-repeat:no-repeat; background-position:0 1.18em;
-  cursor:help;
-}
-.legend{
-  font-size:var(--step--1); color:var(--fg-3); display:inline-flex; align-items:center; gap:9px;
-}
-.legend i{width:22px; height:2px; background:var(--accent); display:inline-block; transform:translateY(3px);}
-
-/* =========================================================
-   NAV
-   ========================================================= */
+/* === NAV === */
 .nav{
   position:sticky; top:0; z-index:60;
-  background:color-mix(in srgb, var(--cream-50) 86%, transparent);
-  backdrop-filter:saturate(150%) blur(11px); -webkit-backdrop-filter:saturate(150%) blur(11px);
+  background:color-mix(in srgb,var(--cream-50) 88%,transparent);
+  backdrop-filter:saturate(160%) blur(12px); -webkit-backdrop-filter:saturate(160%) blur(12px);
   border-bottom:1px solid var(--line);
 }
 .nav .row{
   max-width:var(--container); margin:0 auto; padding:15px var(--gutter);
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
-.brand{display:inline-flex; align-items:center; gap:11px; font-size:var(--step-0); font-weight:500; letter-spacing:-0.01em; cursor:pointer; user-select:none;}
-.brand .seed{
-  width:15px; height:15px; border-radius:50%; flex-shrink:0; position:relative;
-  background:var(--accent); transition:background var(--dur-2) var(--ease-out);
-}
-.brand .seed::after{content:""; position:absolute; inset:0; border-radius:50%; box-shadow:0 0 0 0 var(--accent); animation:seedPulse 3.6s var(--ease-out) infinite;}
-@keyframes seedPulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%, transparent);}70%,100%{box-shadow:0 0 0 9px transparent;}}
-.brand small{font-family:var(--font-body); font-weight:400; color:var(--fg-3); font-size:var(--step--1); letter-spacing:0.01em; margin-left:2px;}
-.nav .links{display:flex; align-items:center; gap:30px; font-size:var(--step--1); letter-spacing:0.02em;}
-.nav .links a{color:var(--fg-2); position:relative; padding:4px 0;}
-.nav .links a::after{content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background:var(--accent); transition:width var(--dur-2) var(--ease-out);}
+.brand{font-family:var(--font-display); font-size:var(--step-0); font-weight:400; letter-spacing:-0.01em; color:var(--fg);}
+.nav .links{display:flex; align-items:center; gap:32px; font-size:var(--step--1); letter-spacing:0.04em;}
+.nav .links a{color:var(--fg-3); position:relative; padding:4px 0; transition:color var(--dur-1);}
+.nav .links a::after{content:""; position:absolute; left:0; bottom:-1px; height:1px; width:0; background:var(--fg); transition:width var(--dur-2) var(--ease-out);}
 .nav .links a:hover{color:var(--fg);}
 .nav .links a:hover::after{width:100%;}
-.nav .menu-btn{display:none;}
-@media(max-width:820px){
-  .nav .links{display:none;}
-  .nav .menu-btn{display:inline-flex; align-items:center; gap:8px; font-size:var(--step--1); letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-2); background:none; border:0; font-family:var(--font-body); cursor:pointer;}
+.nav .menu-btn{
+  display:none; background:none; border:1px solid var(--line-med); border-radius:var(--radius-pill);
+  padding:7px 16px; font-family:var(--font-body); font-size:var(--step--1);
+  letter-spacing:0.10em; text-transform:uppercase; color:var(--fg-2); cursor:pointer;
 }
+@media(max-width:820px){.nav .links{display:none;} .nav .menu-btn{display:inline-flex;}}
 
-/* =========================================================
-   HERO
-   ========================================================= */
-.hero{position:relative; padding:clamp(64px,11vh,128px) 0 clamp(56px,9vh,104px); overflow:hidden;}
-.hero .grid{display:grid; grid-template-columns:1.55fr 1fr; gap:clamp(28px,5vw,72px); align-items:end;}
-.hero .kicker{margin-bottom:var(--space-6);}
-.hero h1{font-size:clamp(2.6rem, 1.7rem + 3.4vw, 4.7rem); font-weight:300; letter-spacing:-0.03em; line-height:1.02; max-width:15ch;}
-.hero h1 .hand{font-weight:600; color:var(--accent-deep); font-size:1.02em; letter-spacing:0; display:inline-block; transform:rotate(-2deg); margin:0 0.06em;}
-.hero .lede{font-family:var(--font-display); font-weight:300; font-size:var(--step-1); line-height:1.5; color:var(--fg-2); max-width:42ch; margin-top:var(--space-6);}
-.hero .meta-col{padding-bottom:8px;}
-.hero .stamp{
-  width:100%; aspect-ratio:1; border-radius:50%; overflow:hidden; position:relative;
-  box-shadow:var(--shadow-3); transform:rotate(-6deg);
-  border:6px solid var(--cream-50);
+/* === HERO === */
+.hero{display:grid; grid-template-columns:1fr 42%; min-height:92vh; border-bottom:1px solid var(--line-med);}
+.hero .text-col{
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:clamp(56px,10vh,120px) var(--gutter) clamp(56px,8vh,100px);
+  padding-left:max(var(--gutter),calc((100vw - var(--container)) / 2 + var(--gutter)));
 }
-.hero .stamp img{width:100%; height:100%; object-fit:cover; animation:stampTurn 60s linear infinite;}
-@keyframes stampTurn{to{transform:rotate(360deg);}}
-.hero .stamp .ring{position:absolute; inset:0; border-radius:50%; mix-blend-mode:multiply; pointer-events:none;}
-.hero .stamp-note{margin-top:var(--space-5); font-size:var(--step--1); color:var(--fg-3); line-height:1.5; max-width:30ch;}
-.hero .stamp-note b{color:var(--fg); font-weight:600;}
+.hero .tag{
+  font-size:var(--step--1); letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--fg-3); margin-bottom:var(--space-7);
+  display:flex; align-items:center; gap:16px;
+}
+.hero .tag::before{content:""; width:36px; height:1px; background:var(--fg-mute);}
+.hero h1{
+  font-family:var(--font-display); font-weight:300; letter-spacing:-0.03em; line-height:1.01;
+  font-size:clamp(2.5rem,1.4rem + 4.2vw,5.4rem); color:var(--fg); max-width:15ch;
+}
+.hero .byline{
+  margin-top:var(--space-6); font-size:var(--step--1); color:var(--fg-3);
+  letter-spacing:0.06em; display:flex; align-items:center; gap:10px;
+}
+.hero .byline::before{content:"—"; opacity:0.45;}
+.hero .scroll-hint{
+  margin-top:var(--space-8); font-size:0.73rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--fg-mute); display:flex; align-items:center; gap:12px;
+}
+.hero .scroll-hint::after{
+  content:""; width:1px; height:36px; background:var(--fg-mute);
+  transform-origin:top; animation:lineGrow 2.2s var(--ease-out) infinite;
+}
+@keyframes lineGrow{0%{transform:scaleY(0); opacity:1;}80%,100%{transform:scaleY(1); opacity:0;}}
 
-/* popular stars strip */
-.stars{display:flex; gap:18px; align-items:center; margin-top:var(--space-7); flex-wrap:wrap;}
-.stars .star{width:13px; height:13px; flex-shrink:0; background:var(--accent);
-  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+.hero .img-col{position:relative; overflow:hidden; background:var(--ink-900);}
+.hero .img-col img{width:100%; height:100%; object-fit:cover; object-position:center top; display:block; filter:grayscale(0.1) contrast(1.06);}
+.hero .img-col::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(90deg,var(--cream-100) 0%,transparent 16%),
+             linear-gradient(180deg,transparent 62%,rgba(30,27,22,0.14) 100%);
 }
-.stars .star:nth-child(2){background:var(--laranja-500);}
-.stars .star:nth-child(3){background:var(--amarelo-500);}
-.stars .star:nth-child(4){background:var(--rosa-500);}
-.stars .star:nth-child(5){background:var(--lilas-500);}
-.stars span{font-size:var(--step--1); letter-spacing:0.14em; text-transform:uppercase; color:var(--fg-3);}
-
-@media(max-width:820px){
-  .hero .grid{grid-template-columns:1fr;}
-  .hero .meta-col{order:-1; display:flex; gap:20px; align-items:center;}
-  .hero .stamp{width:128px; flex-shrink:0;}
-  .hero h1{font-size:clamp(2.9rem,8vw,4.2rem);}
-}
-
-/* =========================================================
-   calçadão wave divider (brega-brasil, contained)
-   ========================================================= */
-.wave{height:34px; width:100%; color:var(--accent);
-  background:
-    radial-gradient(circle at 16px -6px, transparent 16px, currentColor 16px 18px, transparent 18px) 0 0/40px 34px repeat-x;
-  opacity:0.5;
-}
-.section{padding:clamp(64px,10vh,128px) 0; position:relative;}
-.section + .section{border-top:1px solid var(--line);}
-
-/* =========================================================
-   MANIFESTO
-   ========================================================= */
-.manifesto .grid{display:grid; grid-template-columns:230px 1fr; gap:clamp(28px,6vw,88px); align-items:start;}
-.manifesto .head{position:sticky; top:96px;}
-.manifesto h2{font-size:var(--step-3); font-weight:300; letter-spacing:-0.02em; line-height:1.06; max-width:20ch;}
-.manifesto .body{display:flex; flex-direction:column; gap:var(--space-5); max-width:60ch;}
-.manifesto .body p{font-size:var(--step-1); font-family:var(--font-display); font-weight:300; line-height:1.5; color:var(--fg-2);}
-.manifesto .body p strong{font-weight:500; color:var(--fg); font-family:var(--font-display);}
-.pares{display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--space-4);}
-.pares .chip{font-size:var(--step--1); letter-spacing:0.04em; padding:7px 16px; border:1px solid var(--line-strong); border-radius:var(--radius-pill); color:var(--fg-2);}
-@media(max-width:760px){.manifesto .grid{grid-template-columns:1fr; gap:28px;} .manifesto .head{position:static;}}
-
-/* =========================================================
-   OS CAMINHOS (the hub)
-   ========================================================= */
-.caminhos .topline{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:var(--space-8);}
-.caminhos h2{font-size:var(--step-3); font-weight:300; letter-spacing:-0.02em; max-width:16ch;}
-.caminhos h2 em{color:var(--accent-deep);}
-.door{
-  display:grid; grid-template-columns:64px 1.4fr 1fr auto; gap:clamp(16px,3vw,40px);
-  align-items:center; padding:clamp(22px,3vw,34px) 0; border-top:1px solid var(--line);
-  position:relative; cursor:pointer; transition:padding-left var(--dur-3) var(--ease-out);
-  text-wrap:pretty;
-}
-.door:last-of-type{border-bottom:1px solid var(--line);}
-.door::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:0;
-  background:var(--door-soft,var(--verde-100)); z-index:-1;
-  transition:width var(--dur-3) var(--ease-out);
-}
-.door:hover{padding-left:26px;}
-.door:hover::before{width:calc(100% + 2*var(--gutter)); left:calc(-1*var(--gutter));}
-.door .n{font-size:var(--step--1); color:var(--fg-3); font-variant-numeric:tabular-nums; display:flex; align-items:center; gap:11px;}
-.door .n .dot{width:11px; height:11px; border-radius:50%; background:var(--door-color,var(--verde-500)); flex-shrink:0;}
-.door .name{font-family:var(--font-display); font-size:var(--step-2); font-weight:400; letter-spacing:-0.015em; line-height:1.12; color:var(--fg);}
-.door .name .sub{display:block; font-family:var(--font-body); font-size:var(--step--1); font-weight:400; letter-spacing:0.02em; color:var(--fg-3); margin-top:5px; text-transform:none;}
-.door .blurb{font-size:var(--step--1); line-height:1.55; color:var(--fg-2); max-width:34ch;}
-.door .go{display:flex; align-items:center; gap:13px; justify-self:end;}
-.door .tag{font-size:var(--step--1); letter-spacing:0.10em; text-transform:uppercase; padding:5px 13px; border-radius:var(--radius-pill); white-space:nowrap;}
-.tag.open{background:var(--door-color,var(--verde-500)); color:#fff;}
-.tag.soon{background:transparent; color:var(--fg-3); border:1px solid var(--line-strong);}
-.door .arrow{font-size:1.3em; color:var(--fg-3); transition:transform var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);}
-.door:hover .arrow{transform:translateX(7px); color:var(--door-color,var(--verde-700));}
-.door.locked{cursor:default;}
-.door.locked:hover{padding-left:0;}
-.door.locked:hover::before{width:0;}
-.door.locked .name,.door.locked .blurb{opacity:0.62;}
 
 @media(max-width:860px){
-  .door{grid-template-columns:42px 1fr auto; gap:16px 18px; align-items:start;}
-  .door .blurb{grid-column:2/4; margin-top:6px;}
-  .door .go{grid-column:1/4; justify-self:start; margin-top:12px;}
-  .door:hover{padding-left:12px;}
+  .hero{grid-template-columns:1fr; min-height:auto;}
+  .hero .img-col{height:52vw; max-height:400px; order:-1;}
+  .hero .img-col::after{background:linear-gradient(180deg,transparent 58%,var(--cream-100) 100%);}
+  .hero .text-col{padding:var(--space-7) var(--gutter) var(--space-8); max-width:100%;}
+  .hero h1{font-size:clamp(2.4rem,7.5vw,3.8rem);}
 }
 
-/* =========================================================
-   ESCRITOS — lâminas horizontais (wheel / drag)
-   ========================================================= */
-.escritos{overflow:hidden;}
-.escritos-head{max-width:var(--container); margin:0 auto var(--space-7); padding:0 var(--gutter);}
-.escritos-head .eyebrow{margin-bottom:var(--space-5);}
-.escritos-head h2{font-size:var(--step-3); font-weight:300; letter-spacing:-0.02em; max-width:18ch; margin-bottom:var(--space-5);}
-.escritos-head .lede{font-family:var(--font-display); font-weight:300; font-size:var(--step-1); line-height:1.5; color:var(--fg-2); max-width:48ch;}
-.escritos-head .hint{margin-top:var(--space-6); font-size:var(--step--1); letter-spacing:0.14em; text-transform:uppercase; color:var(--fg-3); display:inline-flex; align-items:center; gap:10px;}
-.escritos-head .hint b{font-weight:600; color:var(--accent-deep);}
-.escritos-head .hint span{display:inline-block; animation:nudge 1.8s var(--ease-out) infinite;}
-@keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
+/* === SECTION BASE === */
+.section{padding:clamp(72px,11vh,140px) 0;}
+.section + .section{border-top:1px solid var(--line-med);}
 
-.laminas{position:relative;}
+/* === PENSAMENTO === */
+.pensamento .sec-header{
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:24px; margin-bottom:var(--space-8); flex-wrap:wrap;
+}
+.pensamento .sec-header h2{font-size:var(--step-3); max-width:22ch; margin-top:var(--space-4);}
+.pensamento .sec-header .nota{
+  font-size:var(--step--1); color:var(--fg-3); max-width:30ch;
+  line-height:1.6; text-align:right; align-self:flex-end;
+}
+
+.idea{
+  padding:clamp(28px,4vw,48px) 0; border-top:1px solid var(--line-med);
+  display:grid; grid-template-columns:52px 1fr;
+  gap:0 clamp(20px,3.5vw,56px); align-items:start;
+}
+.idea:last-child{border-bottom:1px solid var(--line-med);}
+.idea .num{
+  font-family:var(--font-display); font-size:var(--step--1);
+  color:var(--fg-mute); letter-spacing:0.08em; padding-top:0.55em;
+  font-variant-numeric:tabular-nums;
+}
+.idea blockquote{
+  margin:0; padding:0; border:0;
+  font-family:var(--font-display); font-weight:300;
+  font-size:clamp(1.65rem,1.0rem + 2.6vw,3.6rem);
+  line-height:1.06; letter-spacing:-0.02em; color:var(--fg); max-width:22ch;
+}
+.idea .fonte{
+  margin-top:var(--space-5); font-size:var(--step--1); color:var(--fg-3);
+  display:inline-flex; align-items:center; gap:10px;
+  border-bottom:1px solid transparent;
+  transition:color var(--dur-1),border-color var(--dur-1);
+}
+.idea .fonte::before{content:"→"; opacity:0.5; font-size:0.9em;}
+.idea .fonte:hover{color:var(--fg); border-bottom-color:var(--line-strong);}
+
+@media(max-width:600px){
+  .idea{grid-template-columns:1fr;}
+  .idea .num{display:none;}
+  .idea blockquote{font-size:clamp(1.6rem,6.5vw,2.6rem);}
+}
+
+/* === BREGA STRIP === */
+.brega-strip{
+  height:clamp(100px,14vw,190px); width:100%;
+  background:url('assets/bg-pattern.webp') center/cover;
+  position:relative; overflow:hidden;
+}
+.brega-strip::after{content:""; position:absolute; inset:0; background:rgba(20,18,14,0.10);}
+
+/* === FORMAÇÕES === */
+.formacoes .sec-header{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:24px; margin-bottom:var(--space-8); flex-wrap:wrap;
+}
+.formacoes .sec-header h2{font-size:var(--step-3); max-width:18ch; margin-top:var(--space-4);}
+
+.formacao{
+  display:grid; grid-template-columns:56px 1.3fr 1fr auto;
+  gap:clamp(14px,2vw,44px); align-items:center;
+  padding:clamp(22px,3vw,36px) 0; border-top:1px solid var(--line-med);
+  position:relative; cursor:pointer;
+  transition:padding-left var(--dur-3) var(--ease-out);
+  text-decoration:none; color:inherit;
+}
+.formacao:last-of-type{border-bottom:1px solid var(--line-med);}
+.formacao::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:0;
+  background:var(--cream-200); z-index:-1;
+  transition:width var(--dur-3) var(--ease-out);
+}
+.formacao:hover{padding-left:22px;}
+.formacao:hover::before{width:calc(100% + 2*var(--gutter)); left:calc(-1*var(--gutter));}
+.formacao .n{font-size:var(--step--1); color:var(--fg-mute); font-variant-numeric:tabular-nums; letter-spacing:0.06em;}
+.formacao .nome{font-family:var(--font-display); font-size:var(--step-2); font-weight:300; letter-spacing:-0.015em; line-height:1.1; color:var(--fg);}
+.formacao .nome .sub{display:block; font-family:var(--font-body); font-size:var(--step--1); font-weight:400; letter-spacing:0.02em; color:var(--fg-3); margin-top:5px;}
+.formacao .desc{font-size:var(--step--1); line-height:1.65; color:var(--fg-2); max-width:36ch;}
+.formacao .cta-col{justify-self:end; display:flex; align-items:center; gap:14px; white-space:nowrap;}
+.tag-status{font-size:var(--step--1); letter-spacing:0.10em; text-transform:uppercase; padding:6px 14px; border-radius:var(--radius-pill);}
+.tag-status.open{background:var(--ink-900); color:var(--cream-50);}
+.tag-status.soon{border:1px solid var(--line-strong); color:var(--fg-3);}
+.formacao .arrow{font-size:1.2em; color:var(--fg-3); transition:transform var(--dur-2) var(--ease-out),color var(--dur-2) var(--ease-out);}
+.formacao:hover .arrow{transform:translateX(6px); color:var(--fg);}
+
+@media(max-width:860px){
+  .formacao{grid-template-columns:40px 1fr auto; gap:12px 16px; align-items:start;}
+  .formacao .desc{grid-column:2/4; margin-top:6px;}
+  .formacao .cta-col{grid-column:1/4; justify-self:start; margin-top:12px;}
+  .formacao:hover{padding-left:10px;}
+}
+
+/* === ESCRITOS === */
+.esc-head{margin-bottom:var(--space-7);}
+.esc-head h2{font-size:var(--step-3); max-width:18ch; margin-top:var(--space-4);}
+.esc-head .lede{
+  font-family:var(--font-display); font-weight:300; font-size:var(--step-1);
+  line-height:1.5; color:var(--fg-2); max-width:48ch; margin-top:var(--space-5);
+}
+.esc-head .dica{
+  margin-top:var(--space-6); font-size:var(--step--1); letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--fg-3);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.esc-head .dica span{display:inline-block; animation:nudge 1.8s var(--ease-out) infinite;}
+@keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(7px);}}
+
 .laminas-track{
-  display:flex; gap:clamp(14px,1.6vw,22px); overflow-x:auto; overflow-y:hidden;
+  display:flex; gap:clamp(12px,1.4vw,20px); overflow-x:auto; overflow-y:hidden;
   scroll-snap-type:x proximity; scroll-behavior:smooth;
-  padding:6px var(--gutter) var(--space-5); -webkit-overflow-scrolling:touch;
-  cursor:grab; scrollbar-width:none;
+  padding:4px var(--gutter) var(--space-5);
+  -webkit-overflow-scrolling:touch; cursor:grab; scrollbar-width:none;
 }
 .laminas-track::-webkit-scrollbar{display:none;}
 .laminas-track.dragging{cursor:grabbing; scroll-behavior:auto;}
 .lamina{
-  position:relative; flex:0 0 auto; width:clamp(258px,30vw,380px); height:clamp(360px,46vw,520px);
-  border-radius:var(--radius-3); overflow:hidden; scroll-snap-align:start;
-  background:var(--c,var(--verde-500)); box-shadow:var(--shadow-2);
+  position:relative; flex:0 0 auto;
+  width:clamp(240px,28vw,360px); height:clamp(340px,44vw,500px);
+  border-radius:12px; overflow:hidden; scroll-snap-align:start;
+  background:var(--c,var(--ink-700)); box-shadow:var(--shadow-2);
   display:block; isolation:isolate; transition:transform var(--dur-2) var(--ease-out);
 }
-.lamina:hover{transform:translateY(-6px);}
+.lamina:hover{transform:translateY(-5px);}
 .lamina .img{position:absolute; inset:0;}
-.lamina .img img{width:100%; height:100%; object-fit:cover; filter:grayscale(0.35) contrast(1.05); transition:transform var(--dur-4) var(--ease-out); background:var(--c);}
-.lamina:hover .img img{transform:scale(1.06);}
-.lamina .tint{position:absolute; inset:0; background:var(--c); mix-blend-mode:color; opacity:0.42;}
-.lamina .shade{position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,18,14,0.22) 0%, rgba(20,18,14,0) 30%, rgba(20,18,14,0) 44%, rgba(20,18,14,0.88) 100%);}
-.lamina .tagtop{position:absolute; top:15px; left:15px; z-index:2; display:inline-flex; align-items:center; gap:9px; font-size:0.70rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream-50); background:rgba(20,18,14,0.34); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); padding:6px 12px; border-radius:var(--radius-pill);}
-.lamina .tagtop .dot{width:9px; height:9px; border-radius:50%; background:var(--c); flex-shrink:0; box-shadow:0 0 0 2px rgba(255,255,255,0.45);}
-.lamina .meta{position:absolute; left:18px; right:18px; bottom:17px; z-index:2;}
-.lamina .meta h3{font-family:var(--font-display); font-weight:400; font-size:var(--step-1); line-height:1.16; color:var(--cream-50); letter-spacing:-0.01em; text-wrap:pretty;}
-.lamina .meta .read{display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-family:var(--font-body); font-size:0.78rem; letter-spacing:0.05em; color:var(--cream-100); opacity:0; transform:translateY(6px); transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out);}
-.lamina:hover .meta .read{opacity:1; transform:none;}
-.lamina-all{display:flex; align-items:center; justify-content:center; text-align:center; background:var(--ink-900); color:var(--cream-50);}
-.lamina-all .allinner{font-family:var(--font-display); font-size:var(--step-2); font-weight:300; line-height:1.2; padding:24px;}
-.lamina-all .allinner b{font-weight:400;}
-.lamina-all .allinner span{display:block; margin-top:14px; font-family:var(--font-body); font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--amarelo-300);}
-.laminas-progress{max-width:var(--container); margin:var(--space-5) auto 0; padding:0 var(--gutter);}
-.laminas-progress .rail{display:block; height:2px; background:var(--line); border-radius:2px; overflow:hidden;}
-.laminas-progress .rail i{display:block; height:100%; width:8%; background:var(--accent); border-radius:2px;}
-
-/* =========================================================
-   QUEM CONDUZ
-   ========================================================= */
-.bio .grid{display:grid; grid-template-columns:230px 280px 1fr; gap:clamp(28px,5vw,64px); align-items:start;}
-.bio .head{position:sticky; top:96px;}
-.bio .portrait-wrap{position:relative;}
-.bio .portrait{width:100%; aspect-ratio:4/5; object-fit:cover; filter:grayscale(1) contrast(1.04); position:relative; z-index:1; border-radius:var(--radius-2);}
-.bio .portrait-wrap::before{content:""; position:absolute; bottom:-18px; right:-18px; width:88px; height:88px; border-radius:50%; background:url('assets/bg-orange.jpg') center/cover; z-index:0;}
-.bio h3{font-family:var(--font-display); font-size:var(--step-3); font-weight:300; letter-spacing:-0.02em; margin-bottom:var(--space-5);}
-.bio p{font-size:var(--step-0); line-height:1.65; color:var(--fg-2); max-width:48ch; margin-bottom:var(--space-4);}
-.bio .creds{display:flex; flex-wrap:wrap; gap:9px; margin-top:var(--space-6); list-style:none; padding:0;}
-.bio .creds li{font-size:var(--step--1); padding:7px 15px; border:1px solid var(--line); border-radius:var(--radius-pill); color:var(--fg-2);}
-@media(max-width:900px){.bio .grid{grid-template-columns:1fr;} .bio .head{position:static;} .bio .portrait{max-width:300px;}}
-
-/* =========================================================
-   CTA / CONTATO
-   ========================================================= */
-.cta{position:relative; overflow:hidden; background:var(--ink-900); color:var(--cream-100);}
-.cta::before{content:""; position:absolute; inset:0; background:url('assets/bg-purple.jpg') center/cover; opacity:0.26; mix-blend-mode:screen; pointer-events:none;}
-.cta .wrap{position:relative; z-index:1; padding:clamp(72px,13vh,150px) var(--gutter);}
-.cta .eyebrow{color:var(--amarelo-300);}
-.cta .eyebrow::before{background:var(--amarelo-500);}
-.cta h2{font-family:var(--font-display); font-size:var(--step-4); font-weight:300; letter-spacing:-0.03em; line-height:1.02; max-width:18ch; margin:var(--space-6) 0; color:var(--cream-50);}
-.cta h2 em{color:var(--amarelo-300);}
-.cta .sub{font-size:var(--step-1); font-family:var(--font-display); font-weight:300; color:var(--cream-200); max-width:46ch; margin-bottom:var(--space-7); line-height:1.5;}
-.btn{
-  display:inline-flex; align-items:center; gap:15px; padding:18px 34px;
-  background:var(--amarelo-500); color:var(--ink-900); font-family:var(--font-body);
-  font-size:var(--step-0); font-weight:600; border-radius:var(--radius-pill);
-  transition:transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+.lamina .img img{width:100%; height:100%; object-fit:cover; filter:grayscale(0.3) contrast(1.04); transition:transform var(--dur-4) var(--ease-out); background:var(--c);}
+.lamina:hover .img img{transform:scale(1.05);}
+.lamina .tint{position:absolute; inset:0; background:var(--c); mix-blend-mode:color; opacity:0.38;}
+.lamina .shade{position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,18,14,0.18) 0%,transparent 32%,transparent 46%,rgba(20,18,14,0.86) 100%);}
+.lamina .tagtop{
+  position:absolute; top:14px; left:14px; z-index:2;
+  font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--cream-50); background:rgba(20,18,14,0.32); backdrop-filter:blur(4px);
+  padding:5px 11px; border-radius:var(--radius-pill);
 }
-.btn:hover{transform:translateY(-2px); box-shadow:0 14px 34px -12px rgba(0,0,0,0.5);}
-.btn .arrow{transition:transform var(--dur-2) var(--ease-out);}
-.btn:hover .arrow{transform:translateX(6px);}
-.cta .ways{margin-top:var(--space-7); display:flex; flex-wrap:wrap; gap:14px 32px; align-items:center; font-size:var(--step--1); color:var(--cream-300);}
-.cta .ways a{color:var(--cream-50); border-bottom:1px solid color-mix(in srgb,var(--cream-50) 50%,transparent); padding-bottom:2px; transition:border-color var(--dur-1);}
-.cta .ways a:hover{border-color:var(--amarelo-300);}
+.lamina .meta{position:absolute; left:16px; right:16px; bottom:16px; z-index:2;}
+.lamina .meta h3{font-family:var(--font-display); font-weight:400; font-size:var(--step-1); line-height:1.16; color:var(--cream-50); letter-spacing:-0.01em; text-wrap:pretty;}
+.lamina .meta .ler{
+  display:inline-flex; align-items:center; gap:8px; margin-top:10px;
+  font-size:0.76rem; letter-spacing:0.05em; color:var(--cream-100);
+  opacity:0; transform:translateY(5px);
+  transition:opacity var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out);
+}
+.lamina:hover .meta .ler{opacity:1; transform:none;}
+.lamina-all{display:flex; align-items:center; justify-content:center; text-align:center; background:var(--ink-900); color:var(--cream-50);}
+.lamina-all .inner{font-family:var(--font-display); font-size:var(--step-2); font-weight:300; line-height:1.2; padding:28px;}
+.lamina-all .inner span{display:block; margin-top:12px; font-family:var(--font-body); font-size:0.76rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--amarelo-300);}
+.rail-wrap{max-width:var(--container); margin:var(--space-5) auto 0; padding:0 var(--gutter);}
+.rail-wrap .rail{display:block; height:1px; background:var(--line-med); border-radius:1px; overflow:hidden;}
+.rail-wrap .rail i{display:block; height:100%; width:8%; background:var(--ink-900); border-radius:1px;}
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-footer{padding:var(--space-8) 0 var(--space-9); font-size:var(--step--1); color:var(--fg-3);}
-footer .row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px 32px;}
-footer .legend-note{display:flex; align-items:center; gap:9px;}
+/* === BIO === */
+.bio-grid{display:grid; grid-template-columns:180px 260px 1fr; gap:clamp(24px,5vw,72px); align-items:start;}
+.bio-head{position:sticky; top:88px;}
+.portrait-wrap{position:relative;}
+.portrait{
+  width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top;
+  filter:grayscale(0.75) contrast(1.08); border-radius:4px; display:block;
+}
+.portrait-wrap::after{
+  content:""; position:absolute; inset:0; border-radius:4px;
+  background:var(--verde-900); mix-blend-mode:multiply; opacity:0.20; pointer-events:none;
+}
+.collage-accent{
+  position:absolute; bottom:-14px; right:-18px;
+  width:66px; height:66px; border-radius:50%;
+  background:url('assets/bg-collage.webp') center/cover; z-index:-1; opacity:0.88;
+}
+.bio-body h3{font-family:var(--font-display); font-size:var(--step-3); font-weight:300; letter-spacing:-0.02em; margin-bottom:var(--space-5); line-height:1.06;}
+.bio-body p{font-size:var(--step-0); line-height:1.74; color:var(--fg-2); margin-bottom:var(--space-4);}
+.bio-body p:last-child{margin-bottom:0;}
 
-/* =========================================================
-   MÚSICA DA SEMANA — hidden ritual player
-   ========================================================= */
-.musica{position:fixed; left:clamp(16px,3vw,32px); bottom:clamp(16px,3vw,32px); z-index:80;}
+@media(max-width:920px){
+  .bio-grid{grid-template-columns:1fr; gap:var(--space-6);}
+  .bio-head{position:static;}
+  .portrait{max-width:220px; aspect-ratio:3/4;}
+}
+
+/* === CTA / CONTATO === */
+.cta{
+  background:var(--ink-900); color:var(--cream-100);
+  padding:clamp(80px,14vh,160px) 0;
+  position:relative; overflow:hidden;
+}
+.cta::before{
+  content:""; position:absolute; inset:0;
+  background:url('assets/bg-collage.webp') center/cover;
+  opacity:0.07; mix-blend-mode:screen; pointer-events:none;
+}
+.cta .inner{position:relative; z-index:1;}
+.cta .eyebrow{color:var(--brega-amarelo); margin-bottom:var(--space-6);}
+.cta .eyebrow::before{background:var(--brega-amarelo);}
+.cta blockquote{
+  margin:0; padding:0; border:0;
+  font-family:var(--font-display); font-weight:300; letter-spacing:-0.025em; line-height:1.04;
+  font-size:clamp(1.9rem,1.2rem + 3vw,4.2rem);
+  color:var(--cream-50); max-width:20ch; margin-bottom:var(--space-5);
+}
+.cta blockquote em{color:var(--brega-amarelo); font-style:italic;}
+.cta .att{font-size:var(--step--1); color:var(--cream-300); margin-bottom:var(--space-8); letter-spacing:0.04em;}
+.btn{
+  display:inline-flex; align-items:center; gap:14px; padding:18px 34px;
+  background:var(--brega-amarelo); color:var(--ink-900);
+  font-family:var(--font-body); font-size:var(--step-0); font-weight:600;
+  border-radius:var(--radius-pill);
+  transition:transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out);
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 16px 36px -12px rgba(0,0,0,0.55);}
+.btn .arr{transition:transform var(--dur-2) var(--ease-out);}
+.btn:hover .arr{transform:translateX(5px);}
+.cta .ways{
+  margin-top:var(--space-7); display:flex; flex-wrap:wrap;
+  gap:12px 28px; align-items:center; font-size:var(--step--1); color:var(--cream-300);
+}
+.cta .ways a{
+  color:var(--cream-100);
+  border-bottom:1px solid color-mix(in srgb,var(--cream-100) 38%,transparent);
+  padding-bottom:2px; transition:color var(--dur-1),border-color var(--dur-1);
+}
+.cta .ways a:hover{color:var(--brega-amarelo); border-color:var(--brega-amarelo);}
+
+/* === FOOTER === */
+footer{padding:var(--space-7) 0 var(--space-8); font-size:var(--step--1); color:var(--fg-3); border-top:1px solid var(--line);}
+footer .row{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px 24px;}
+
+/* === MÚSICA DA SEMANA === */
+.musica{position:fixed; left:clamp(14px,2.5vw,28px); bottom:clamp(14px,2.5vw,28px); z-index:80;}
 .musica .toggle{
-  display:inline-flex; align-items:center; gap:11px; padding:11px 17px 11px 13px;
+  display:inline-flex; align-items:center; gap:10px; padding:10px 15px 10px 12px;
   background:var(--ink-900); color:var(--cream-100); border:0; border-radius:var(--radius-pill);
-  font-family:var(--font-body); font-size:var(--step--1); letter-spacing:0.04em; cursor:pointer;
+  font-family:var(--font-body); font-size:var(--step--1); cursor:pointer;
   box-shadow:var(--shadow-2); transition:transform var(--dur-2) var(--ease-out);
 }
 .musica .toggle:hover{transform:translateY(-2px);}
-.musica .toggle .disc{
-  width:22px; height:22px; border-radius:50%; flex-shrink:0;
-  background:radial-gradient(circle at center, var(--cream-100) 0 14%, var(--laranja-500) 15% 30%, var(--ink-700) 31% 100%);
+.disc{
+  width:20px; height:20px; border-radius:50%; flex-shrink:0;
+  background:radial-gradient(circle at center,var(--cream-50) 0 13%,var(--laranja-500) 14% 29%,var(--ink-700) 30% 100%);
   animation:spin 4.5s linear infinite; animation-play-state:paused;
 }
-.musica.playing .toggle .disc, .musica .panel.show .disc{animation-play-state:running;}
+.musica.playing .disc{animation-play-state:running;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.musica .toggle .lbl b{font-weight:600;}
-.musica .toggle .lbl{display:flex; flex-direction:column; line-height:1.15; text-align:left;}
-.musica .toggle .lbl span{color:var(--cream-300); font-size:0.84em;}
-
+.musica .lbl{display:flex; flex-direction:column; line-height:1.2; text-align:left;}
+.musica .lbl b{font-weight:600;}
+.musica .lbl span{color:var(--cream-300); font-size:0.82em;}
 .musica .panel{
-  position:absolute; left:0; bottom:calc(100% + 12px); width:min(340px,82vw);
-  background:var(--cream-50); border:1px solid var(--line); border-radius:var(--radius-3);
+  position:absolute; left:0; bottom:calc(100% + 10px); width:min(316px,80vw);
+  background:var(--cream-50); border:1px solid var(--line-med); border-radius:16px;
   box-shadow:var(--shadow-3); padding:var(--space-6); overflow:hidden;
-  opacity:0; transform:translateY(12px) scale(0.97); pointer-events:none;
-  transition:opacity var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out);
+  opacity:0; transform:translateY(10px) scale(0.97); pointer-events:none;
+  transition:opacity var(--dur-2) var(--ease-out),transform var(--dur-3) var(--ease-out);
 }
 .musica .panel.show{opacity:1; transform:none; pointer-events:auto;}
-.musica .panel .tex{position:absolute; top:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:url('assets/bg-green.jpg') center/cover; opacity:0.5; mix-blend-mode:multiply;}
+.musica .panel .tex{
+  position:absolute; top:-24px; right:-24px; width:96px; height:96px;
+  border-radius:50%; background:url('assets/bg-collage.webp') center/cover;
+  opacity:0.38; mix-blend-mode:multiply;
+}
 .musica .panel .eyebrow{margin-bottom:var(--space-5);}
-.musica .panel .vinyl{
-  width:96px; height:96px; border-radius:50%; margin-bottom:var(--space-5); position:relative;
-  background:
-    radial-gradient(circle at center, var(--cream-50) 0 11%, var(--laranja-500) 12% 22%, var(--ink-900) 23% 100%);
+.vinyl{
+  width:80px; height:80px; border-radius:50%; margin-bottom:var(--space-4);
+  background:radial-gradient(circle at center,var(--cream-50) 0 11%,var(--laranja-500) 12% 22%,var(--ink-900) 23% 100%);
   box-shadow:var(--shadow-2);
   animation:spin 4.5s linear infinite; animation-play-state:paused;
 }
 .musica .panel.show .vinyl{animation-play-state:running;}
-.musica .panel .vinyl::after{content:""; position:absolute; inset:0; border-radius:50%;
-  background:repeating-radial-gradient(circle at center, transparent 0 3px, rgba(0,0,0,0.18) 3px 4px);
-  -webkit-mask:radial-gradient(circle at center, transparent 0 24%, #000 25% 100%);
-  mask:radial-gradient(circle at center, transparent 0 24%, #000 25% 100%);
-}
-.musica .panel h4{font-family:var(--font-display); font-size:var(--step-2); font-weight:400; line-height:1.12; margin-bottom:6px;}
+.musica .panel h4{font-family:var(--font-display); font-size:var(--step-2); font-weight:400; line-height:1.12; margin-bottom:5px;}
 .musica .panel .by{font-size:var(--step--1); color:var(--fg-3); margin-bottom:var(--space-5);}
-.musica .panel .listen{display:inline-flex; align-items:center; gap:11px; font-size:var(--step--1); font-weight:600; letter-spacing:0.04em; color:var(--ink-900); background:var(--amarelo-500); padding:11px 18px; border-radius:var(--radius-pill); transition:transform var(--dur-2) var(--ease-out);}
+.musica .panel .listen{
+  display:inline-flex; align-items:center; gap:10px; font-size:var(--step--1);
+  font-weight:600; color:var(--ink-900); background:var(--brega-amarelo);
+  padding:10px 16px; border-radius:var(--radius-pill);
+  transition:transform var(--dur-2) var(--ease-out);
+}
 .musica .panel .listen:hover{transform:translateY(-2px);}
-.musica .panel .week{margin-top:var(--space-5); font-size:0.78rem; color:var(--fg-mute); display:flex; align-items:center; gap:8px;}
-.musica .panel .close{position:absolute; top:13px; right:14px; background:none; border:0; font-size:20px; line-height:1; color:var(--fg-3); cursor:pointer; z-index:2;}
-@media(max-width:560px){.musica .toggle .lbl{display:none;}}
+.musica .panel .close{position:absolute; top:12px; right:12px; background:none; border:0; font-size:18px; line-height:1; color:var(--fg-3); cursor:pointer;}
+@media(max-width:560px){.musica .lbl{display:none;}}
 
-/* =========================================================
-   reveal on scroll
-   ========================================================= */
-.reveal{opacity:0; transform:translateY(16px); transition:opacity var(--dur-4) var(--ease-out), transform var(--dur-4) var(--ease-out);}
+/* === SCROLL REVEAL === */
+.reveal{opacity:0; transform:translateY(14px); transition:opacity var(--dur-4) var(--ease-out),transform var(--dur-4) var(--ease-out);}
 .reveal.in{opacity:1; transform:none;}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important; transition-duration:0.01ms!important;}
@@ -409,18 +438,14 @@ footer .legend-note{display:flex; align-items:center; gap:9px;}
 </head>
 <body>
 
-<!-- ===================== NAV ===================== -->
+<!-- NAV -->
 <nav class="nav">
   <div class="row">
-    <div class="brand" id="brandSeed" title="toque para mudar a estação de cor">
-      <span class="seed"></span>
-      Elaine Narcizo <small>· espaço em construção</small>
-    </div>
+    <a class="brand" href="#">Elaine Narcizo</a>
     <div class="links">
-      <a href="#espaco">O espaço</a>
-      <a href="#caminhos">Os caminhos</a>
+      <a href="#pensamento">Pensamento</a>
+      <a href="#formacoes">Formações</a>
       <a href="#escritos">Escritos</a>
-      <a href="#conduz">Quem conduz</a>
       <a href="#contato">Contato</a>
     </div>
     <button class="menu-btn" id="menuBtn">Menu</button>
@@ -429,242 +454,235 @@ footer .legend-note{display:flex; align-items:center; gap:9px;}
 
 <main>
 
-  <!-- ===================== HERO ===================== -->
-  <header class="hero" data-screen-label="Hero">
-    <div class="wrap grid">
-      <div class="lead-col">
-        <div class="kicker eyebrow">Um lugar sendo construído</div>
-        <h1>Tem uma <span class="hand">escola</span> nascendo aqui — devagar, e por inteiro.</h1>
-        <p class="lede"><span class="wip" title="texto provisório — a revisar com a Elaine">Por enquanto, é por onde eu começo: oficinas, formações e encontros que cabem na vida real das mulheres. Cada um é um tijolo dessa ponte entre onde você está e onde quer chegar.</span></p>
-        <div class="stars" aria-hidden="true">
-          <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-          <span>beleza · sinceridade · solução</span>
-        </div>
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="text-col reveal">
+    <p class="tag">Educadora · Arteterapeuta · Pesquisadora</p>
+    <h1>"Quem controla as perguntas controla os limites do possível."</h1>
+    <p class="byline">Elaine Narcizo</p>
+    <p class="scroll-hint">rolar</p>
+  </div>
+  <div class="img-col">
+    <img src="assets/bg-mao.webp" alt="" role="presentation" />
+  </div>
+</header>
+
+<!-- ===================== PENSAMENTO ===================== -->
+<section class="section pensamento" id="pensamento">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div>
+        <div class="eyebrow">Pensamento</div>
+        <h2>Três ideias que sustentam este trabalho.</h2>
       </div>
-      <div class="meta-col">
-        <div class="stamp">
-          <img src="assets/bg-green.jpg" alt="Textura manuscrita da marca" />
-        </div>
-        <p class="stamp-note"><b>Desde 2026.</b> Um espaço da educadora, arteterapeuta e artista <b>Elaine Narcizo</b> — feito à mão, no tempo certo.</p>
-      </div>
-    </div>
-  </header>
-
-  <div class="wave" aria-hidden="true"></div>
-
-  <!-- ===================== MANIFESTO ===================== -->
-  <section class="section manifesto" id="espaco" data-screen-label="O espaço">
-    <div class="wrap grid">
-      <div class="head">
-        <div class="eyebrow">O espaço</div>
-      </div>
-      <div class="body">
-        <h2>Eu sempre quis um lugar. Um lugar onde a beleza não fosse luxo, e o cuidado não fosse pressa.</h2>
-        <p class="wip" title="texto provisório — a revisar com a Elaine">Comecei a construir esse lugar com o que tenho nas mãos: a arteterapia, a dança, o corpo, a escuta. <strong>Não é uma plataforma de cursos.</strong> É um território — que um dia será escola — onde a gente aprende a perceber, e não só a produzir.</p>
-        <p class="wip" title="texto provisório — a revisar com a Elaine">Aqui cada coisa é pensada para a vida real: com limites, ritmos, trocas e apoios possíveis. Você chega como está, e a gente atravessa junto.</p>
-        <div class="pares">
-          <span class="chip">presença &amp; presente</span>
-          <span class="chip">individual &amp; coletivo</span>
-          <span class="chip">corpo &amp; matéria</span>
-          <span class="chip">ousadia &amp; cuidado</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== OS CAMINHOS (hub) ===================== -->
-  <section class="section caminhos" id="caminhos" data-screen-label="Os caminhos">
-    <div class="wrap">
-      <div class="topline">
-        <div>
-          <div class="eyebrow" style="margin-bottom:18px;">Os caminhos</div>
-          <h2>Cada porta é um jeito de <em>começar</em>.</h2>
-        </div>
-        <p class="legend"><i></i> sublinhado = texto provisório, a revisar com a Elaine</p>
-      </div>
-
-      <!-- Repertórios Sensíveis -->
-      <a class="door" style="--door-color:var(--laranja-500); --door-soft:var(--laranja-100);" href="#contato" data-season-jump="laranja">
-        <span class="n"><span class="dot"></span>01</span>
-        <span class="name">Repertórios Sensíveis para a Clínica
-          <span class="sub">Formação para psicólogas · 2026</span>
-        </span>
-        <span class="blurb">Arteterapia, corpo, dança, teatro e pintura para ampliar a escuta clínica. Três módulos, dez temas.</span>
-        <span class="go"><span class="tag open">Inscrições abertas</span><span class="arrow">→</span></span>
-      </a>
-
-      <!-- PONTE -->
-      <a class="door" style="--door-color:var(--verde-500); --door-soft:var(--verde-100);" href="#contato" data-season-jump="verde">
-        <span class="n"><span class="dot"></span>02</span>
-        <span class="name">PONTE
-          <span class="sub">Oficina para elaboração de projetos de vida</span>
-        </span>
-        <span class="blurb">Três exercícios que atravessam o presente até o futuro, ancorados em relações, grupos e beleza.</span>
-        <span class="go"><span class="tag open">Aberta a grupos</span><span class="arrow">→</span></span>
-      </a>
-
-      <!-- ORIGINAR-SE -->
-      <a class="door" style="--door-color:var(--amarelo-700); --door-soft:var(--amarelo-100);" href="#contato" data-season-jump="amarelo">
-        <span class="n"><span class="dot"></span>03</span>
-        <span class="name">Originar-se
-          <span class="sub">Territórios de Formação</span>
-        </span>
-        <span class="blurb wip" title="texto provisório — a revisar com a Elaine">Um percurso de formação que reúne metodologias sensíveis para quem cuida, ensina e cria.</span>
-        <span class="go"><span class="tag soon">Detalhes em breve</span><span class="arrow">→</span></span>
-      </a>
-
-      <!-- A escola (locked) -->
-      <div class="door locked" style="--door-color:var(--lilas-500); --door-soft:var(--lilas-100);">
-        <span class="n"><span class="dot"></span>04</span>
-        <span class="name">A escola
-          <span class="sub">O horizonte de tudo isto</span>
-        </span>
-        <span class="blurb wip" title="texto provisório — a revisar com a Elaine">O lugar para onde todos os caminhos apontam. Sendo sonhada e construída, um tijolo de cada vez.</span>
-        <span class="go"><span class="tag soon">Em construção</span></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== ESCRITOS — lâminas ===================== -->
-  <section class="section escritos" id="escritos" data-screen-label="Escritos">
-    <div class="escritos-head">
-      <div class="eyebrow">Escritos</div>
-      <h2>Penso em voz alta, e escrevo.</h2>
-      <p class="lede"><span class="wip" title="texto provisório — a revisar com a Elaine">Textos sobre mulheres, descanso, clínica e os gestos miúdos que sustentam uma vida inteira. Role para o lado e escolha por onde entrar.</span></p>
-      <p class="hint">role para o lado <b>·</b> arraste <span>→</span></p>
+      <p class="nota">Extraídas dos artigos de Elaine Narcizo — clique para ler na íntegra.</p>
     </div>
 
-    <div class="laminas">
-      <div class="laminas-track" id="laminasTrack">
-
-        <a class="lamina" style="--c:var(--laranja-500)" href="https://medium.com/@elainenarcizo/quando-dizemos-parab%C3%A9ns-no-dia-da-mulher-estamos-celebrando-exatamente-o-qu%C3%AA-d16323c71383" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Mar · 2026</span>
-          <span class="meta"><h3>Quando dizemos "parabéns" no Dia da Mulher, estamos celebrando exatamente o quê?</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--verde-500)" href="https://medium.com/@elainenarcizo/o-rid%C3%ADculo-%C3%A9-um-dispositivo-que-pode-salvar-uma-mulher-cfeece96e707" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Fev · 2026</span>
-          <span class="meta"><h3>O ridículo é um dispositivo que pode salvar uma mulher.</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--amarelo-700)" href="https://medium.com/@elainenarcizo/mulher-voc%C3%AA-j%C3%A1-pensou-que-na-maior-parte-da-sua-vida-passa-respondendo-perguntas-que-nunca-dc272d616bd8" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Fev · 2026</span>
-          <span class="meta"><h3>Mulher, você passa a vida respondendo perguntas que nunca escolheu?</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--rosa-500)" href="https://medium.com/@elainenarcizo/descanso-e-mulheres-n%C3%A3o-basta-igualdade-na-corrida-quando-ningu%C3%A9m-pode-parar-907e36336652" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*6sVPffnzHTUAXtELvPlEtA.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Jan · 2026</span>
-          <span class="meta"><h3>Descanso e mulheres: não basta igualdade na corrida quando ninguém pode parar</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--lilas-500)" href="https://medium.com/@elainenarcizo/deser%C3%A7%C3%A3o-das-l%C3%A1grimas-um-sonho-para-2026-0d23c25f76b4" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Dez · 2025</span>
-          <span class="meta"><h3>Deserção das lágrimas: um sonho para 2026.</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--laranja-500)" href="https://medium.com/@elainenarcizo/reescrevendo-o-agora-o-papel-estrutural-do-planejamento-feminino-2c5089c17dac" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*6sVPffnzHTUAXtELvPlEtA.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Dez · 2025</span>
-          <span class="meta"><h3>Reescrevendo o agora: o papel estrutural do planejamento feminino</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--verde-500)" href="https://medium.com/@elainenarcizo/se-voc%C3%AA-estiver-cansada-talvez-isso-seja-para-voc%C3%AA-fe1bcc9fdf22" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Nov · 2025</span>
-          <span class="meta"><h3>Se você estiver cansada, talvez isso seja para você.</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--amarelo-700)" href="https://medium.com/@elainenarcizo/a-tristeza-aleat%C3%B3ria-fea4e9c705e5" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Nov · 2025</span>
-          <span class="meta"><h3>A Tristeza Aleatória</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--rosa-500)" href="https://medium.com/@elainenarcizo/originar-se-territ%C3%B3rios-de-forma%C3%A7%C3%A3o-d8faaa09ca7c" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*F5E3jyX6fgVwniyBEGhbfA.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Out · 2025</span>
-          <span class="meta"><h3>Originar-se: territórios de formação</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina" style="--c:var(--lilas-500)" href="https://medium.com/@elainenarcizo/quero-ter-um-filho-quero-dar-a-morte-para-algu%C3%A9m-pensando-sobre-o-amor-e-finitude-1eaa1f8e53ea" target="_blank" rel="noopener">
-          <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*F5E3jyX6fgVwniyBEGhbfA.jpeg" alt="" /></span>
-          <span class="tint"></span><span class="shade"></span>
-          <span class="tagtop"><span class="dot"></span>Set · 2025</span>
-          <span class="meta"><h3>"Quero ter um filho, quero dar a morte para alguém…" sobre o amor e a finitude.</h3><span class="read">Ler no Medium →</span></span>
-        </a>
-
-        <a class="lamina lamina-all" href="https://medium.com/@elainenarcizo" target="_blank" rel="noopener">
-          <span class="allinner"><b>Todos os escritos</b><span>no Medium →</span></span>
-        </a>
-
+    <div class="idea reveal">
+      <span class="num">01</span>
+      <div>
+        <blockquote>"Ser ridícula liberta. O que você se permite fazer sem se julgar revela quem você realmente é, sem máscaras."</blockquote>
+        <a class="fonte" href="https://medium.com/@elainenarcizo/o-rid%C3%ADculo-%C3%A9-um-dispositivo-que-pode-salvar-uma-mulher-cfeece96e707" target="_blank" rel="noopener">O ridículo é um dispositivo que pode salvar uma mulher</a>
       </div>
-      <div class="laminas-progress"><span class="rail"><i id="laminasBar"></i></span></div>
     </div>
-  </section>
 
-  <!-- ===================== QUEM CONDUZ ===================== -->
-  <section class="section bio" id="conduz" data-screen-label="Quem conduz">
-    <div class="wrap grid">
-      <div class="head"><div class="eyebrow">Quem conduz</div></div>
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets/elaine.jpg" alt="Retrato de Elaine Narcizo" />
+    <div class="idea reveal">
+      <span class="num">02</span>
+      <div>
+        <blockquote>"Mulheres que nunca descansam ensinam outras mulheres a nunca descansar."</blockquote>
+        <a class="fonte" href="https://medium.com/@elainenarcizo/descanso-e-mulheres-n%C3%A3o-basta-igualdade-na-corrida-quando-ningu%C3%A9m-pode-parar-907e36336652" target="_blank" rel="noopener">Descanso e mulheres: não basta igualdade na corrida quando ninguém pode parar</a>
       </div>
-      <div class="body">
+    </div>
+
+    <div class="idea reveal">
+      <span class="num">03</span>
+      <div>
+        <blockquote>"É o movimento de quem, tendo recebido um mapa incompleto, se faz cartógrafo de seu próprio território interno."</blockquote>
+        <a class="fonte" href="https://medium.com/@elainenarcizo/originar-se-territ%C3%B3rios-de-forma%C3%A7%C3%A3o-d8faaa09ca7c" target="_blank" rel="noopener">Originar-se: territórios de formação</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== BREGA STRIP ===================== -->
+<div class="brega-strip" role="presentation" aria-hidden="true"></div>
+
+<!-- ===================== FORMAÇÕES ===================== -->
+<section class="section formacoes" id="formacoes">
+  <div class="wrap">
+    <div class="sec-header reveal">
+      <div>
+        <div class="eyebrow">Formações</div>
+        <h2>Dois caminhos para entrar.</h2>
+      </div>
+    </div>
+
+    <a class="formacao reveal" href="https://wa.me/5516991595707" target="_blank" rel="noopener">
+      <span class="n">01</span>
+      <span class="nome">Repertórios Sensíveis para a Clínica
+        <span class="sub">Formação para psicólogas · 2026</span>
+      </span>
+      <span class="desc">Arteterapia, corpo, dança e teatro para ampliar a escuta clínica. Três módulos, dez temas. Turmas pequenas.</span>
+      <span class="cta-col">
+        <span class="tag-status open">Inscrições abertas</span>
+        <span class="arrow">→</span>
+      </span>
+    </a>
+
+    <a class="formacao reveal" href="https://wa.me/5516991595707" target="_blank" rel="noopener">
+      <span class="n">02</span>
+      <span class="nome">PONTE
+        <span class="sub">Oficina de elaboração de projetos de vida</span>
+      </span>
+      <span class="desc">Três exercícios que atravessam o presente até o futuro, ancorados em relações, grupos e beleza.</span>
+      <span class="cta-col">
+        <span class="tag-status open">Aberta a grupos</span>
+        <span class="arrow">→</span>
+      </span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ===================== ESCRITOS ===================== -->
+<section class="section escritos" id="escritos">
+  <div class="wrap esc-head reveal">
+    <div class="eyebrow">Escritos</div>
+    <h2>Penso em voz alta, e escrevo.</h2>
+    <p class="lede">"Iríamos todas nós, as mulheres do Brasil, às praças." Role para o lado e escolha por onde entrar.</p>
+    <p class="dica">role para o lado <span>→</span></p>
+  </div>
+
+  <div class="laminas-track" id="laminasTrack">
+
+    <a class="lamina" style="--c:var(--laranja-500)" href="https://medium.com/@elainenarcizo/quando-dizemos-parab%C3%A9ns-no-dia-da-mulher-estamos-celebrando-exatamente-o-qu%C3%AA-d16323c71383" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Mar · 2026</span>
+      <span class="meta"><h3>Quando dizemos "parabéns" no Dia da Mulher, estamos celebrando exatamente o quê?</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--verde-500)" href="https://medium.com/@elainenarcizo/o-rid%C3%ADculo-%C3%A9-um-dispositivo-que-pode-salvar-uma-mulher-cfeece96e707" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Fev · 2026</span>
+      <span class="meta"><h3>O ridículo é um dispositivo que pode salvar uma mulher.</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--amarelo-700)" href="https://medium.com/@elainenarcizo/mulher-voc%C3%AA-j%C3%A1-pensou-que-na-maior-parte-da-sua-vida-passa-respondendo-perguntas-que-nunca-dc272d616bd8" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Fev · 2026</span>
+      <span class="meta"><h3>Mulher, você passa a vida respondendo perguntas que nunca escolheu?</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:#C05080" href="https://medium.com/@elainenarcizo/descanso-e-mulheres-n%C3%A3o-basta-igualdade-na-corrida-quando-ningu%C3%A9m-pode-parar-907e36336652" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*6sVPffnzHTUAXtELvPlEtA.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Jan · 2026</span>
+      <span class="meta"><h3>Descanso e mulheres: não basta igualdade na corrida quando ninguém pode parar</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--brega-roxo)" href="https://medium.com/@elainenarcizo/deser%C3%A7%C3%A3o-das-l%C3%A1grimas-um-sonho-para-2026-0d23c25f76b4" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*1BzKhr3FaBRPVi2wXnekvw.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Dez · 2025</span>
+      <span class="meta"><h3>Deserção das lágrimas: um sonho para 2026.</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--laranja-500)" href="https://medium.com/@elainenarcizo/reescrevendo-o-agora-o-papel-estrutural-do-planejamento-feminino-2c5089c17dac" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*6sVPffnzHTUAXtELvPlEtA.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Dez · 2025</span>
+      <span class="meta"><h3>Reescrevendo o agora: o papel estrutural do planejamento feminino</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--verde-500)" href="https://medium.com/@elainenarcizo/se-voc%C3%AA-estiver-cansada-talvez-isso-seja-para-voc%C3%AA-fe1bcc9fdf22" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Nov · 2025</span>
+      <span class="meta"><h3>Se você estiver cansada, talvez isso seja para você.</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:#9B6A10" href="https://medium.com/@elainenarcizo/a-tristeza-aleat%C3%B3ria-fea4e9c705e5" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*x04ncSZMk7m5krwNrPiL-g.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Nov · 2025</span>
+      <span class="meta"><h3>A Tristeza Aleatória</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:#C05080" href="https://medium.com/@elainenarcizo/originar-se-territ%C3%B3rios-de-forma%C3%A7%C3%A3o-d8faaa09ca7c" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*F5E3jyX6fgVwniyBEGhbfA.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Out · 2025</span>
+      <span class="meta"><h3>Originar-se: territórios de formação</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina" style="--c:var(--brega-roxo)" href="https://medium.com/@elainenarcizo/quero-ter-um-filho-quero-dar-a-morte-para-algu%C3%A9m-pensando-sobre-o-amor-e-finitude-1eaa1f8e53ea" target="_blank" rel="noopener">
+      <span class="img"><img src="https://miro.medium.com/v2/resize:fill:760:1040/1*F5E3jyX6fgVwniyBEGhbfA.jpeg" alt="" /></span>
+      <span class="tint"></span><span class="shade"></span>
+      <span class="tagtop">Set · 2025</span>
+      <span class="meta"><h3>"Quero ter um filho, quero dar a morte para alguém…" sobre o amor e a finitude.</h3><span class="ler">Ler no Medium →</span></span>
+    </a>
+
+    <a class="lamina lamina-all" href="https://medium.com/@elainenarcizo" target="_blank" rel="noopener">
+      <span class="inner"><b>Todos os escritos</b><span>no Medium →</span></span>
+    </a>
+
+  </div>
+  <div class="rail-wrap"><span class="rail"><i id="laminasBar"></i></span></div>
+</section>
+
+<!-- ===================== BIO ===================== -->
+<section class="section bio" id="conduz">
+  <div class="wrap">
+    <div class="bio-grid">
+      <div class="bio-head reveal">
+        <div class="eyebrow">Quem é</div>
+      </div>
+      <div class="portrait-wrap reveal">
+        <img class="portrait" src="assets/elaine.jpg" alt="Elaine Narcizo" />
+        <span class="collage-accent" aria-hidden="true"></span>
+      </div>
+      <div class="bio-body reveal">
         <h3>Elaine Narcizo</h3>
-        <p>Mestra em Serviço Social, especialista em dança, música e teatro para educadores, arteterapeuta e artista.</p>
-        <p>Trabalha na intersecção entre clínica, arte e educação, conduzindo processos formativos em consultório, em projetos comunitários e em formação continuada para profissionais da saúde e da educação.</p>
-        <ul class="creds">
-          <li>Mestra em Serviço Social</li>
-          <li>Arteterapeuta</li>
-          <li>Dança · música · teatro</li>
-          <li>Artista</li>
-        </ul>
+        <p>Educadora, arteterapeuta, mestra em Serviço Social e artista. Trabalha na intersecção entre arte, corpo e clínica — conduzindo formações para profissionais da saúde, psicólogas e mulheres que querem pensar a própria vida com mais rigor e mais beleza.</p>
+        <p>Seus textos, aulas e rituais partem de uma convicção: o pensamento transforma quando encontra o corpo. Baseada em Ribeirão Preto, SP.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ===================== CTA / CONTATO ===================== -->
-  <section class="cta" id="contato" data-screen-label="Contato">
-    <div class="wrap">
-      <div class="eyebrow">Vamos conversar</div>
-      <h2>Se algo aqui te parou por um momento, <em>esse já é o primeiro sinal</em>.</h2>
-      <p class="sub"><span class="wip" title="texto provisório — a revisar com a Elaine">As turmas são pequenas, e a conversa antes de entrar é parte do processo. Me escreva e a gente combina os próximos passos.</span></p>
-      <a class="btn" href="https://wa.me/5516991595707" target="_blank" rel="noopener">Falar com a Elaine no WhatsApp <span class="arrow">→</span></a>
-      <div class="ways">
-        <span>Outros caminhos:</span>
-        <a href="https://www.instagram.com/elaine.c.narcizo/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.youtube.com/@elainenarc" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://medium.com/@elainenarcizo" target="_blank" rel="noopener">Medium</a>
-        <a href="mailto:" class="wip" title="e-mail a confirmar com a Elaine">E-mail (a confirmar)</a>
-      </div>
+<!-- ===================== CONTATO ===================== -->
+<section class="cta" id="contato">
+  <div class="wrap inner">
+    <div class="eyebrow reveal">Vamos conversar</div>
+    <blockquote class="reveal">"Um futuro digno para as mulheres depende do descanso que construímos agora, do descanso que fazemos existir <em>a partir de nós mesmas</em>."</blockquote>
+    <p class="att reveal">— Elaine Narcizo</p>
+    <a class="btn reveal" href="https://wa.me/5516991595707" target="_blank" rel="noopener">
+      Falar com a Elaine no WhatsApp <span class="arr">→</span>
+    </a>
+    <div class="ways reveal">
+      <span>Outros caminhos:</span>
+      <a href="https://www.instagram.com/elaine.c.narcizo/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@elainenarc" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://medium.com/@elainenarcizo" target="_blank" rel="noopener">Medium</a>
+      <a href="https://open.spotify.com/show/3yCNwDaO1KVVuyfAbxXbXV" target="_blank" rel="noopener">Spotify</a>
     </div>
-  </section>
+  </div>
+</section>
 
 </main>
 
 <footer>
   <div class="wrap row">
-    <span>© 2026 Elaine Narcizo · um espaço sendo construído</span>
-    <span class="legend-note"><i style="width:22px;height:2px;background:var(--accent);display:inline-block;"></i> sublinhado = provisório, a revisar</span>
-    <span>Ribeirão Preto · SP</span>
+    <span>© 2026 Elaine Narcizo · Ribeirão Preto, SP</span>
+    <span>Educadora · Arteterapeuta · Pesquisadora</span>
   </div>
 </footer>
 
-<!-- ===================== MÚSICA DA SEMANA (ritual) ===================== -->
+<!-- ===================== MÚSICA DA SEMANA ===================== -->
 <div class="musica" id="musica">
   <button class="toggle" id="musicaToggle" aria-expanded="false">
     <span class="disc" aria-hidden="true"></span>
@@ -674,111 +692,62 @@ footer .legend-note{display:flex; align-items:center; gap:9px;}
     <span class="tex" aria-hidden="true"></span>
     <button class="close" id="musicaClose" aria-label="Fechar">×</button>
     <div class="eyebrow">Música da semana</div>
-    <div class="vinyl" aria-hidden="true"></div>
+    <div class="vinyl" id="musicaVinyl" aria-hidden="true"></div>
     <h4>One River</h4>
     <p class="by">Benjy Wertheimer · John de Kadt</p>
     <a class="listen" href="https://youtu.be/rLsP8NgS01Y" target="_blank" rel="noopener">Ouvir agora ▸</a>
-    <p class="week"><span class="wip" title="atualizar toda semana">atualizada toda semana pela Elaine</span></p>
   </div>
 </div>
 
 <script>
 (function(){
-  /* ---- scroll reveal (with failsafe so nothing stays hidden) ---- */
-  var revealEls = [];
+  /* scroll reveal */
   var io = new IntersectionObserver(function(ents){
-    ents.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-  }, {threshold:0.08, rootMargin:'0px 0px -6% 0px'});
-  document.querySelectorAll('.section .wrap > *, .escritos-head > *, .hero .lead-col, .hero .meta-col, .door').forEach(function(el,i){
-    el.classList.add('reveal');
-    el.style.transitionDelay = (Math.min(i,6)*40)+'ms';
-    revealEls.push(el);
-    io.observe(el);
+    ents.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:0.07, rootMargin:'0px 0px -4% 0px'});
+  var revEls = [];
+  document.querySelectorAll('.reveal').forEach(function(el,i){
+    el.style.transitionDelay = (Math.min(i%5,4)*55)+'ms';
+    revEls.push(el); io.observe(el);
   });
-  // reveal anything already in view on load, immediately
-  function revealInView(){
-    revealEls.forEach(function(el){
-      var r=el.getBoundingClientRect();
-      if(r.top < window.innerHeight*0.98 && r.bottom > 0){ el.classList.add('in'); }
-    });
-  }
-  window.addEventListener('load', revealInView);
-  revealInView();
-  // ultimate failsafe: never leave content hidden
-  setTimeout(function(){ revealEls.forEach(function(el){ el.classList.add('in'); }); }, 1600);
+  function revNow(){ revEls.forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top<window.innerHeight*0.98&&r.bottom>0) el.classList.add('in'); }); }
+  window.addEventListener('load',revNow); revNow();
+  setTimeout(function(){ revEls.forEach(function(el){ el.classList.add('in'); }); },1800);
 
-  /* ---- season (cromatic journey) ---- */
-  var seasons=['verde','laranja','amarelo'];
-  var root=document.documentElement;
-  // brand seed cycles the season — a tiny easter egg
-  document.getElementById('brandSeed').addEventListener('click', function(){
-    var cur=root.getAttribute('data-season');
-    var nxt=seasons[(seasons.indexOf(cur)+1)%seasons.length];
-    root.setAttribute('data-season', nxt);
-  });
-  // hovering a door previews its season; clicking jumps to it
-  document.querySelectorAll('[data-season-jump]').forEach(function(d){
-    var s=d.getAttribute('data-season-jump');
-    d.addEventListener('mouseenter', function(){ root.setAttribute('data-season', s); });
-  });
-
-  /* ---- música da semana ---- */
+  /* música */
   var musica=document.getElementById('musica');
   var toggle=document.getElementById('musicaToggle');
   var panel=document.getElementById('musicaPanel');
   var closeBtn=document.getElementById('musicaClose');
   function openPanel(){ panel.classList.add('show'); musica.classList.add('playing'); toggle.setAttribute('aria-expanded','true'); }
   function closePanel(){ panel.classList.remove('show'); musica.classList.remove('playing'); toggle.setAttribute('aria-expanded','false'); }
-  toggle.addEventListener('click', function(){ panel.classList.contains('show')?closePanel():openPanel(); });
-  closeBtn.addEventListener('click', closePanel);
-  document.addEventListener('click', function(e){ if(!musica.contains(e.target)) closePanel(); });
+  toggle.addEventListener('click',function(){ panel.classList.contains('show')?closePanel():openPanel(); });
+  closeBtn.addEventListener('click',closePanel);
+  document.addEventListener('click',function(e){ if(!musica.contains(e.target)) closePanel(); });
 
-  /* ---- escritos: lâminas (wheel→horizontal, drag, progress) ---- */
+  /* escritos drag + wheel */
   var track=document.getElementById('laminasTrack');
   var bar=document.getElementById('laminasBar');
   if(track){
-    function updBar(){
+    function updBar(){ var max=track.scrollWidth-track.clientWidth; var p=max>0?track.scrollLeft/max:0; if(bar) bar.style.width=(8+p*92)+'%'; }
+    track.addEventListener('scroll',updBar,{passive:true});
+    window.addEventListener('resize',updBar); updBar();
+    track.addEventListener('wheel',function(e){
+      if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
       var max=track.scrollWidth-track.clientWidth;
-      var p=max>0 ? track.scrollLeft/max : 0;
-      if(bar) bar.style.width=(8 + p*92)+'%';
-    }
-    track.addEventListener('scroll', updBar, {passive:true});
-    window.addEventListener('resize', updBar);
-    updBar();
-    // vertical wheel scrolls the gallery sideways — but only while there is room,
-    // so the page keeps scrolling normally once you reach either end.
-    track.addEventListener('wheel', function(e){
-      if(Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      var max=track.scrollWidth-track.clientWidth;
-      var atStart=track.scrollLeft<=0, atEnd=track.scrollLeft>=max-1;
-      if((e.deltaY>0 && !atEnd) || (e.deltaY<0 && !atStart)){
-        track.scrollLeft += e.deltaY;
-        e.preventDefault();
-      }
-    }, {passive:false});
-    // drag to scroll (desktop)
-    var down=false, sx=0, sl=0, moved=0;
-    track.addEventListener('pointerdown', function(e){
-      if(e.pointerType==='mouse' && e.button!==0) return;
-      down=true; sx=e.clientX; sl=track.scrollLeft; moved=0;
-    });
-    window.addEventListener('pointermove', function(e){
-      if(!down) return;
-      var dx=e.clientX-sx;
-      if(Math.abs(dx)>4){ moved=Math.abs(dx); track.classList.add('dragging'); }
-      track.scrollLeft=sl-dx;
-    });
-    window.addEventListener('pointerup', function(){
-      down=false; setTimeout(function(){ track.classList.remove('dragging'); },0);
-    });
-    // swallow the click that ends a drag, so we don't open a link by accident
-    track.addEventListener('click', function(e){ if(moved>6){ e.preventDefault(); } }, true);
+      if((e.deltaY>0&&track.scrollLeft<max-1)||(e.deltaY<0&&track.scrollLeft>0)){ track.scrollLeft+=e.deltaY; e.preventDefault(); }
+    },{passive:false});
+    var down=false,sx=0,sl=0,moved=0;
+    track.addEventListener('pointerdown',function(e){ if(e.pointerType==='mouse'&&e.button!==0) return; down=true; sx=e.clientX; sl=track.scrollLeft; moved=0; });
+    window.addEventListener('pointermove',function(e){ if(!down) return; var dx=e.clientX-sx; if(Math.abs(dx)>4){moved=Math.abs(dx); track.classList.add('dragging');} track.scrollLeft=sl-dx; });
+    window.addEventListener('pointerup',function(){ down=false; setTimeout(function(){ track.classList.remove('dragging'); },0); });
+    track.addEventListener('click',function(e){ if(moved>6) e.preventDefault(); },true);
   }
 
-  /* ---- mobile menu (simple anchor jump list) ---- */
-  document.getElementById('menuBtn').addEventListener('click', function(){
-    var t=document.getElementById('caminhos');
-    if(t){ var y=t.getBoundingClientRect().top + window.pageYOffset - 60; window.scrollTo({top:y, behavior:'smooth'}); }
+  /* mobile menu */
+  document.getElementById('menuBtn').addEventListener('click',function(){
+    var t=document.getElementById('formacoes');
+    if(t) window.scrollTo({top:t.getBoundingClientRect().top+window.pageYOffset-60,behavior:'smooth'});
   });
 })();
 </script>
