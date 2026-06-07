@@ -12,10 +12,12 @@
 
 <style>
 /* =========================================================
-   ELAINE NARCIZO — HOME MAPA v3
-   Vocabulário visual: Repertórios Sensíveis
-   Papel branco · tinta preta · acentos de cor pontuais
-   Navegação 2D: Y = mundos (snap), X = painéis (snap)
+   ELAINE NARCIZO — HOME MAPA v4 · "GALERIA EDITORIAL"
+   Base limpa (Repertórios Sensíveis) · papel branco · DM Sans
+   Cada mundo ancorado por UMA imagem emoldurada
+   Composição: cabeçalho / imagem-que-preenche / ação
+   Navegação 2D: Y = mundos (snap) · X = painéis (snap)
+   Movimento: conteúdo REVELA ao chegar (fade + sobe)
    ========================================================= */
 :root{
   --ink:       #0A0A0A;
@@ -29,391 +31,255 @@
   --verde:   #A8B73F;
   --laranja: #E87A32;
   --amarelo: #F5D731;
-  --roxo:    #5B2D8E;
-
-  /* --ac definido por mundo via style inline */
+  --roxo:    #6C4BB6;
   --ac: var(--verde);
 
   --font:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --serif:"Newsreader",Georgia,serif;
-  --ease:cubic-bezier(0.2,0.8,0.2,1);
-  --dur:260ms;
-  --bar-top:34px;
-}
+  --ease:cubic-bezier(0.22,0.61,0.36,1);
+  --dur:280ms;
 
+  --bar-top:34px;
+  --pad-x:clamp(26px,6.5vw,60px);
+  --pad-y:clamp(28px,4.6vh,52px);
+  --gap:clamp(16px,3vh,28px);
+}
 *{ box-sizing:border-box; }
 html,body{ margin:0; height:100%; overflow:hidden; }
 body{
   font-family:var(--font); font-size:17px; line-height:1.6;
-  color:var(--ink); background:var(--ink);
-  -webkit-font-smoothing:antialiased;
-  font-feature-settings:"ss01";
+  color:var(--ink); background:var(--paper);
+  -webkit-font-smoothing:antialiased; font-feature-settings:"ss01";
   overscroll-behavior:none;
 }
 h1,h2,h3{ margin:0; text-wrap:balance; }
 p{ margin:0; text-wrap:pretty; }
 a{ color:inherit; text-decoration:none; }
-em{ font-family:var(--serif); font-style:italic; }
+em{ font-family:var(--serif); font-style:italic; font-weight:400; }
+img{ display:block; }
 
-/* ── BAR: faixa marquee fixa no topo ── */
+/* ── BAR superior ── */
 .bar{
   position:fixed; top:0; left:0; right:0; height:var(--bar-top); z-index:60;
-  background:var(--ink); border-bottom:1px solid rgba(255,255,255,0.07);
-  display:flex; align-items:center; overflow:hidden; cursor:pointer;
+  background:var(--ink); display:flex; align-items:center; overflow:hidden; cursor:pointer;
 }
-.bar .track{ display:inline-flex; white-space:nowrap; animation:marquee 28s linear infinite; }
+.bar .track{ display:inline-flex; white-space:nowrap; animation:marquee 34s linear infinite; }
 .bar:hover .track{ animation-play-state:paused; }
 .bar .track span{
-  display:inline-flex; align-items:center; gap:10px; padding:0 28px;
-  font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.45);
+  display:inline-flex; align-items:center; gap:9px; padding:0 26px;
+  font-size:11px; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.42);
 }
-.bar .track span b{ color:rgba(255,255,255,0.85); font-weight:500; }
-.bar .live{ width:6px; height:6px; border-radius:50%; background:#FF5A4D; animation:pulse 1.8s var(--ease) infinite; }
+.bar .track span b{ color:rgba(255,255,255,0.86); font-weight:500; }
+.bar .live{ width:6px; height:6px; border-radius:50%; background:#FF5A4D; animation:pulse 1.9s var(--ease) infinite; }
 @keyframes marquee{ to{ transform:translateX(-50%); } }
-@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,90,77,0.55); } 70%,100%{ box-shadow:0 0 0 7px rgba(255,90,77,0); } }
+@keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(255,90,77,0.5); } 70%,100%{ box-shadow:0 0 0 7px rgba(255,90,77,0); } }
 
-/* ── STAGE: container de scroll Y (troca de mundo) ── */
+/* ── STAGE: scroll Y ── */
 .stage{
-  position:fixed;
-  top:var(--bar-top); left:0; right:0; bottom:0;
+  position:fixed; top:var(--bar-top); left:0; right:0; bottom:0;
   overflow-y:scroll; overflow-x:hidden;
-  scroll-snap-type:y mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  touch-action:pan-y;
+  scroll-snap-type:y mandatory; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none; touch-action:pan-y;
 }
 .stage::-webkit-scrollbar{ display:none; }
 
-/* ── MUNDO: container de scroll X (explora painéis) ── */
+/* ── MUNDO: scroll X ── */
 .mundo{
-  width:100%; height:100%;
-  display:flex;
+  width:100%; height:100%; display:flex;
   overflow-x:scroll; overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  scroll-snap-align:start;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  overscroll-behavior-x:contain;
-  touch-action:pan-x pan-y;
+  scroll-snap-type:x mandatory; scroll-snap-align:start;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  overscroll-behavior-x:contain; touch-action:pan-x pan-y;
 }
 .mundo::-webkit-scrollbar{ display:none; }
 
-/* ── PANEL: tela individual ── */
+/* ── PANEL ── */
 .panel{
   flex:0 0 100%; height:100%;
-  scroll-snap-align:start;
-  overflow:hidden; position:relative;
+  scroll-snap-align:start; overflow:hidden; position:relative;
   background:var(--paper);
 }
 .panel.warm{ background:var(--warm); }
-.panel.dark{ background:var(--ink); }
 
-/* ── INNER: layout editorial em coluna ── */
+/* ── INNER: composição vertical ── */
 .inner{
-  height:100%;
-  display:flex; flex-direction:column;
-  padding:clamp(30px,5.5vh,54px) clamp(26px,6vw,52px);
+  height:100%; display:flex; flex-direction:column; gap:var(--gap);
+  padding:var(--pad-y) var(--pad-x);
 }
+.inner.center{ justify-content:center; }
 
-/* ── EYEBROW: padrão Repertórios — linha + dot de cor ── */
+/* ── HEAD: bloco de texto ── */
+.head{ flex:0 0 auto; display:flex; flex-direction:column; gap:12px; }
+
+/* eyebrow: linha + dot de cor (padrão Repertórios) */
 .eyebrow{
   font-size:11px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase;
-  color:var(--mute);
-  display:inline-flex; align-items:center; gap:12px;
+  color:var(--mute); display:inline-flex; align-items:center; gap:11px;
 }
-.eyebrow::before{
-  content:""; width:26px; height:1px; background:var(--ink); flex-shrink:0;
-}
-.eyebrow::after{
-  content:""; width:7px; height:7px; border-radius:50%;
-  background:var(--ac,var(--verde)); flex-shrink:0;
-}
-.panel.dark .eyebrow{ color:rgba(255,255,255,0.4); }
-.panel.dark .eyebrow::before{ background:rgba(255,255,255,0.4); }
+.eyebrow::before{ content:""; width:24px; height:1px; background:var(--ink); flex-shrink:0; }
+.eyebrow::after{ content:""; width:7px; height:7px; border-radius:50%; background:var(--ac); flex-shrink:0; }
+.eyebrow.live::after{ background:#FF5A4D; animation:pulse 1.9s var(--ease) infinite; }
 
-/* ── TÍTULOS ── */
-h1{
-  font-size:clamp(2.8rem,11vw,5.2rem); font-weight:200;
-  letter-spacing:-0.035em; line-height:0.96;
-  color:var(--paper); margin-top:22px; max-width:16ch;
-}
-h2{
-  font-size:clamp(2rem,8.5vw,3.6rem); font-weight:200;
-  letter-spacing:-0.03em; line-height:0.96;
-  color:var(--ink); margin-top:18px; max-width:20ch;
-}
-.panel.dark h2{ color:var(--paper); }
+h1{ font-size:clamp(2.7rem,10.5vw,4.6rem); font-weight:200; letter-spacing:-0.035em; line-height:0.97; max-width:15ch; }
+h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em; line-height:0.98; max-width:18ch; }
+.sub{ font-size:clamp(0.95rem,0.9rem + 0.4vw,1.12rem); font-weight:300; line-height:1.55; color:var(--mute); max-width:40ch; }
 
-/* ── SUBTÍTULO ── */
-.sub{
-  font-size:clamp(0.93rem,0.9rem + 0.3vw,1.1rem); font-weight:300;
-  line-height:1.58; color:var(--mute); max-width:38ch; margin-top:14px;
+/* ── PLATE: imagem emoldurada que preenche o meio ── */
+.plate{
+  flex:1 1 auto; min-height:0; position:relative; overflow:hidden;
+  background:var(--warm); border:1px solid var(--line);
 }
-.panel.dark .sub{ color:rgba(255,255,255,0.45); }
+.plate img{ width:100%; height:100%; object-fit:cover; }
+.plate .tag{
+  position:absolute; left:0; bottom:0; background:var(--paper);
+  padding:8px 13px; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink);
+  display:flex; align-items:center; gap:8px;
+}
+.plate .tag::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ac); }
+.plate.tall{ flex:1 1 auto; }
 
-/* ── STACK: agrupa actions no rodapé ── */
-.stack{ display:flex; flex-direction:column; margin-top:auto; padding-top:24px; }
+/* ── FOOT: ação ── */
+.foot{ flex:0 0 auto; display:flex; flex-direction:column; gap:14px; }
 
-/* ── CARD: linha horizontal, hover com indent ── */
+/* ── BOTÕES: 1 primário + 1 fantasma ── */
+.btn{
+  display:inline-flex; align-items:center; gap:9px; align-self:flex-start;
+  font-size:12px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--paper); background:var(--ink); padding:13px 22px; cursor:pointer; border:0;
+  transition:gap var(--dur) var(--ease), background var(--dur);
+}
+.btn:hover{ gap:14px; background:var(--ink-soft); }
+.btn .ar{ transition:transform var(--dur) var(--ease); }
+.btn:hover .ar{ transform:translateX(3px); }
+.btn.ghost{ background:none; color:var(--ink); border:1px solid var(--line); }
+.btn.ghost:hover{ background:none; border-color:var(--ink); }
+
+/* ── CARD: linha de lista (Repertórios) ── */
+.cards{ display:flex; flex-direction:column; }
 .card{
-  display:flex; align-items:center; gap:16px;
-  padding:17px 0; border-top:1px solid var(--line);
-  cursor:pointer;
+  display:flex; align-items:center; gap:16px; padding:15px 0;
+  border-top:1px solid var(--line); cursor:pointer;
   transition:padding-left var(--dur) var(--ease), border-color var(--dur);
 }
-.card:last-child{ border-bottom:1px solid var(--line); }
-.card:hover{ padding-left:12px; border-color:var(--ink); }
-.card .body{ flex:1; }
-.card .t{ font-size:0.97rem; font-weight:300; line-height:1.25; color:var(--ink); }
-.card .m{ font-size:0.71rem; letter-spacing:0.05em; color:var(--mute); margin-top:3px; }
-.card .go{ font-size:1.1rem; color:var(--mute); flex-shrink:0; transition:transform var(--dur) var(--ease), color var(--dur); }
+.cards .card:last-child{ border-bottom:1px solid var(--line); }
+.card:hover{ padding-left:11px; border-color:var(--ink); }
+.card .body{ flex:1; min-width:0; }
+.card .t{ font-size:0.97rem; font-weight:300; line-height:1.3; color:var(--ink); }
+.card .m{ font-size:0.71rem; letter-spacing:0.04em; color:var(--mute); margin-top:3px; }
+.card .go{ font-size:1.05rem; color:var(--mute); flex-shrink:0; transition:transform var(--dur) var(--ease), color var(--dur); }
 .card:hover .go{ color:var(--ink); transform:translateX(4px); }
 
-/* ── PILL / CTA: texto com underline ── */
-.pill{
+/* ── SOON: tag discreta (substitui caixa "placeholder") ── */
+.soon{
   display:inline-flex; align-items:center; gap:8px;
-  font-size:11px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--ink); border:0; background:none;
-  border-bottom:1px solid var(--ink); padding-bottom:2px;
-  cursor:pointer; align-self:flex-start; margin-top:18px;
-  transition:letter-spacing var(--dur) var(--ease);
+  font-size:11px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--mute);
 }
-.pill:hover{ letter-spacing:0.20em; }
-.pill.inv{ color:var(--paper); border-color:var(--paper); }
-.pill.box{
-  border:1px solid var(--ink); border-bottom:1px solid var(--ink);
-  padding:10px 18px 10px; letter-spacing:0.12em; margin-top:18px;
-}
-.pill.box:hover{ background:var(--ink); color:var(--paper); letter-spacing:0.12em; }
-.panel.dark .pill{ color:var(--paper); border-color:var(--paper); }
+.soon::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ac); opacity:.6; }
 
-/* ── PLACEHOLDER ── */
-.ph{
-  border:1px dashed var(--line); padding:14px;
-  font-size:0.78rem; color:var(--mute); margin-top:10px;
-}
-.ph b{ color:var(--ink-soft); font-weight:500; }
-
-/* ── PANEL LABEL (painéis de exploração) ── */
-.panel-label{
-  font-size:11px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase;
-  color:var(--mute); display:flex; align-items:center; gap:10px;
-}
-.panel-label::before{ content:"→"; font-size:0.9rem; }
-
-/* ── HERO (mundo 00, painel 1) ── */
-.role{
-  font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
-  color:rgba(255,255,255,0.3); margin-top:12px;
-}
-.hero-cta{
-  margin-top:auto;
-  border:1px solid rgba(255,255,255,0.12);
-  padding:20px 22px;
-}
-.hero-cta .k{
-  font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--verde); display:flex; align-items:center; gap:8px; margin-bottom:10px;
-}
-.hero-cta .k i{ width:6px; height:6px; border-radius:50%; background:#FF5A4D; animation:pulse 1.8s var(--ease) infinite; }
-.hero-cta h3{ font-size:1.1rem; font-weight:300; color:var(--paper); line-height:1.35; }
-.hero-cta .btn{
-  display:inline-flex; align-items:center; gap:9px; margin-top:16px;
-  font-size:11px; font-weight:500; letter-spacing:0.13em; text-transform:uppercase;
-  color:var(--ink); background:var(--paper); padding:10px 18px;
-  transition:background var(--dur);
-}
-.hero-cta .btn:hover{ background:var(--warm); }
-.scroll-hint{
-  display:flex; align-items:center; justify-content:space-between;
-  margin-top:20px;
-  font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.25);
-}
-.arr-y,.arr-x{ display:inline-flex; gap:2px; margin-left:4px; }
-.arr-y{ flex-direction:column; }
-.arr-y span{ animation:slideY 1.5s var(--ease) infinite; }
-.arr-y span:nth-child(2){ animation-delay:.12s; opacity:.6; }
-.arr-y span:nth-child(3){ animation-delay:.24s; opacity:.3; }
-.arr-x span{ animation:slideX 1.5s var(--ease) infinite; }
-.arr-x span:nth-child(2){ animation-delay:.12s; opacity:.6; }
-.arr-x span:nth-child(3){ animation-delay:.24s; opacity:.3; }
-@keyframes slideY{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
-@keyframes slideX{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
-
-/* ── X-HINT: indicador "deslize" ── */
-.x-hint{
-  position:absolute; bottom:22px; right:22px;
-  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--mute); display:flex; align-items:center; gap:5px; pointer-events:none;
-}
-.panel.dark .x-hint{ color:rgba(255,255,255,0.25); }
-.x-hint::after{ content:"›"; font-size:1rem; }
-
-/* ── BANNERS (mundo 00, painéis 2–4) ── */
-.banner h2{ font-size:clamp(2.4rem,10vw,4.2rem); }
-.banner .b-eyebrow{
-  font-size:11px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase;
-  color:var(--mute); display:flex; align-items:center; gap:12px;
-}
-.banner .b-eyebrow::before{
-  content:""; width:26px; height:1px; background:var(--ink); flex-shrink:0;
-}
-.banner .b-dot{
-  width:7px; height:7px; border-radius:50%; flex-shrink:0;
-  background:var(--bd,var(--verde));
-}
-.banner .b-live{
-  width:6px; height:6px; border-radius:50%; flex-shrink:0;
-  background:#FF5A4D; animation:pulse 1.8s var(--ease) infinite;
-}
-.banner .b-sub{
-  font-size:clamp(0.93rem,0.9rem + 0.3vw,1.1rem); font-weight:300;
-  line-height:1.58; color:var(--mute); max-width:38ch; margin-top:14px;
-}
-
-/* ── DANÇADESTINO: contador ── */
-.ritual{ display:flex; flex-direction:column; gap:14px; margin-top:auto; padding-top:22px; }
+/* ── CONTADOR DançaDestino (preenche o meio) ── */
+.clock-wrap{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:16px; }
 .clock{ display:flex; gap:10px; }
-.clock .u{
-  flex:1; text-align:center;
-  border:1px solid var(--line); padding:14px 4px;
-}
-.clock .u b{
-  display:block; font-size:1.8rem; font-weight:200;
-  letter-spacing:-0.02em; line-height:1;
-  color:var(--ink); font-variant-numeric:tabular-nums;
-}
-.clock .u span{
-  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--mute); margin-top:6px; display:block;
-}
+.clock .u{ flex:1; text-align:center; border:1px solid var(--line); padding:clamp(16px,3.4vh,30px) 4px; }
+.clock .u b{ display:block; font-size:clamp(2.2rem,11vw,3.4rem); font-weight:200; letter-spacing:-0.03em; line-height:1; font-variant-numeric:tabular-nums; }
+.clock .u span{ font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--mute); margin-top:9px; display:block; }
+.clock-cap{ font-size:0.95rem; font-weight:300; color:var(--mute); text-align:center; }
 .now-live{
-  border:1px solid var(--verde); color:var(--verde);
-  padding:13px 16px; font-size:0.85rem; font-weight:400;
-  display:flex; align-items:center; gap:10px;
+  flex:1 1 auto; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
+  border:1px solid var(--verde); color:var(--ink); padding:24px; text-align:center;
 }
-.now-live i{
-  width:7px; height:7px; border-radius:50%;
-  background:var(--verde); animation:pulse 1.6s var(--ease) infinite;
-}
-.song{
-  display:flex; align-items:center; gap:14px;
-  border:1px solid var(--line); padding:14px 16px;
-}
+.now-live i{ width:10px; height:10px; border-radius:50%; background:var(--verde); animation:pulse 1.6s var(--ease) infinite; }
+.now-live b{ font-size:1.4rem; font-weight:300; }
+
+/* ── MÚSICA da semana ── */
+.song{ display:flex; align-items:center; gap:15px; border:1px solid var(--line); padding:16px 18px; }
 .disc{
-  width:36px; height:36px; border-radius:50%; flex:0 0 auto;
-  background:radial-gradient(circle at center,var(--paper) 0 12%,var(--laranja) 13% 26%,var(--ink) 27% 100%);
-  animation:spin 5s linear infinite;
+  width:46px; height:46px; border-radius:50%; flex:0 0 auto;
+  background:radial-gradient(circle at center,var(--paper) 0 11%,var(--laranja) 12% 24%,var(--ink) 25% 100%);
+  animation:spin 6s linear infinite;
 }
 @keyframes spin{ to{ transform:rotate(360deg); } }
-.song .info .l{ font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mute); }
-.song .info .t{ font-size:0.95rem; font-weight:300; margin-top:2px; }
+.song .l{ font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mute); }
+.song .t{ font-size:1.02rem; font-weight:300; margin-top:3px; }
 
-/* ── AVATAR ELAINE ── */
-.elaine-avatar{
-  width:64px; height:64px; border-radius:50%; overflow:hidden;
-  border:1px solid var(--line); margin-bottom:14px; flex-shrink:0;
+/* ── REVELAÇÃO ao chegar (progressive enhancement: oculto só com .js) ── */
+.r{ transition:opacity .7s var(--ease), transform .7s var(--ease); transition-delay:calc(var(--r,0) * 85ms); }
+.js .r{ opacity:0; transform:translateY(20px); }
+.js .panel.is-in .r{ opacity:1; transform:none; }
+
+/* ── NAV: trilha de mundos (direita) ── */
+.worlds-rail{
+  position:fixed; right:12px; top:50%; transform:translateY(-50%); z-index:55;
+  display:flex; flex-direction:column; gap:8px; align-items:center;
 }
-.elaine-avatar img{ width:100%; height:100%; object-fit:cover; object-position:center 18%; }
+.worlds-rail i{ display:block; width:6px; height:6px; border-radius:50%; background:rgba(10,10,10,0.16); cursor:pointer; transition:height var(--dur) var(--ease), background var(--dur); }
+.worlds-rail i.on{ height:18px; border-radius:3px; background:var(--ink); }
 
-/* ── DOTS: indicador de painéis X ── */
+/* ── NAV: bolinhas de painéis (rodapé) ── */
 .world-dots{
-  position:fixed; left:50%; bottom:18px;
-  transform:translateX(-50%);
-  display:flex; gap:7px; z-index:55; pointer-events:none;
-  transition:opacity var(--dur);
+  position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+  display:flex; gap:7px; z-index:55; pointer-events:none; transition:opacity var(--dur);
 }
 .world-dots.hidden{ opacity:0; }
-.world-dots span{
-  display:block; width:6px; height:6px; border-radius:50%;
-  background:rgba(0,0,0,0.18);
-  transition:width var(--dur) var(--ease), border-radius var(--dur), background var(--dur);
-}
+.world-dots span{ display:block; width:6px; height:6px; border-radius:50%; background:rgba(10,10,10,0.18); transition:width var(--dur) var(--ease), border-radius var(--dur), background var(--dur); }
 .world-dots span.active{ width:18px; border-radius:3px; background:var(--ink); }
-/* inversão no hero (fundo escuro) */
-.dots-inv .world-dots span{ background:rgba(255,255,255,0.3); }
-.dots-inv .world-dots span.active{ background:var(--paper); }
+
+/* ── HINT inicial (some na 1ª interação) ── */
+.hint{
+  position:fixed; left:50%; bottom:38px; transform:translateX(-50%); z-index:54;
+  display:flex; flex-direction:column; align-items:center; gap:5px; pointer-events:none;
+  transition:opacity .6s var(--ease);
+}
+.hint.gone{ opacity:0; }
+.hint .lab{ font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mute); }
+.hint .chev{ font-size:13px; color:var(--ink); animation:bob 1.9s var(--ease) infinite; }
+@keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.35; } 50%{ transform:translateY(5px); opacity:1; } }
 
 /* ── BOTÃO HAMBÚRGUER ── */
 .menu-btn{
-  position:fixed; top:0; right:0; z-index:90;
-  width:52px; height:var(--bar-top);
+  position:fixed; top:0; right:0; z-index:90; width:52px; height:var(--bar-top);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
-  cursor:pointer; border:0; background:var(--ink);
-  box-shadow:-18px 0 16px var(--ink);
+  cursor:pointer; border:0; background:var(--ink); box-shadow:-18px 0 16px var(--ink);
 }
-.menu-btn i{
-  display:block; width:18px; height:1px; background:rgba(255,255,255,0.6);
-  transition:transform var(--dur) var(--ease), opacity var(--dur);
-}
+.menu-btn i{ display:block; width:18px; height:1px; background:rgba(255,255,255,0.65); transition:transform var(--dur) var(--ease), opacity var(--dur); }
 .menu-btn.open i:nth-child(1){ transform:translateY(6px) rotate(45deg); }
 .menu-btn.open i:nth-child(2){ opacity:0; }
 .menu-btn.open i:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
 
 /* ── MENU OVERLAY ── */
 .menu{
-  position:fixed; inset:0; z-index:70;
-  background:var(--ink);
-  display:flex; flex-direction:column;
-  padding:calc(var(--bar-top) + 7vh) clamp(26px,8vw,72px) 6vh;
-  opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity 340ms var(--ease), visibility 340ms;
+  position:fixed; inset:0; z-index:70; background:var(--ink);
+  display:flex; flex-direction:column; padding:calc(var(--bar-top) + 7vh) clamp(26px,8vw,72px) 6vh;
+  opacity:0; visibility:hidden; pointer-events:none; transition:opacity 340ms var(--ease), visibility 340ms;
 }
 .menu.open{ opacity:1; visibility:visible; pointer-events:auto; }
-.menu-cap{
-  font-size:10px; letter-spacing:0.22em; text-transform:uppercase;
-  color:rgba(255,255,255,0.25); margin-bottom:clamp(18px,4vh,36px);
-}
+.menu-cap{ font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:clamp(18px,4vh,36px); }
 .menu-list{ list-style:none; margin:0; padding:0; }
 .menu-item{
-  display:flex; align-items:baseline; gap:20px;
-  padding:clamp(9px,1.6vh,16px) 0;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  cursor:pointer;
+  display:flex; align-items:baseline; gap:18px; padding:clamp(9px,1.6vh,16px) 0;
+  border-bottom:1px solid rgba(255,255,255,0.06); cursor:pointer;
   opacity:0; transform:translateY(10px);
-  transition:transform 340ms var(--ease), opacity 340ms;
-  transition-delay:calc(var(--i) * 38ms);
+  transition:transform 340ms var(--ease), opacity 340ms; transition-delay:calc(var(--i) * 38ms);
 }
 .menu.open .menu-item{ opacity:1; transform:none; }
-.menu-item .mi-ord{
-  font-size:11px; letter-spacing:0.06em;
-  color:rgba(255,255,255,0.2); font-variant-numeric:tabular-nums; flex:0 0 22px;
-}
-.menu-item .mi-name{
-  font-size:clamp(1.7rem,7.5vw,2.8rem); font-weight:200;
-  letter-spacing:-0.02em; line-height:1;
-  color:rgba(255,255,255,0.55);
-  transition:color 200ms;
-}
-.menu-item .mi-dot{
-  align-self:center; width:7px; height:7px; border-radius:50%; margin-left:6px;
-  background:var(--tc,rgba(255,255,255,0.3));
-  opacity:0; transform:scale(0.4);
-  transition:opacity 200ms, transform 200ms var(--ease);
-}
-.menu-item:hover .mi-name,
-.menu-item.current .mi-name{ color:var(--paper); }
-.menu-item:hover .mi-dot,
-.menu-item.current .mi-dot{ opacity:1; transform:scale(1); }
-.menu-foot{
-  margin-top:auto; padding-top:4vh;
-  font-size:0.88rem; font-weight:300; line-height:1.5; color:rgba(255,255,255,0.25);
-}
+.menu-item .mi-ord{ font-size:11px; color:rgba(255,255,255,0.2); font-variant-numeric:tabular-nums; flex:0 0 22px; }
+.menu-item .mi-name{ font-size:clamp(1.7rem,7.5vw,2.7rem); font-weight:200; letter-spacing:-0.02em; line-height:1; color:rgba(255,255,255,0.55); transition:color 200ms; }
+.menu-item .mi-dot{ align-self:center; width:7px; height:7px; border-radius:50%; margin-left:4px; background:var(--tc,rgba(255,255,255,0.3)); opacity:0; transform:scale(0.4); transition:opacity 200ms, transform 200ms var(--ease); }
+.menu-item:hover .mi-name,.menu-item.current .mi-name{ color:var(--paper); }
+.menu-item:hover .mi-dot,.menu-item.current .mi-dot{ opacity:1; transform:scale(1); }
+.menu-foot{ margin-top:auto; padding-top:4vh; font-size:0.88rem; font-weight:300; line-height:1.5; color:rgba(255,255,255,0.25); }
 .menu-foot b{ display:block; font-size:0.95rem; color:rgba(255,255,255,0.6); font-weight:400; margin-bottom:2px; }
 
-/* ── SETAS DESKTOP (Y) ── */
+/* ── SETAS DESKTOP ── */
 .nav-arrow{
-  display:none; position:fixed; right:18px; z-index:55;
-  width:38px; height:38px; border:1px solid var(--line);
-  background:var(--paper); color:var(--ink); font-size:17px;
-  align-items:center; justify-content:center; cursor:pointer;
-  transition:background var(--dur), border-color var(--dur);
+  display:none; position:fixed; right:18px; z-index:53; width:38px; height:38px;
+  border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:16px;
+  align-items:center; justify-content:center; cursor:pointer; transition:background var(--dur), border-color var(--dur);
 }
 .nav-arrow:hover{ background:var(--warm); border-color:var(--ink); }
 .nav-arrow.up{ top:calc(var(--bar-top) + 12px); }
-.nav-arrow.down{ bottom:18px; }
-@media(min-width:900px){ .nav-arrow{ display:flex; } }
-@media(prefers-reduced-motion:reduce){ *{ animation:none!important; scroll-behavior:auto!important; } }
+.nav-arrow.down{ bottom:54px; }
+@media(min-width:900px){ .nav-arrow{ display:flex; } .worlds-rail{ right:64px; } }
+@media(prefers-reduced-motion:reduce){ *{ animation:none!important; } .r{ opacity:1!important; transform:none!important; } .stage{ scroll-behavior:auto!important; } }
 </style>
 </head>
 <body>
@@ -428,63 +294,76 @@ h2{
   </div>
 </div>
 
-<!-- ═══ STAGE: scroll Y ═══ -->
+<!-- ═══ STAGE ═══ -->
 <div class="stage" id="stage">
 
   <!-- ══ 00 · INÍCIO ══ -->
-  <section class="mundo" data-name="Início" data-color="var(--verde)">
+  <section class="mundo" data-name="Início" data-color="var(--verde)" style="--ac:var(--verde)">
 
-    <!-- painel 1: hero -->
-    <div class="panel dark">
+    <!-- hero -->
+    <div class="panel">
       <div class="inner">
-        <span class="eyebrow" style="--ac:var(--verde)">Elaine Narcizo</span>
-        <h1>Tem muita <em>vida</em> acontecendo aqui.</h1>
-        <p class="role">Educadora · Arteterapeuta · Pesquisadora</p>
-        <div class="hero-cta">
-          <div class="k"><i></i> Acontecendo agora</div>
-          <h3>Repertórios Sensíveis para a Clínica — turma 2026</h3>
-          <a class="btn" href="#" data-jump="3">Ver a formação →</a>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Elaine Narcizo</span>
+          <h1 class="r" style="--r:1">Tem muita <em>vida</em> acontecendo aqui.</h1>
         </div>
-        <div class="scroll-hint">
-          <span>role para explorar <span class="arr-y"><span>↓</span><span>↓</span><span>↓</span></span></span>
-          <span>deslize para ver mais <span class="arr-x"><span>›</span><span>›</span><span>›</span></span></span>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-mao.webp" alt="Mão alcançando a luz numa sala" loading="eager" />
+          <span class="tag">Educadora · Arteterapeuta · Pesquisadora</span>
         </div>
-      </div>
-      <span class="x-hint">em destaque</span>
-    </div>
-
-    <!-- painel 2: banner Repertórios Sensíveis -->
-    <div class="panel warm banner" style="--ac:var(--verde)">
-      <div class="inner">
-        <div class="b-eyebrow"><i class="b-live"></i> Inscrições abertas<span class="b-dot" style="--bd:var(--verde)"></span></div>
-        <h2>Repertórios<br>Sensíveis<br><em>para a Clínica</em></h2>
-        <p class="b-sub">Formação para psicólogas que querem ampliar o manejo clínico com arteterapia. Turma 2026.</p>
-        <div class="stack">
-          <a class="pill box" data-jump="3" href="#">Ver a formação →</a>
+        <div class="foot r" style="--r:3">
+          <a class="btn" href="#" data-jump="3">Repertórios Sensíveis 2026 <span class="ar">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- painel 3: banner DançaDestino -->
-    <div class="panel banner" style="--ac:var(--roxo)">
+    <!-- banner Repertórios -->
+    <div class="panel warm" style="--ac:var(--verde)">
       <div class="inner">
-        <div class="b-eyebrow">Ritual semanal · toda sexta 20h<span class="b-dot" style="--bd:var(--roxo)"></span></div>
-        <h2>Dança<em>Destino</em></h2>
-        <p class="b-sub">Você dança onde estiver, sem câmeras — só o movimento e a sensação de não estar sozinha.</p>
-        <div class="stack">
-          <a class="pill box" data-jump="2" href="#">Conhecer o ritual →</a>
+        <div class="head">
+          <span class="eyebrow live r" style="--r:0">Inscrições abertas</span>
+          <h2 class="r" style="--r:1">Repertórios Sensíveis</h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-collage.webp" alt="Colagem brega-brasil" loading="lazy" />
+          <span class="tag">Formação · turma 2026</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn" href="#" data-jump="3">Ver a formação <span class="ar">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- painel 4: banner PONTE -->
-    <div class="panel warm banner" style="--ac:var(--laranja)">
+    <!-- banner DançaDestino -->
+    <div class="panel" style="--ac:var(--roxo)">
       <div class="inner">
-        <div class="b-eyebrow">Experiência aberta<span class="b-dot" style="--bd:var(--laranja)"></span></div>
-        <h2>PONTE —<br><em>projeto<br>de vida</em></h2>
-        <p class="b-sub">Uma oficina para atravessar o presente até o futuro, com beleza e com outras pessoas.</p>
-        <div class="stack">
-          <a class="pill box" data-jump="4" href="#">Conhecer a PONTE →</a>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Toda sexta · 20h</span>
+          <h2 class="r" style="--r:1">Dança<em>Destino</em></h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-pattern.webp" alt="Padrão risográfico" loading="lazy" />
+          <span class="tag">Ritual semanal</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn ghost" href="#" data-jump="2">Conhecer o ritual <span class="ar">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- banner PONTE -->
+    <div class="panel warm" style="--ac:var(--laranja)">
+      <div class="inner">
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Experiência aberta</span>
+          <h2 class="r" style="--r:1">PONTE — <em>projeto de vida</em></h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-orange.jpg" alt="Formas orgânicas laranja" loading="lazy" />
+          <span class="tag">Oficina · grupos</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn ghost" href="#" data-jump="4">Conhecer a PONTE <span class="ar">→</span></a>
         </div>
       </div>
     </div>
@@ -494,55 +373,33 @@ h2{
   <!-- ══ 01 · ESCRITOS & VOZ ══ -->
   <section class="mundo" data-name="Escritos &amp; Voz" data-color="var(--laranja)" style="--ac:var(--laranja)">
 
-    <!-- painel 1: destaques -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Escritos &amp; Voz</span>
-        <h2>O pensamento<br><em>em texto e em áudio</em></h2>
-        <p class="sub">Artigos no Medium e o podcast onde a Elaine os lê em voz alta.</p>
-        <div class="stack">
-          <div class="card">
-            <div class="body">
-              <div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div>
-              <div class="m">Texto · Fev 2026</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <div class="card">
-            <div class="body">
-              <div class="t">Descanso e mulheres</div>
-              <div class="m">Texto · Jan 2026</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <a class="pill" href="#">▸ Ouvir o podcast no Spotify</a>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Escritos &amp; Voz</span>
+          <h2 class="r" style="--r:1">O pensamento <em>em texto e em voz</em></h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-collage.webp" alt="Colagem brega-brasil" loading="lazy" />
+          <span class="tag">Artigos · podcast</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn ghost" href="#">▸ Ouvir no Spotify</a>
         </div>
       </div>
-      <span class="x-hint">arquivo</span>
     </div>
 
-    <!-- painel 2: arquivo -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">arquivo completo</span>
-        <h2>Mais <em>textos</em></h2>
-        <p class="sub">Tudo que a Elaine publicou, do mais recente ao mais antigo.</p>
-        <div class="stack">
-          <div class="card">
-            <div class="body">
-              <div class="t">A pergunta que move</div>
-              <div class="m">Texto · Dez 2025</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <div class="card">
-            <div class="body">
-              <div class="t">Ver todos no Medium</div>
-              <div class="m">medium.com/@elainenarcizo</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <div class="ph"><b>placeholder</b> — feed completo via RSS ou curadoria manual.</div>
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Arquivo</span>
+          <h2>Mais <em>textos</em></h2>
+          <p class="sub">Do mais recente ao mais antigo. Tudo que a Elaine publicou.</p>
+        </div>
+        <div class="cards r" style="--r:1">
+          <a class="card" href="#"><div class="body"><div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div><div class="m">Fev 2026</div></div><span class="go">→</span></a>
+          <a class="card" href="#"><div class="body"><div class="t">Descanso e mulheres</div><div class="m">Jan 2026</div></div><span class="go">→</span></a>
+          <a class="card" href="#"><div class="body"><div class="t">Ver todos no Medium</div><div class="m">medium.com/@elainenarcizo</div></div><span class="go">→</span></a>
         </div>
       </div>
     </div>
@@ -552,56 +409,58 @@ h2{
   <!-- ══ 02 · DANÇADESTINO ══ -->
   <section class="mundo" data-name="DançaDestino" data-color="var(--roxo)" style="--ac:var(--roxo)">
 
-    <!-- painel 1: ritual + countdown -->
+    <!-- contador -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Movimento &amp; comunidade</span>
-        <h2>Dança<em>Destino</em></h2>
-        <p class="sub">Toda sexta, 20h. Você dança onde estiver, sem câmeras — só o movimento e a sensação de não estar sozinha.</p>
-        <div class="ritual">
-          <div id="clockBox">
-            <div class="clock">
-              <div class="u"><b id="cd-d">–</b><span>dias</span></div>
-              <div class="u"><b id="cd-h">–</b><span>horas</span></div>
-              <div class="u"><b id="cd-m">–</b><span>min</span></div>
-            </div>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Movimento &amp; comunidade</span>
+          <h2 class="r" style="--r:1">Dança<em>Destino</em></h2>
+          <p class="sub r" style="--r:2">Toda sexta, 20h. Você dança onde estiver, sem câmeras — só o movimento e a sensação de não estar sozinha.</p>
+        </div>
+        <div class="clock-wrap r" style="--r:3" id="clockBox">
+          <div class="clock">
+            <div class="u"><b id="cd-d">–</b><span>dias</span></div>
+            <div class="u"><b id="cd-h">–</b><span>horas</span></div>
+            <div class="u"><b id="cd-m">–</b><span>min</span></div>
           </div>
-          <div class="ph"><b>placeholder</b> — botão para entrar no grupo do ritual.</div>
+          <p class="clock-cap">para o próximo encontro</p>
+        </div>
+        <div class="foot r" style="--r:4">
+          <a class="btn" href="#">Entrar no ritual <span class="ar">→</span></a>
         </div>
       </div>
-      <span class="x-hint">música</span>
     </div>
 
-    <!-- painel 2: música da semana -->
+    <!-- música -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">música desta semana</span>
-        <h2>A trilha<br><em>do ritual</em></h2>
-        <p class="sub">Curadoria semanal da Elaine para acompanhar o DançaDestino.</p>
-        <div class="stack">
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Música desta semana</span>
+          <h2>A trilha <em>do ritual</em></h2>
+          <p class="sub">Curadoria semanal da Elaine para acompanhar o DançaDestino.</p>
+        </div>
+        <div class="r" style="--r:1">
           <div class="song">
             <span class="disc"></span>
-            <div class="info">
-              <div class="l">Semana 35 · DançaDestino</div>
-              <div class="t">One River</div>
-            </div>
+            <div><div class="l">Semana 35</div><div class="t">One River</div></div>
           </div>
-          <div class="ph"><b>placeholder</b> — arquivo das 35 semanas de curadoria.</div>
         </div>
       </div>
-      <span class="x-hint">comunidade</span>
     </div>
 
-    <!-- painel 3: comunidade -->
-    <div class="panel dark">
+    <!-- comunidade -->
+    <div class="panel">
       <div class="inner">
-        <span class="eyebrow" style="--ac:var(--roxo)">Comunidade</span>
-        <h2>Dance<br><em>com a gente</em></h2>
-        <p class="sub">Há algo que só se sente em movimento coletivo, mesmo à distância. Quem já dança sabe.</p>
-        <div class="stack">
-          <div class="ph" style="border-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.35);">
-            <b style="color:rgba(255,255,255,0.6)">placeholder</b> — botão de entrada no grupo + participantes.
-          </div>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Comunidade</span>
+          <h2 class="r" style="--r:1">Dance <em>com a gente</em></h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/bg-pattern.webp" alt="Padrão risográfico" loading="lazy" />
+          <span class="tag">Quem já dança, sabe</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn" href="#">Entrar no grupo <span class="ar">→</span></a>
         </div>
       </div>
     </div>
@@ -611,35 +470,31 @@ h2{
   <!-- ══ 03 · FORMAÇÕES ══ -->
   <section class="mundo" data-name="Formações" data-color="var(--verde)" style="--ac:var(--verde)">
 
-    <!-- painel 1: Repertórios Sensíveis -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Formações</span>
-        <h2>Repertórios<br>Sensíveis<br><em>para a Clínica</em></h2>
-        <p class="sub">Formação completa para psicólogas. Arteterapia, corpo e experiência simbólica no manejo clínico.</p>
-        <div class="stack">
-          <div class="card">
-            <div class="body">
-              <div class="t">Formação completa — turma 2026</div>
-              <div class="m">Para psicólogas · inscrições abertas</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <div class="ph"><b>placeholder</b> — datas, modalidade, investimento.</div>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Formações</span>
+          <h2 class="r" style="--r:1">Repertórios Sensíveis <em>para a Clínica</em></h2>
+          <p class="sub r" style="--r:2">Formação completa para psicólogas. Arteterapia, corpo e experiência simbólica no manejo clínico.</p>
+        </div>
+        <div class="plate r" style="--r:3">
+          <img src="assets/bg-green.jpg" alt="Formas orgânicas verdes" loading="lazy" />
+          <span class="tag">Turma 2026 · inscrições abertas</span>
+        </div>
+        <div class="foot r" style="--r:4">
+          <a class="btn" href="#">Ver a formação <span class="ar">→</span></a>
         </div>
       </div>
-      <span class="x-hint">skills avulsas</span>
     </div>
 
-    <!-- painel 2: skills avulsas -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">módulos avulsos</span>
-        <h2>Skills<br><em>avulsas</em></h2>
-        <p class="sub">Os 10 temas da formação oferecidos individualmente — um repertório de cada vez.</p>
-        <div class="stack">
-          <div class="ph"><b>placeholder</b> — grade com as 10 skills vendáveis individualmente.</div>
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Módulos avulsos</span>
+          <h2>Skills <em>avulsas</em></h2>
+          <p class="sub">Os 10 temas da formação, oferecidos individualmente — um repertório de cada vez.</p>
         </div>
+        <div class="foot r" style="--r:1"><span class="soon">Grade em breve</span></div>
       </div>
     </div>
 
@@ -648,65 +503,64 @@ h2{
   <!-- ══ 04 · PERCURSOS ══ -->
   <section class="mundo" data-name="Percursos" data-color="var(--laranja)" style="--ac:var(--laranja)">
 
-    <!-- painel 1: PONTE -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Percursos abertos</span>
-        <h2>PONTE —<br><em>projeto<br>de vida</em></h2>
-        <p class="sub">Experiência aberta para grupos e comunidades. Atravessar o presente até o futuro, com beleza.</p>
-        <div class="stack">
-          <div class="card">
-            <div class="body">
-              <div class="t">PONTE — oficina de projeto de vida</div>
-              <div class="m">Experiência aberta · grupos</div>
-            </div>
-            <span class="go">→</span>
-          </div>
-          <div class="ph"><b>placeholder</b> — próxima turma, inscrição.</div>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Percursos abertos</span>
+          <h2 class="r" style="--r:1">PONTE — <em>projeto de vida</em></h2>
+          <p class="sub r" style="--r:2">Experiência aberta para grupos e comunidades. Atravessar o presente até o futuro, com beleza.</p>
+        </div>
+        <div class="plate r" style="--r:3">
+          <img src="assets/bg-orange.jpg" alt="Formas orgânicas laranja" loading="lazy" />
+          <span class="tag">Oficina · grupos</span>
+        </div>
+        <div class="foot r" style="--r:4">
+          <a class="btn" href="#">Conhecer a PONTE <span class="ar">→</span></a>
         </div>
       </div>
-      <span class="x-hint">outros percursos</span>
     </div>
 
-    <!-- painel 2: outros -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">outros percursos</span>
-        <h2>Mais <em>experiências</em></h2>
-        <p class="sub">Workshops, formatos variados, parcerias institucionais.</p>
-        <div class="stack">
-          <div class="ph"><b>placeholder</b> — outros percursos e experiências abertas.</div>
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Outros percursos</span>
+          <h2>Mais <em>experiências</em></h2>
+          <p class="sub">Workshops, formatos variados, parcerias institucionais.</p>
         </div>
+        <div class="foot r" style="--r:1"><span class="soon">Em breve</span></div>
       </div>
     </div>
 
   </section>
 
   <!-- ══ 05 · RECURSOS ══ -->
-  <section class="mundo" data-name="Recursos" data-color="var(--verde)" style="--ac:var(--verde)">
+  <section class="mundo" data-name="Recursos" data-color="var(--roxo)" style="--ac:var(--roxo)">
 
-    <!-- painel 1: biblioteca -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Recursos</span>
-        <h2>Uma biblioteca<br><em>que fica</em></h2>
-        <p class="sub">Exercícios e materiais arteterapêuticos para usar na clínica, na escola ou em casa.</p>
-        <div class="stack">
-          <div class="ph"><b>placeholder</b> — material gratuito. Isca para newsletter.</div>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Recursos</span>
+          <h2 class="r" style="--r:1">Uma biblioteca <em>que fica</em></h2>
+          <p class="sub r" style="--r:2">Exercícios e materiais arteterapêuticos para usar na clínica, na escola ou em casa.</p>
+        </div>
+        <div class="plate r" style="--r:3">
+          <img src="assets/bg-purple.jpg" alt="Formas orgânicas roxo" loading="lazy" />
+          <span class="tag">Material gratuito</span>
+        </div>
+        <div class="foot r" style="--r:4">
+          <a class="btn ghost" href="#">Acessar a biblioteca <span class="ar">→</span></a>
         </div>
       </div>
-      <span class="x-hint">newsletter</span>
     </div>
 
-    <!-- painel 2: newsletter -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">carta semanal</span>
-        <h2>A <em>lista</em></h2>
-        <p class="sub">Um ativo durável, sem algoritmo. A Elaine direto na sua caixa de entrada.</p>
-        <div class="stack">
-          <div class="ph"><b>placeholder</b> — formulário de inscrição. Integração Mailchimp / Substack.</div>
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Carta semanal</span>
+          <h2>A <em>lista</em></h2>
+          <p class="sub">Um ativo durável, sem algoritmo. A Elaine direto na sua caixa de entrada.</p>
         </div>
+        <div class="foot r" style="--r:1"><span class="soon">Inscrição em breve</span></div>
       </div>
     </div>
 
@@ -715,39 +569,32 @@ h2{
   <!-- ══ 06 · QUEM É ══ -->
   <section class="mundo" data-name="Quem é" data-color="var(--amarelo)" style="--ac:var(--amarelo)">
 
-    <!-- painel 1: bio + contato -->
     <div class="panel">
       <div class="inner">
-        <span class="eyebrow">Quem é Elaine</span>
-        <div class="elaine-avatar"><img src="assets/elaine.jpg" alt="Elaine Narcizo" /></div>
-        <h2>Educadora,<br><em>arteterapeuta,</em><br>pesquisadora.</h2>
-        <p class="sub">Mestra em Serviço Social. O pensamento transforma quando encontra o corpo.</p>
-        <div class="stack">
-          <a class="pill box" href="#">Falar no WhatsApp →</a>
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Quem é Elaine</span>
+          <h2 class="r" style="--r:1">Educadora, <em>arteterapeuta,</em> pesquisadora.</h2>
+        </div>
+        <div class="plate r" style="--r:2">
+          <img src="assets/elaine.jpg" alt="Retrato de Elaine Narcizo" loading="lazy" />
+          <span class="tag">Mestra em Serviço Social</span>
+        </div>
+        <div class="foot r" style="--r:3">
+          <a class="btn" href="#">Falar no WhatsApp <span class="ar">→</span></a>
         </div>
       </div>
-      <span class="x-hint">redes</span>
     </div>
 
-    <!-- painel 2: redes -->
     <div class="panel warm">
-      <div class="inner">
-        <span class="panel-label">redes &amp; plataformas</span>
-        <h2>Onde <em>ela está</em></h2>
-        <p class="sub">O pensamento em cada formato.</p>
-        <div class="stack">
-          <div class="card">
-            <div class="body"><div class="t">@elainenarc · Instagram</div><div class="m">Imagens, reels, conversas</div></div>
-            <span class="go">→</span>
-          </div>
-          <div class="card">
-            <div class="body"><div class="t">@elainenarc · YouTube</div><div class="m">Vídeos e lives</div></div>
-            <span class="go">→</span>
-          </div>
-          <div class="card">
-            <div class="body"><div class="t">medium.com/@elainenarcizo</div><div class="m">Artigos, pensamento longo</div></div>
-            <span class="go">→</span>
-          </div>
+      <div class="inner center">
+        <div class="head r" style="--r:0">
+          <span class="eyebrow">Redes &amp; plataformas</span>
+          <h2>Onde <em>ela está</em></h2>
+        </div>
+        <div class="cards r" style="--r:1">
+          <a class="card" href="#"><div class="body"><div class="t">@elainenarc · Instagram</div><div class="m">Imagens, reels, conversas</div></div><span class="go">→</span></a>
+          <a class="card" href="#"><div class="body"><div class="t">@elainenarc · YouTube</div><div class="m">Vídeos e lives</div></div><span class="go">→</span></a>
+          <a class="card" href="#"><div class="body"><div class="t">medium.com/@elainenarcizo</div><div class="m">Pensamento longo</div></div><span class="go">→</span></a>
         </div>
       </div>
     </div>
@@ -756,15 +603,13 @@ h2{
 
 </div><!-- /stage -->
 
-<!-- DOTS: indicador de painéis X -->
+<!-- NAV -->
+<div class="worlds-rail" id="worldsRail"></div>
 <div class="world-dots hidden" id="worldDots"></div>
+<div class="hint" id="hint"><span class="lab">role ↓ · deslize →</span><span class="chev">⌄</span></div>
 
-<!-- BOTÃO HAMBÚRGUER -->
-<button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
-  <i></i><i></i><i></i>
-</button>
-
-<!-- MENU OVERLAY -->
+<!-- MENU -->
+<button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
 <nav class="menu" id="menu" aria-hidden="true">
   <p class="menu-cap">Navegar</p>
   <ul class="menu-list" id="menuList"></ul>
@@ -778,125 +623,130 @@ h2{
 <script>
 (function(){
   'use strict';
-  var stage    = document.getElementById('stage');
-  var dotsEl   = document.getElementById('worldDots');
-  var menu     = document.getElementById('menu');
-  var menuBtn  = document.getElementById('menuBtn');
-  var menuList = document.getElementById('menuList');
-  var mundos   = [].slice.call(stage.querySelectorAll('.mundo'));
-  var cur      = 0;
+  document.documentElement.classList.add('js'); /* só agora o conteúdo fica oculto p/ revelar */
+  try{
+  var stage=document.getElementById('stage');
+  var dotsEl=document.getElementById('worldDots');
+  var railEl=document.getElementById('worldsRail');
+  var hintEl=document.getElementById('hint');
+  var menu=document.getElementById('menu');
+  var menuBtn=document.getElementById('menuBtn');
+  var menuList=document.getElementById('menuList');
+  var mundos=[].slice.call(stage.querySelectorAll('.mundo'));
+  var cur=0, interacted=false;
 
-  /* MENU: gera itens + abre/fecha */
-  mundos.forEach(function(m, i){
-    var li = document.createElement('li');
-    li.className = 'menu-item';
-    li.style.setProperty('--tc', m.dataset.color || 'rgba(255,255,255,0.3)');
-    li.style.setProperty('--i', i);
-    li.innerHTML = '<span class="mi-ord">' + ('0'+i).slice(-2) + '</span>' +
-                   '<span class="mi-name">' + m.dataset.name + '</span>' +
-                   '<span class="mi-dot"></span>';
-    li.addEventListener('click', function(){ goToWorld(i); closeMenu(); });
+  /* MENU + TRILHA: gera itens */
+  mundos.forEach(function(m,i){
+    var li=document.createElement('li');
+    li.className='menu-item';
+    li.style.setProperty('--tc',m.dataset.color||'rgba(255,255,255,0.3)');
+    li.style.setProperty('--i',i);
+    li.innerHTML='<span class="mi-ord">'+('0'+i).slice(-2)+'</span><span class="mi-name">'+m.dataset.name+'</span><span class="mi-dot"></span>';
+    li.addEventListener('click',function(){ goToWorld(i); closeMenu(); });
     menuList.appendChild(li);
+
+    var tick=document.createElement('i');
+    tick.title=m.dataset.name;
+    tick.addEventListener('click',function(){ goToWorld(i); });
+    railEl.appendChild(tick);
   });
-  var items = [].slice.call(menuList.querySelectorAll('.menu-item'));
+  var items=[].slice.call(menuList.querySelectorAll('.menu-item'));
+  var ticks=[].slice.call(railEl.querySelectorAll('i'));
   if(items[0]) items[0].classList.add('current');
+  if(ticks[0]) ticks[0].classList.add('on');
 
-  function openMenu(){
-    menu.classList.add('open'); menuBtn.classList.add('open');
-    menu.setAttribute('aria-hidden','false'); menuBtn.setAttribute('aria-expanded','true');
-  }
-  function closeMenu(){
-    menu.classList.remove('open'); menuBtn.classList.remove('open');
-    menu.setAttribute('aria-hidden','true'); menuBtn.setAttribute('aria-expanded','false');
-  }
-  menuBtn.addEventListener('click', function(){ menu.classList.contains('open') ? closeMenu() : openMenu(); });
-  menu.addEventListener('click', function(e){ if(e.target===menu) closeMenu(); });
+  function openMenu(){ menu.classList.add('open'); menuBtn.classList.add('open'); menu.setAttribute('aria-hidden','false'); menuBtn.setAttribute('aria-expanded','true'); }
+  function closeMenu(){ menu.classList.remove('open'); menuBtn.classList.remove('open'); menu.setAttribute('aria-hidden','true'); menuBtn.setAttribute('aria-expanded','false'); }
+  menuBtn.addEventListener('click',function(){ menu.classList.contains('open')?closeMenu():openMenu(); });
+  menu.addEventListener('click',function(e){ if(e.target===menu) closeMenu(); });
 
-  /* NAVEGAR para um mundo (Y) */
+  /* REVELAÇÃO */
+  function revealPanel(p){ if(p) p.classList.add('is-in'); }
+  function panelAt(m){ var p=m.querySelectorAll('.panel'); return p[Math.round(m.scrollLeft/Math.max(m.clientWidth,1))]; }
+
+  /* NAVEGAR mundo (Y) */
   function goToWorld(i){
-    i = Math.max(0, Math.min(mundos.length-1, i));
-    stage.scrollTo({ top: i * stage.clientHeight, behavior:'smooth' });
-    mundos[i].scrollLeft = 0;
-    cur = i;
+    i=Math.max(0,Math.min(mundos.length-1,i));
+    stage.scrollTo({ top:i*stage.clientHeight, behavior:'smooth' });
+    cur=i; killHint();
   }
 
-  /* INTERSECTION OBSERVER: mundo ativo */
-  var io = new IntersectionObserver(function(entries){
+  /* OBSERVER: mundo ativo */
+  var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting && e.intersectionRatio >= 0.55){
-        var i = mundos.indexOf(e.target); if(i < 0) return;
-        cur = i;
-        items.forEach(function(t,k){ t.classList.toggle('current', k===i); });
-        /* inverte cor dos dots quando mundo hero (fundo escuro) */
-        document.body.classList.toggle('dots-inv', i===0);
-        updateDots(i, getPanelIdx(mundos[i]));
+      if(e.isIntersecting && e.intersectionRatio>=0.55){
+        var i=mundos.indexOf(e.target); if(i<0) return;
+        cur=i;
+        items.forEach(function(t,k){ t.classList.toggle('current',k===i); });
+        ticks.forEach(function(t,k){ t.classList.toggle('on',k===i); });
+        revealPanel(panelAt(mundos[i]));
+        updateDots(i,getPanelIdx(mundos[i]));
       }
     });
-  }, { root:stage, threshold:[0.55,0.8] });
+  },{ root:stage, threshold:[0.55,0.8] });
   mundos.forEach(function(m){ io.observe(m); });
 
-  /* DOTS: indicador horizontal */
+  /* DOTS de painéis */
   function getPanelCount(m){ return m.querySelectorAll('.panel').length; }
-  function getPanelIdx(m){ return Math.round(m.scrollLeft / Math.max(m.clientWidth,1)); }
-  function updateDots(wi, pi){
-    var count = getPanelCount(mundos[wi]);
-    if(count <= 1){ dotsEl.innerHTML=''; dotsEl.classList.add('hidden'); return; }
-    if(dotsEl.children.length !== count){
-      dotsEl.innerHTML='';
-      for(var j=0;j<count;j++) dotsEl.appendChild(document.createElement('span'));
-    }
+  function getPanelIdx(m){ return Math.round(m.scrollLeft/Math.max(m.clientWidth,1)); }
+  function updateDots(wi,pi){
+    var count=getPanelCount(mundos[wi]);
+    if(count<=1){ dotsEl.innerHTML=''; dotsEl.classList.add('hidden'); return; }
+    if(dotsEl.children.length!==count){ dotsEl.innerHTML=''; for(var j=0;j<count;j++) dotsEl.appendChild(document.createElement('span')); }
     dotsEl.classList.remove('hidden');
-    [].forEach.call(dotsEl.children, function(s,k){ s.classList.toggle('active',k===pi); });
+    [].forEach.call(dotsEl.children,function(s,k){ s.classList.toggle('active',k===pi); });
   }
   mundos.forEach(function(m,i){
-    m.addEventListener('scroll', function(){ if(i===cur) updateDots(i, getPanelIdx(m)); }, {passive:true});
+    m.addEventListener('scroll',function(){
+      if(i===cur){ updateDots(i,getPanelIdx(m)); revealPanel(panelAt(m)); killHint(); }
+    },{passive:true});
   });
-  updateDots(0,0);
-  document.body.classList.add('dots-inv'); /* hero é o mundo inicial (fundo escuro) */
 
-  /* SETAS DESKTOP */
-  document.getElementById('prev').addEventListener('click', function(){ goToWorld(cur-1); });
-  document.getElementById('next').addEventListener('click', function(){ goToWorld(cur+1); });
+  /* HINT some na 1ª interação */
+  function killHint(){ if(!interacted){ interacted=true; hintEl.classList.add('gone'); } }
+  stage.addEventListener('scroll',function(){ killHint(); },{passive:true,once:true});
 
-  /* TECLADO */
-  document.addEventListener('keydown', function(e){
+  /* SETAS + TECLADO */
+  document.getElementById('prev').addEventListener('click',function(){ goToWorld(cur-1); });
+  document.getElementById('next').addEventListener('click',function(){ goToWorld(cur+1); });
+  document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){ closeMenu(); return; }
     if(e.key==='ArrowDown'){ e.preventDefault(); goToWorld(cur+1); }
-    if(e.key==='ArrowUp'  ){ e.preventDefault(); goToWorld(cur-1); }
+    if(e.key==='ArrowUp'){ e.preventDefault(); goToWorld(cur-1); }
     if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
       var m=mundos[cur], pi=getPanelIdx(m), n=getPanelCount(m);
-      var to = e.key==='ArrowRight' ? Math.min(pi+1,n-1) : Math.max(pi-1,0);
-      m.scrollTo({ left:to*m.clientWidth, behavior:'smooth' });
+      var to=e.key==='ArrowRight'?Math.min(pi+1,n-1):Math.max(pi-1,0);
+      m.scrollTo({ left:to*m.clientWidth, behavior:'smooth' }); killHint();
     }
   });
 
-  /* JUMPS internos + bar */
+  /* JUMPS + bar */
   document.querySelectorAll('[data-jump]').forEach(function(el){
-    el.addEventListener('click', function(e){ e.preventDefault(); goToWorld(+el.dataset.jump); });
+    el.addEventListener('click',function(e){ e.preventDefault(); goToWorld(+el.dataset.jump); });
   });
-  document.getElementById('bar').addEventListener('click', function(){ goToWorld(2); });
+  document.getElementById('bar').addEventListener('click',function(){ goToWorld(2); });
 
   /* CONTADOR DançaDestino */
   function nextFriday(){
     var now=new Date(), d=new Date(now);
-    var diff=(5-d.getDay()+7)%7;
-    d.setDate(d.getDate()+diff); d.setHours(20,0,0,0);
-    if(d.getTime()<=now.getTime()){
-      if(now.getDay()===5&&now.getHours()>=21){ d.setDate(d.getDate()+7); }
-      else if(now.getDay()!==5){ d.setDate(d.getDate()+7); }
-    }
+    d.setDate(d.getDate()+(5-d.getDay()+7)%7); d.setHours(20,0,0,0);
+    if(d.getTime()<=now.getTime()) d.setDate(d.getDate()+7); /* já passou as 20h → próxima sexta */
     return d;
   }
   function isLive(){ var n=new Date(); return n.getDay()===5&&n.getHours()>=20&&n.getHours()<21; }
   function tick(){
     var box=document.getElementById('clockBox'); if(!box) return;
-    if(isLive()){ box.innerHTML='<div class="now-live"><i></i> Acontecendo agora — dance com a gente</div>'; return; }
+    if(isLive()){ box.innerHTML='<div class="now-live"><i></i><b>Acontecendo agora</b><span class="clock-cap">dance com a gente</span></div>'; return; }
     var t=nextFriday()-new Date();
     var dd=Math.floor(t/86400000), hh=Math.floor(t%86400000/3600000), mm=Math.floor(t%3600000/60000);
-    var ed=document.getElementById('cd-d'), eh=document.getElementById('cd-h'), em=document.getElementById('cd-m');
-    if(ed){ ed.textContent=dd; eh.textContent=hh; em.textContent=mm; }
+    var ed=document.getElementById('cd-d'); if(ed){ ed.textContent=dd; document.getElementById('cd-h').textContent=hh; document.getElementById('cd-m').textContent=mm; }
   }
   tick(); setInterval(tick,30000);
+
+  /* primeira revelação — setTimeout dispara mesmo em aba não-visível (rAF não) */
+  setTimeout(function(){ revealPanel(mundos[0].querySelector('.panel')); },30);
+
+  }catch(err){ document.documentElement.classList.remove('js'); } /* falha → mostra tudo */
 })();
 </script>
 </body>
