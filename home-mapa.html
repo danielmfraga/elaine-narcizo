@@ -3,27 +3,28 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Elaine Narcizo — mapa (esqueleto)</title>
-<meta name="description" content="Esqueleto de navegação por mundos — protótipo." />
+<title>Elaine Narcizo — mapa</title>
+<meta name="description" content="Elaine Narcizo — educadora, arteterapeuta, pesquisadora." />
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=DM+Sans:opsz,wght@9..40,300..700&family=Caveat:wght@500..700&display=swap" rel="stylesheet">
 
 <style>
 /* =========================================================
-   ELAINE NARCIZO — HOME MAPA (esqueleto de navegação)
-   Protótipo: hero-lançamento + mundos em swipe lateral + dock flutuante.
-   Mobile-first. Conteúdo é placeholder rotulado por propósito.
+   ELAINE NARCIZO — HOME MAPA v2
+   Navegação 2D:
+     Y (vertical)  → mundos empilhados, scroll-snap = nova tela
+     X (horizontal) → painéis de exploração dentro de cada mundo
+   Mobile-first. touch-action separa os eixos de forma limpa.
    ========================================================= */
 :root{
   --cream-50:#FBF5EE; --cream-100:#F5EBDE; --cream-200:#EFDFCB; --cream-300:#E6CFB1;
   --ink-900:#1E1B16; --ink-700:#3C3730; --ink-500:#6C645A; --ink-300:#A89F92;
-  --verde-500:#A8B73F; --verde-900:#444B18;
-  --laranja-500:#E87A32; --laranja-900:#5E2A07;
-  --amarelo-500:#F5D731; --amarelo-700:#C2A40C;
-  --rosa-500:#EC8FE0; --rosa-900:#61264F;
+  --verde-500:#A8B73F;
+  --laranja-500:#E87A32;
+  --amarelo-700:#C2A40C;
+  --rosa-500:#EC8FE0;
   --brega-roxo:#5B2D8E; --brega-amarelo:#F2C200;
 
   --bg:var(--cream-100); --fg:var(--ink-900); --fg-2:var(--ink-700); --fg-3:var(--ink-500); --fg-mute:var(--ink-300);
@@ -34,161 +35,223 @@
   --font-hand:"Caveat",cursive;
 
   --ease-out:cubic-bezier(0.16,1,0.3,1);
-  --dur-2:320ms; --dur-3:560ms;
-  --bar-top:34px;       /* faixa de lançamento */
-  --dock-h:74px;        /* dock flutuante */
+  --dur-2:320ms;
+  --bar-top:34px;
+  --dock-h:74px;
 }
 *{box-sizing:border-box;}
-html,body{margin:0; height:100%;}
-body{
-  font-family:var(--font-body); color:var(--fg); background:var(--ink-900);
-  -webkit-font-smoothing:antialiased; overflow:hidden; overscroll-behavior:none;
-}
-h1,h2,h3,h4{font-family:var(--font-display); font-weight:300; line-height:1.04; letter-spacing:-0.02em; margin:0; text-wrap:balance;}
+html,body{margin:0; height:100%; overflow:hidden;}
+body{font-family:var(--font-body); color:var(--fg); -webkit-font-smoothing:antialiased; overscroll-behavior:none;}
+h1,h2,h3{font-family:var(--font-display); font-weight:300; line-height:1.04; letter-spacing:-0.02em; margin:0; text-wrap:balance;}
 p{margin:0; text-wrap:pretty;}
 a{color:inherit; text-decoration:none;}
-img{display:block; max-width:100%;}
 .hand{font-family:var(--font-hand);}
 
-/* ---------- STAGE: viewport travada ---------- */
-.stage{position:fixed; inset:0; display:flex; flex-direction:column; height:100vh; height:100dvh;}
-
-/* ---------- FAIXA DE LANÇAMENTO (marquee) ---------- */
+/* ── BAR ── */
 .bar{
-  flex:0 0 auto; height:var(--bar-top); z-index:40; position:relative;
-  background:var(--ink-900); color:var(--cream-100);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  position:fixed; top:0; left:0; right:0; height:var(--bar-top); z-index:60;
+  background:var(--ink-900); border-bottom:1px solid rgba(255,255,255,0.08);
   display:flex; align-items:center; overflow:hidden; cursor:pointer;
 }
-.bar .track{display:inline-flex; white-space:nowrap; will-change:transform; animation:marquee 26s linear infinite;}
+.bar .track{display:inline-flex; white-space:nowrap; animation:marquee 28s linear infinite;}
 .bar:hover .track{animation-play-state:paused;}
 .bar .track span{
   display:inline-flex; align-items:center; gap:10px; padding:0 28px;
-  font-size:0.74rem; letter-spacing:0.10em; text-transform:uppercase; color:var(--cream-200);
+  font-size:0.73rem; letter-spacing:0.10em; text-transform:uppercase; color:var(--cream-200);
 }
 .bar .track span b{color:var(--brega-amarelo); font-weight:600;}
-.bar .track .live{width:7px; height:7px; border-radius:50%; background:#FF5A4D; box-shadow:0 0 0 0 rgba(255,90,77,0.6); animation:pulse 1.8s var(--ease-out) infinite;}
+.bar .live{width:7px; height:7px; border-radius:50%; background:#FF5A4D; animation:pulse 1.8s var(--ease-out) infinite;}
 @keyframes marquee{to{transform:translateX(-50%);}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,90,77,0.55);}70%,100%{box-shadow:0 0 0 7px rgba(255,90,77,0);}}
 
-/* ---------- DECK: mundos em swipe horizontal ---------- */
-.deck{
-  flex:1 1 auto; display:flex; min-height:0;
-  overflow-x:auto; overflow-y:hidden;
-  scroll-snap-type:x mandatory; scroll-behavior:smooth;
-  -webkit-overflow-scrolling:touch; scrollbar-width:none;
+/* ── STAGE: container Y (mundos empilhados) ── */
+.stage{
+  position:fixed;
+  top:var(--bar-top); left:0; right:0; bottom:var(--dock-h);
+  overflow-y:scroll; overflow-x:hidden;
+  scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  touch-action:pan-y; /* eixo vertical pertence ao stage */
 }
-.deck::-webkit-scrollbar{display:none;}
+.stage::-webkit-scrollbar{display:none;}
 
+/* ── MUNDO: linha horizontal de painéis ── */
 .mundo{
-  flex:0 0 87vw; height:100%; scroll-snap-align:center;
-  overflow-y:auto; overflow-x:hidden; scrollbar-width:none;
-  position:relative; background:var(--bg);
-  border-radius:18px; margin:8px 5px; box-shadow:0 18px 50px -28px rgba(0,0,0,0.6);
+  width:100%;
+  height:100%;
+  display:flex;
+  overflow-x:scroll; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-snap-align:start;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x; /* eixo horizontal pertence ao mundo */
+  position:relative;
 }
 .mundo::-webkit-scrollbar{display:none;}
-.mundo:first-child{margin-left:10px;}
-.mundo:last-child{margin-right:10px;}
-.mundo .inner{
-  min-height:100%; display:flex; flex-direction:column;
-  padding:clamp(22px,6vw,40px) clamp(20px,6vw,40px) calc(var(--dock-h) + 26px);
+
+/* ── PANEL: tela individual ── */
+.panel{
+  flex:0 0 100%;
+  height:100%;
+  scroll-snap-align:start;
+  overflow:hidden;
+  position:relative;
+  background:var(--bg);
+}
+.panel.dark{background:var(--ink-900); color:var(--cream-100);}
+.panel.tinted{background:color-mix(in srgb,var(--c,var(--brega-roxo)) 8%,var(--cream-50));}
+.panel.accent{background:var(--c,var(--brega-roxo)); color:var(--cream-50);}
+
+/* ── INNER: layout de conteúdo ── */
+.inner{
+  height:100%;
+  display:flex; flex-direction:column;
+  padding:clamp(22px,5.5vw,42px) clamp(20px,5.5vw,42px) 28px;
 }
 
-/* a cor de cada mundo entra como acento */
-.mundo .eyebrow{
-  font-size:0.72rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
-  color:var(--c,var(--fg-3)); display:inline-flex; align-items:center; gap:10px; margin-bottom:auto;
+/* ── TIPOGRAFIA / COMUNS ── */
+.eyebrow{
+  font-size:0.71rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--c,var(--fg-3)); display:inline-flex; align-items:center; gap:10px;
 }
-.mundo .eyebrow::before{content:""; width:22px; height:2px; background:currentColor;}
-.mundo .ord{margin-left:auto; color:var(--fg-mute); font-variant-numeric:tabular-nums; letter-spacing:0.04em;}
-.mundo .head-row{display:flex; align-items:center; gap:12px; margin-bottom:26px;}
-.mundo h2{font-size:clamp(2.1rem,9vw,3.2rem); color:var(--fg); margin-top:14px;}
-.mundo .sub{font-family:var(--font-display); font-size:1.12rem; line-height:1.5; color:var(--fg-2); max-width:34ch; margin-top:16px;}
+.eyebrow::before{content:""; width:22px; height:2px; background:currentColor; flex-shrink:0;}
+.ord{color:var(--fg-mute); font-size:0.78rem; letter-spacing:0.04em;}
+.head-row{display:flex; align-items:center; justify-content:space-between;}
+h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
+.sub{font-family:var(--font-display); font-style:italic; font-size:1.03rem; line-height:1.52; color:var(--fg-2); max-width:36ch; margin-top:12px;}
 
-/* blocos placeholder */
-.stack{display:flex; flex-direction:column; gap:12px; margin-top:30px;}
+/* panel label (exploração) */
+.panel-label{
+  font-size:0.69rem; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--c,var(--fg-3)); display:flex; align-items:center; gap:7px; margin-bottom:4px;
+}
+.panel-label::before{content:"→"; font-size:0.9rem;}
+
+/* ── BLOCOS ── */
+.stack{display:flex; flex-direction:column; gap:11px; margin-top:auto; padding-top:26px;}
 .card{
-  border:1px solid var(--line-med); border-radius:14px; padding:18px 20px; background:var(--cream-50);
-  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  border:1px solid var(--line-med); border-radius:14px; padding:16px 18px; background:var(--cream-50);
+  display:flex; align-items:center; gap:14px; cursor:pointer;
+  transition:background var(--dur-2);
 }
-.card .t{font-family:var(--font-display); font-size:1.12rem; line-height:1.2;}
-.card .m{font-size:0.78rem; color:var(--fg-3); letter-spacing:0.04em; margin-top:4px;}
-.card .go{flex:0 0 auto; width:34px; height:34px; border-radius:50%; border:1px solid var(--line-med); display:grid; place-items:center; color:var(--fg-2);}
-.pill{display:inline-flex; align-items:center; gap:9px; align-self:flex-start; padding:9px 16px; border-radius:999px; font-size:0.8rem; font-weight:600; letter-spacing:0.03em;}
+.card:active{background:var(--cream-200);}
+.card .body{flex:1;}
+.card .t{font-family:var(--font-display); font-size:1.08rem; line-height:1.22;}
+.card .m{font-size:0.74rem; color:var(--fg-3); margin-top:3px;}
+.card .go{flex:0 0 34px; height:34px; border-radius:50%; border:1px solid var(--line-med); display:grid; place-items:center; color:var(--fg-2); font-size:17px;}
+.pill{display:inline-flex; align-items:center; gap:8px; align-self:flex-start; padding:9px 16px; border-radius:999px; font-size:0.8rem; font-weight:600; cursor:pointer;}
 .pill.solid{background:var(--c,var(--ink-900)); color:#fff;}
-.pill.ghost{border:1px solid var(--line-med); color:var(--fg-2);}
-.ph{border:1px dashed var(--line-med); border-radius:12px; padding:16px; color:var(--fg-3); font-size:0.82rem; letter-spacing:0.02em; background:rgba(0,0,0,0.015);}
+.pill.outline{border:1px solid var(--line-med); color:var(--fg-2);}
+.pill.yellow{background:var(--brega-amarelo); color:var(--ink-900);}
+.ph{border:1px dashed var(--line-med); border-radius:12px; padding:14px; color:var(--fg-3); font-size:0.79rem; background:rgba(0,0,0,0.018);}
 .ph b{color:var(--fg-2); font-weight:600;}
 
-/* hero (mundo 0) tem fundo escuro */
-.mundo.hero{background:var(--ink-900);}
-.mundo.hero .inner{color:var(--cream-100);}
-.mundo.hero .eyebrow{color:var(--brega-amarelo);}
-.mundo.hero h1{font-size:clamp(2.6rem,12vw,4rem); color:var(--cream-50); line-height:0.98;}
-.mundo.hero .role{margin-top:16px; font-size:0.78rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream-300);}
-.mundo.hero .launch{
-  margin-top:30px; border:1px solid rgba(255,255,255,0.16); border-radius:16px; padding:18px 20px;
-  background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0));
+/* ── HERO ── */
+.panel.dark h1{font-size:clamp(2.5rem,11.5vw,4.2rem); color:var(--cream-50); line-height:0.97;}
+.panel.dark .role{margin-top:12px; font-size:0.74rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream-300);}
+.panel.dark .eyebrow{color:var(--brega-amarelo);}
+.hero-cta{
+  margin-top:auto;
+  border:1px solid rgba(255,255,255,0.14); border-radius:16px; padding:18px 20px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0) 100%);
 }
-.mundo.hero .launch .k{font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--brega-amarelo); display:flex; align-items:center; gap:8px; margin-bottom:9px;}
-.mundo.hero .launch .k i{width:7px; height:7px; border-radius:50%; background:#FF5A4D; animation:pulse 1.8s var(--ease-out) infinite;}
-.mundo.hero .launch h3{font-size:1.45rem; color:var(--cream-50);}
-.mundo.hero .launch .cta{display:inline-flex; align-items:center; gap:10px; margin-top:14px; padding:11px 20px; background:var(--brega-amarelo); color:var(--ink-900); border-radius:999px; font-weight:600; font-size:0.9rem;}
-.mundo.hero .swipe{margin-top:auto; padding-top:30px; font-size:0.74rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream-300); display:flex; align-items:center; gap:12px;}
-.mundo.hero .swipe .arr{display:inline-flex; gap:3px;}
-.mundo.hero .swipe .arr span{animation:slide 1.5s var(--ease-out) infinite;}
-.mundo.hero .swipe .arr span:nth-child(2){animation-delay:0.12s; opacity:0.6;}
-.mundo.hero .swipe .arr span:nth-child(3){animation-delay:0.24s; opacity:0.3;}
-@keyframes slide{0%,100%{transform:translateX(0);}50%{transform:translateX(5px);}}
+.hero-cta .k{font-size:0.69rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--brega-amarelo); display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+.hero-cta .k i{width:7px; height:7px; border-radius:50%; background:#FF5A4D; animation:pulse 1.8s var(--ease-out) infinite;}
+.hero-cta h3{font-size:1.38rem; color:var(--cream-50);}
+.hero-cta .btn{display:inline-flex; align-items:center; gap:9px; margin-top:14px; padding:11px 20px; background:var(--brega-amarelo); color:var(--ink-900); border-radius:999px; font-weight:600; font-size:0.88rem; cursor:pointer;}
+.scroll-hint{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-top:20px; font-size:0.68rem; letter-spacing:0.13em; text-transform:uppercase; color:var(--cream-300);
+}
+.arr-y,.arr-x{display:inline-flex; gap:2px; margin-left:5px;}
+.arr-y{flex-direction:column;}
+.arr-y span{animation:slideY 1.5s var(--ease-out) infinite;}
+.arr-y span:nth-child(2){animation-delay:.12s; opacity:.6;}
+.arr-y span:nth-child(3){animation-delay:.24s; opacity:.3;}
+.arr-x span{animation:slideX 1.5s var(--ease-out) infinite;}
+.arr-x span:nth-child(2){animation-delay:.12s; opacity:.6;}
+.arr-x span:nth-child(3){animation-delay:.24s; opacity:.3;}
+@keyframes slideY{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+@keyframes slideX{0%,100%{transform:translateX(0);}50%{transform:translateX(4px);}}
 
-/* DançaDestino — contador + ritual */
-.ritual{margin-top:28px; display:flex; flex-direction:column; gap:18px;}
+/* explore hint (canto inferior direito do painel principal) */
+.x-hint{
+  position:absolute; bottom:20px; right:20px;
+  font-size:0.66rem; letter-spacing:0.13em; text-transform:uppercase;
+  color:var(--c,var(--fg-3)); opacity:.65;
+  display:flex; align-items:center; gap:5px; pointer-events:none;
+}
+.x-hint::after{content:"›"; font-size:1rem;}
+
+/* ── DançaDestino ── */
+.ritual{display:flex; flex-direction:column; gap:14px; margin-top:auto; padding-top:22px;}
 .clock{display:flex; gap:10px;}
-.clock .u{flex:1; text-align:center; border:1px solid var(--line-med); border-radius:12px; padding:14px 6px; background:var(--cream-50);}
-.clock .u b{display:block; font-family:var(--font-display); font-size:1.9rem; line-height:1; color:var(--brega-roxo); font-variant-numeric:tabular-nums;}
-.clock .u span{font-size:0.64rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3); margin-top:6px; display:block;}
+.clock .u{flex:1; text-align:center; border:1px solid var(--line-med); border-radius:12px; padding:14px 4px; background:var(--cream-50);}
+.clock .u b{display:block; font-family:var(--font-display); font-size:1.85rem; line-height:1; color:var(--brega-roxo); font-variant-numeric:tabular-nums;}
+.clock .u span{font-size:0.61rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3); margin-top:6px; display:block;}
 .now-live{border:1px solid var(--brega-roxo); background:color-mix(in srgb,var(--brega-roxo) 10%,transparent); color:var(--brega-roxo); border-radius:12px; padding:14px 16px; font-weight:600; display:flex; align-items:center; gap:10px;}
 .now-live i{width:9px; height:9px; border-radius:50%; background:var(--brega-roxo); animation:pulse 1.6s var(--ease-out) infinite;}
-.song{display:flex; align-items:center; gap:14px; border:1px solid var(--line-med); border-radius:14px; padding:14px 16px; background:var(--cream-50);}
-.song .disc{width:42px; height:42px; border-radius:50%; flex:0 0 auto; background:radial-gradient(circle at center,var(--cream-50) 0 12%,var(--laranja-500) 13% 26%,var(--ink-900) 27% 100%); animation:spin 5s linear infinite;}
+.song{display:flex; align-items:center; gap:13px; border:1px solid var(--line-med); border-radius:14px; padding:13px 15px; background:var(--cream-50);}
+.disc{width:40px; height:40px; border-radius:50%; flex:0 0 auto; background:radial-gradient(circle at center,var(--cream-50) 0 12%,var(--laranja-500) 13% 26%,var(--ink-900) 27% 100%); animation:spin 5s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.song .info{flex:1;}
-.song .info .l{font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3);}
-.song .info .t{font-family:var(--font-display); font-size:1.1rem;}
+.song .info .l{font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3);}
+.song .info .t{font-family:var(--font-display); font-size:1.05rem; margin-top:2px;}
 
-/* ---------- DOCK FLUTUANTE ---------- */
+/* ── DOTS: indicador de painéis X ── */
+.world-dots{
+  position:fixed; left:50%; bottom:calc(var(--dock-h) + 11px);
+  transform:translateX(-50%);
+  display:flex; gap:7px; z-index:55; pointer-events:none;
+  transition:opacity var(--dur-2);
+}
+.world-dots.hidden{opacity:0;}
+.world-dots span{
+  display:block; width:7px; height:7px; border-radius:50%;
+  background:rgba(255,255,255,0.38);
+  box-shadow:0 1px 4px rgba(0,0,0,0.35);
+  transition:width var(--dur-2) var(--ease-out), border-radius var(--dur-2), background var(--dur-2);
+}
+.world-dots span.active{width:20px; border-radius:4px; background:rgba(255,255,255,0.9);}
+
+/* ── DOCK ── */
 .dock{
   position:fixed; left:0; right:0; bottom:0; z-index:50; height:var(--dock-h);
   display:flex; align-items:center; gap:8px; padding:0 12px 8px;
   overflow-x:auto; scrollbar-width:none;
-  background:linear-gradient(0deg,var(--ink-900) 40%,transparent);
+  background:linear-gradient(0deg,var(--ink-900) 60%,transparent);
 }
 .dock::-webkit-scrollbar{display:none;}
 .tab{
   flex:0 0 auto; display:inline-flex; align-items:center; gap:8px;
-  padding:9px 15px; border-radius:999px; cursor:pointer; border:1px solid rgba(255,255,255,0.14);
-  background:rgba(255,255,255,0.04); color:var(--cream-200); font-size:0.78rem; letter-spacing:0.02em;
-  transition:background var(--dur-2) var(--ease-out),color var(--dur-2),border-color var(--dur-2),transform var(--dur-2);
-  white-space:nowrap;
+  padding:9px 15px; border-radius:999px; cursor:pointer;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.04); color:var(--cream-200);
+  font-size:0.77rem; letter-spacing:0.02em; white-space:nowrap;
+  transition:background var(--dur-2),color var(--dur-2),border-color var(--dur-2),transform var(--dur-2);
 }
 .tab .dot{width:8px; height:8px; border-radius:50%; background:var(--tc,var(--cream-300)); flex:0 0 auto;}
 .tab:hover{background:rgba(255,255,255,0.10); color:#fff;}
 .tab.active{background:var(--cream-50); color:var(--ink-900); border-color:var(--cream-50); transform:translateY(-2px);}
 .tab.active .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--tc) 35%,transparent);}
 
-/* ---------- SETAS (desktop) ---------- */
+/* ── SETAS DESKTOP (vertical) ── */
 .nav-arrow{
-  display:none; position:fixed; top:50%; transform:translateY(-50%); z-index:45;
-  width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,0.18);
-  background:rgba(30,27,22,0.55); backdrop-filter:blur(6px); color:var(--cream-50);
-  align-items:center; justify-content:center; cursor:pointer; font-size:20px;
+  display:none; position:fixed; right:18px; z-index:55;
+  width:44px; height:44px; border-radius:50%;
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(30,27,22,0.55); backdrop-filter:blur(6px);
+  color:var(--cream-50); font-size:19px;
+  align-items:center; justify-content:center; cursor:pointer;
   transition:background var(--dur-2),transform var(--dur-2);
 }
 .nav-arrow:hover{background:rgba(30,27,22,0.85);}
-.nav-arrow.prev{left:14px;} .nav-arrow.next{right:14px;}
+.nav-arrow.up{top:calc(var(--bar-top) + 12px);}
+.nav-arrow.down{bottom:calc(var(--dock-h) + 12px);}
 
 @media(min-width:900px){
-  .mundo{flex:0 0 min(560px,62vw);}
   .nav-arrow{display:flex;}
   .dock{justify-content:center;}
 }
@@ -199,59 +262,81 @@ img{display:block; max-width:100%;}
 </head>
 <body>
 
-<div class="stage">
-
-  <!-- FAIXA DE LANÇAMENTO -->
-  <div class="bar" id="bar" title="ver lançamento">
-    <div class="track">
-      <span><i class="live"></i> <b>Inscrições abertas</b> — Repertórios Sensíveis para a Clínica · 2026</span>
-      <span>✦ Toda sexta, 20h — <b>DançaDestino</b>, um ritual para nosso tempo</span>
-      <span><i class="live"></i> <b>Inscrições abertas</b> — Repertórios Sensíveis para a Clínica · 2026</span>
-      <span>✦ Toda sexta, 20h — <b>DançaDestino</b>, um ritual para nosso tempo</span>
-    </div>
+<!-- ═══════════════════ BAR ═══════════════════ -->
+<div class="bar" id="bar">
+  <div class="track">
+    <span><i class="live"></i> <b>Inscrições abertas</b> — Repertórios Sensíveis para a Clínica · 2026</span>
+    <span>✦ Toda sexta, 20h — <b>DançaDestino</b>, um ritual para nosso tempo</span>
+    <span><i class="live"></i> <b>Inscrições abertas</b> — Repertórios Sensíveis para a Clínica · 2026</span>
+    <span>✦ Toda sexta, 20h — <b>DançaDestino</b>, um ritual para nosso tempo</span>
   </div>
+</div>
 
-  <!-- DECK DE MUNDOS -->
-  <div class="deck" id="deck">
+<!-- ═══════════════════ STAGE (Y) ═══════════════════ -->
+<div class="stage" id="stage">
 
-    <!-- 0 · HERO / AGORA -->
-    <section class="mundo hero" data-name="Início" data-color="var(--brega-amarelo)">
+  <!-- ══ 00 · INÍCIO ══ -->
+  <section class="mundo" data-name="Início" data-color="var(--brega-amarelo)">
+    <div class="panel dark">
       <div class="inner">
-        <div class="head-row"><span class="eyebrow">Elaine Narcizo</span><span class="ord">00</span></div>
+        <div class="head-row">
+          <span class="eyebrow">Elaine Narcizo</span>
+          <span class="ord">00</span>
+        </div>
         <h1>Tem muita <span class="hand">vida</span> acontecendo aqui.</h1>
         <p class="role">Educadora · Arteterapeuta · Pesquisadora</p>
-
-        <div class="launch">
+        <div class="hero-cta">
           <div class="k"><i></i> Acontecendo agora</div>
           <h3>Repertórios Sensíveis para a Clínica — turma 2026</h3>
-          <a class="cta" href="#" data-jump="3">Ver a formação →</a>
+          <a class="btn" href="#" data-jump="3">Ver a formação →</a>
         </div>
-
-        <p class="swipe">arraste para conhecer os mundos <span class="arr"><span>›</span><span>›</span><span>›</span></span></p>
+        <div class="scroll-hint">
+          <span>role para explorar <span class="arr-y"><span>↓</span><span>↓</span><span>↓</span></span></span>
+          <span>deslize cada mundo <span class="arr-x"><span>›</span><span>›</span><span>›</span></span></span>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 1 · ESCRITOS & VOZ -->
-    <section class="mundo" data-name="Escritos &amp; Voz" data-color="var(--laranja-500)" style="--c:var(--laranja-500)">
+  <!-- ══ 01 · ESCRITOS & VOZ ══ -->
+  <section class="mundo" data-name="Escritos &amp; Voz" data-color="var(--laranja-500)" style="--c:var(--laranja-500)">
+    <!-- painel 1: destaques -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Densidade &amp; autoridade</span><span class="ord">01</span></div>
         <h2>Escritos &amp; Voz</h2>
-        <p class="sub">O pensamento da Elaine em texto e em áudio — os artigos do Medium e o podcast onde ela mesma os lê.</p>
+        <p class="sub">O pensamento da Elaine em texto e em áudio.</p>
         <div class="stack">
-          <div class="card"><div><div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div><div class="m">Texto · Fev 2026</div></div><div class="go">→</div></div>
-          <div class="card"><div><div class="t">Descanso e mulheres</div><div class="m">Texto · Jan 2026</div></div><div class="go">→</div></div>
-          <span class="pill solid">▸ Ouvir o podcast no Spotify</span>
-          <div class="ph"><b>placeholder</b> — aqui entra o feed dos textos + player do podcast. Decidir: vira página própria (<i>/escritos</i>)?</div>
+          <div class="card"><div class="body"><div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div><div class="m">Texto · Fev 2026</div></div><div class="go">→</div></div>
+          <div class="card"><div class="body"><div class="t">Descanso e mulheres</div><div class="m">Texto · Jan 2026</div></div><div class="go">→</div></div>
+          <span class="pill solid">▸ Ouvir no Spotify</span>
         </div>
       </div>
-    </section>
+      <span class="x-hint">arquivo</span>
+    </div>
+    <!-- painel 2: arquivo -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">arquivo de escritos</span>
+        <h2>Mais textos</h2>
+        <p class="sub">Tudo que a Elaine publicou, do mais recente ao mais antigo.</p>
+        <div class="stack">
+          <div class="card"><div class="body"><div class="t">A pergunta que move</div><div class="m">Texto · Dez 2025</div></div><div class="go">→</div></div>
+          <div class="card"><div class="body"><div class="t">Ver todos no Medium →</div><div class="m">medium.com/@elainenarcizo</div></div><div class="go">→</div></div>
+          <div class="ph"><b>placeholder</b> — feed completo via RSS ou curadoria manual.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 2 · DANÇADESTINO -->
-    <section class="mundo" data-name="DançaDestino" data-color="var(--brega-roxo)" style="--c:var(--brega-roxo)">
+  <!-- ══ 02 · DANÇADESTINO ══ -->
+  <section class="mundo" data-name="DançaDestino" data-color="var(--brega-roxo)" style="--c:var(--brega-roxo)">
+    <!-- painel 1: ritual + countdown -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Movimento &amp; comunidade</span><span class="ord">02</span></div>
         <h2>DançaDestino</h2>
-        <p class="sub">Um ritual para nosso tempo. Você dança, onde estiver. Sem câmeras, sem telas — só o movimento e a sensação de que não está sozinha.</p>
+        <p class="sub">Toda sexta, 20h. Você dança onde estiver. Sem câmeras — só o movimento e a sensação de não estar sozinha.</p>
         <div class="ritual">
           <div id="clockBox">
             <div class="clock">
@@ -260,159 +345,326 @@ img{display:block; max-width:100%;}
               <div class="u"><b id="cd-m">–</b><span>min</span></div>
             </div>
           </div>
-          <div class="song">
-            <span class="disc"></span>
-            <div class="info"><div class="l">Música desta semana</div><div class="t">One River</div></div>
-            <span class="pill ghost">▸ Ouvir</span>
-          </div>
-          <div class="ph"><b>placeholder</b> — porta de entrada do ritual. <i>Existe grupo (WhatsApp/Telegram)?</i> Se sim, o botão leva pra lá.</div>
+          <div class="ph"><b>placeholder</b> — botão para entrar no grupo / ritual. Existe WhatsApp/Telegram?</div>
         </div>
       </div>
-    </section>
+      <span class="x-hint">música</span>
+    </div>
+    <!-- painel 2: música da semana -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">música desta semana</span>
+        <h2>A trilha do ritual</h2>
+        <p class="sub">Curadoria semanal da Elaine para acompanhar o DançaDestino.</p>
+        <div class="stack">
+          <div class="song">
+            <span class="disc"></span>
+            <div class="info"><div class="l">Semana 35 · DançaDestino</div><div class="t">One River</div></div>
+            <span class="pill outline">▸ Ouvir</span>
+          </div>
+          <div class="ph"><b>placeholder</b> — arquivo das 35 semanas de curadoria.</div>
+        </div>
+      </div>
+      <span class="x-hint" style="--c:var(--brega-roxo)">comunidade</span>
+    </div>
+    <!-- painel 3: comunidade -->
+    <div class="panel accent">
+      <div class="inner">
+        <span class="panel-label" style="color:rgba(255,255,255,0.55);">comunidade</span>
+        <h2 style="color:var(--cream-50); margin-top:12px;">Dance com a gente</h2>
+        <p class="sub" style="color:rgba(255,255,255,0.72); margin-top:12px;">Há algo que só se sente em movimento coletivo, mesmo à distância. Quem já dança sabe.</p>
+        <div class="stack">
+          <div class="ph" style="border-color:rgba(255,255,255,0.2); color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.06);">
+            <b style="color:rgba(255,255,255,0.8);">placeholder</b> — botão de entrada no grupo + quantas pessoas já dançam.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 3 · FORMAÇÕES -->
-    <section class="mundo" data-name="Formações" data-color="var(--verde-500)" style="--c:var(--verde-500)">
+  <!-- ══ 03 · FORMAÇÕES ══ -->
+  <section class="mundo" data-name="Formações" data-color="var(--verde-500)" style="--c:var(--verde-500)">
+    <!-- painel 1: Repertórios Sensíveis -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Formações · comercial</span><span class="ord">03</span></div>
         <h2>Formações</h2>
-        <p class="sub">Os percursos de aprendizado da Elaine — do completo ao módulo avulso, para quem quer um repertório de cada vez.</p>
+        <p class="sub">Os percursos de aprendizado da Elaine — do completo ao módulo avulso.</p>
         <div class="stack">
-          <div class="card"><div><div class="t">Repertórios Sensíveis para a Clínica</div><div class="m">Formação completa · psicólogas · 2026</div></div><div class="go">→</div></div>
-          <div class="card"><div><div class="t">Skills avulsas</div><div class="m">Os 10 temas, oferecidos individualmente</div></div><div class="go">→</div></div>
-          <div class="ph"><b>placeholder</b> — comercial forte aqui. Cada skill pode virar um card vendável.</div>
+          <div class="card"><div class="body"><div class="t">Repertórios Sensíveis para a Clínica</div><div class="m">Formação completa · psicólogas · 2026</div></div><div class="go">→</div></div>
+          <div class="ph"><b>placeholder</b> — descrição da formação, datas, inscrição.</div>
         </div>
       </div>
-    </section>
+      <span class="x-hint">skills avulsas</span>
+    </div>
+    <!-- painel 2: skills avulsas -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">módulos avulsos</span>
+        <h2>Skills avulsas</h2>
+        <p class="sub">Os 10 temas da formação, oferecidos individualmente.</p>
+        <div class="stack">
+          <div class="ph"><b>placeholder</b> — grade das 10 skills vendáveis individualmente.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 4 · PERCURSOS -->
-    <section class="mundo" data-name="Percursos" data-color="var(--amarelo-700)" style="--c:var(--amarelo-700)">
+  <!-- ══ 04 · PERCURSOS ══ -->
+  <section class="mundo" data-name="Percursos" data-color="var(--amarelo-700)" style="--c:var(--amarelo-700)">
+    <!-- painel 1: PONTE -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Utilidade pública</span><span class="ord">04</span></div>
         <h2>Percursos</h2>
-        <p class="sub">Experiências abertas, pensadas para grupos e comunidades. Atravessar o presente até o futuro, com beleza.</p>
+        <p class="sub">Experiências abertas para grupos e comunidades. Atravessar o presente com beleza.</p>
         <div class="stack">
-          <div class="card"><div><div class="t">PONTE</div><div class="m">Oficina de projetos de vida</div></div><div class="go">→</div></div>
-          <div class="ph"><b>placeholder</b> — PONTE e outros percursos de utilidade pública.</div>
+          <div class="card"><div class="body"><div class="t">PONTE — Projeto de vida</div><div class="m">Oficina aberta · grupos</div></div><div class="go">→</div></div>
+          <div class="ph"><b>placeholder</b> — PONTE: descrição, próxima turma, inscrição.</div>
         </div>
       </div>
-    </section>
+      <span class="x-hint">outros percursos</span>
+    </div>
+    <!-- painel 2: outros -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">outros percursos</span>
+        <h2>Mais experiências</h2>
+        <p class="sub">Workshops, formatos variados, parcerias institucionais.</p>
+        <div class="stack">
+          <div class="ph"><b>placeholder</b> — outros percursos e experiências abertas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 5 · RECURSOS -->
-    <section class="mundo" data-name="Recursos" data-color="var(--rosa-500)" style="--c:var(--rosa-500)">
+  <!-- ══ 05 · RECURSOS ══ -->
+  <section class="mundo" data-name="Recursos" data-color="var(--rosa-500)" style="--c:var(--rosa-500)">
+    <!-- painel 1: biblioteca -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Perene</span><span class="ord">05</span></div>
-        <h2>Recursos arteterapêuticos</h2>
-        <p class="sub">Uma biblioteca que fica. Exercícios, materiais e planejamentos para usar e voltar sempre.</p>
+        <h2>Recursos</h2>
+        <p class="sub">Uma biblioteca que fica. Exercícios e materiais arteterapêuticos para usar e voltar sempre.</p>
         <div class="stack">
-          <div class="ph"><b>placeholder</b> — material perene (downloads, exercícios). Bom candidato a <i>isca</i> de e-mail/lista.</div>
+          <div class="ph"><b>placeholder</b> — material gratuito (downloads, exercícios). Isca de newsletter.</div>
         </div>
       </div>
-    </section>
+      <span class="x-hint">lista</span>
+    </div>
+    <!-- painel 2: newsletter -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">carta semanal</span>
+        <h2>A lista</h2>
+        <p class="sub">Um ativo durável, sem algoritmo. A Elaine direto na sua caixa de entrada.</p>
+        <div class="stack">
+          <div class="ph"><b>placeholder</b> — formulário de inscrição. Integração Mailchimp/Substack.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- 6 · QUEM É / CONTATO -->
-    <section class="mundo" data-name="Quem é" data-color="var(--ink-700)" style="--c:var(--ink-700)">
+  <!-- ══ 06 · QUEM É ══ -->
+  <section class="mundo" data-name="Quem é" data-color="var(--ink-700)" style="--c:var(--ink-700)">
+    <!-- painel 1: bio + contato -->
+    <div class="panel">
       <div class="inner">
         <div class="head-row"><span class="eyebrow">Cartão de visita</span><span class="ord">06</span></div>
         <h2>Quem é Elaine</h2>
-        <p class="sub">Educadora, arteterapeuta, mestra em Serviço Social e artista. O pensamento transforma quando encontra o corpo.</p>
+        <p class="sub">Educadora, arteterapeuta, mestra em Serviço Social. O pensamento transforma quando encontra o corpo.</p>
         <div class="stack">
           <span class="pill solid">Falar no WhatsApp →</span>
-          <div class="card"><div><div class="t">Instagram · YouTube · Medium · Spotify</div><div class="m">Onde ela também está</div></div><div class="go">→</div></div>
+          <div class="ph"><b>placeholder</b> — bio em prosa, foto, links para redes.</div>
         </div>
       </div>
-    </section>
+      <span class="x-hint">redes</span>
+    </div>
+    <!-- painel 2: redes -->
+    <div class="panel tinted">
+      <div class="inner">
+        <span class="panel-label">redes &amp; plataformas</span>
+        <h2>Onde ela está</h2>
+        <p class="sub">Instagram, YouTube, Medium, Spotify — o pensamento em cada formato.</p>
+        <div class="stack">
+          <div class="card"><div class="body"><div class="t">@elainenarc · Instagram</div><div class="m">Imagens, reels, conversas</div></div><div class="go">→</div></div>
+          <div class="card"><div class="body"><div class="t">@elainenarc · YouTube</div><div class="m">Vídeos e lives</div></div><div class="go">→</div></div>
+          <div class="card"><div class="body"><div class="t">medium.com/@elainenarcizo</div><div class="m">Artigos, pensamento longo</div></div><div class="go">→</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  </div>
+</div><!-- /stage -->
 
-  <!-- DOCK FLUTUANTE (preenchido via JS) -->
-  <div class="dock" id="dock"></div>
+<!-- DOTS: indicador horizontal (gerado via JS) -->
+<div class="world-dots hidden" id="worldDots"></div>
 
-  <!-- SETAS DESKTOP -->
-  <button class="nav-arrow prev" id="prev" aria-label="anterior">‹</button>
-  <button class="nav-arrow next" id="next" aria-label="próximo">›</button>
+<!-- DOCK (gerado via JS) -->
+<div class="dock" id="dock"></div>
 
-</div>
+<!-- SETAS DESKTOP (vertical) -->
+<button class="nav-arrow up" id="prev" aria-label="mundo anterior">↑</button>
+<button class="nav-arrow down" id="next" aria-label="próximo mundo">↓</button>
 
 <script>
 (function(){
-  var deck=document.getElementById('deck');
-  var dock=document.getElementById('dock');
-  var mundos=Array.prototype.slice.call(deck.querySelectorAll('.mundo'));
+  'use strict';
+  var stage   = document.getElementById('stage');
+  var dock    = document.getElementById('dock');
+  var dotsEl  = document.getElementById('worldDots');
+  var mundos  = [].slice.call(stage.querySelectorAll('.mundo'));
+  var cur     = 0;
 
-  /* ---- monta o dock a partir dos mundos ---- */
-  mundos.forEach(function(m,i){
-    var tab=document.createElement('button');
-    tab.className='tab'; tab.dataset.i=i;
-    tab.style.setProperty('--tc', m.dataset.color||'var(--cream-300)');
-    tab.innerHTML='<span class="dot"></span>'+m.dataset.name;
-    tab.addEventListener('click',function(){ goTo(i); });
+  /* ──────────────────────────────────────
+     DOCK: gera tabs
+  ────────────────────────────────────── */
+  mundos.forEach(function(m, i){
+    var tab = document.createElement('button');
+    tab.className = 'tab';
+    tab.dataset.i = i;
+    tab.style.setProperty('--tc', m.dataset.color || 'var(--cream-300)');
+    tab.innerHTML = '<span class="dot"></span>' + m.dataset.name;
+    tab.addEventListener('click', function(){ goToWorld(i); });
     dock.appendChild(tab);
   });
-  var tabs=Array.prototype.slice.call(dock.querySelectorAll('.tab'));
+  var tabs = [].slice.call(dock.querySelectorAll('.tab'));
+  if(tabs[0]) tabs[0].classList.add('active');
 
-  function goTo(i){
-    i=Math.max(0,Math.min(mundos.length-1,i));
-    mundos[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  /* ──────────────────────────────────────
+     NAVEGAR para um mundo (eixo Y)
+  ────────────────────────────────────── */
+  function goToWorld(i){
+    i = Math.max(0, Math.min(mundos.length - 1, i));
+    var h = stage.clientHeight;
+    stage.scrollTo({ top: i * h, behavior: 'smooth' });
+    // reset horizontal do destino
+    mundos[i].scrollLeft = 0;
+    cur = i;
   }
 
-  /* ---- marca a aba ativa conforme o swipe ---- */
-  var io=new IntersectionObserver(function(ents){
-    ents.forEach(function(e){
-      if(e.isIntersecting && e.intersectionRatio>0.55){
-        var i=mundos.indexOf(e.target);
-        tabs.forEach(function(t,k){ t.classList.toggle('active',k===i); });
-        var at=tabs[i]; if(at) at.scrollIntoView({inline:'nearest',block:'nearest',behavior:'smooth'});
-        cur=i;
+  /* ──────────────────────────────────────
+     INTERSECTION OBSERVER: mundo ativo (Y)
+  ────────────────────────────────────── */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && e.intersectionRatio >= 0.55){
+        var i = mundos.indexOf(e.target);
+        if(i < 0) return;
+        cur = i;
+        tabs.forEach(function(t, k){ t.classList.toggle('active', k === i); });
+        var at = tabs[i];
+        if(at) at.scrollIntoView({ inline:'nearest', block:'nearest', behavior:'smooth' });
+        updateDots(i, getPanelIdx(mundos[i]));
       }
     });
-  },{root:deck,threshold:[0.55,0.8]});
+  }, { root: stage, threshold: [0.55, 0.8] });
   mundos.forEach(function(m){ io.observe(m); });
 
-  /* ---- setas desktop ---- */
-  var cur=0;
-  document.getElementById('prev').addEventListener('click',function(){ goTo(cur-1); });
-  document.getElementById('next').addEventListener('click',function(){ goTo(cur+1); });
-  document.addEventListener('keydown',function(e){
-    if(e.key==='ArrowRight') goTo(cur+1);
-    if(e.key==='ArrowLeft') goTo(cur-1);
+  /* ──────────────────────────────────────
+     DOTS: indicador de painéis X
+  ────────────────────────────────────── */
+  function getPanelCount(m){ return m.querySelectorAll('.panel').length; }
+  function getPanelIdx(m){ return Math.round(m.scrollLeft / Math.max(m.clientWidth, 1)); }
+
+  function updateDots(wi, pi){
+    var m     = mundos[wi];
+    var count = getPanelCount(m);
+    if(count <= 1){ dotsEl.innerHTML = ''; dotsEl.classList.add('hidden'); return; }
+    if(dotsEl.children.length !== count){
+      dotsEl.innerHTML = '';
+      for(var j = 0; j < count; j++){
+        dotsEl.appendChild(document.createElement('span'));
+      }
+    }
+    dotsEl.classList.remove('hidden');
+    [].forEach.call(dotsEl.children, function(s, k){
+      s.classList.toggle('active', k === pi);
+    });
+  }
+
+  mundos.forEach(function(m, i){
+    m.addEventListener('scroll', function(){
+      if(i !== cur) return;
+      updateDots(i, getPanelIdx(m));
+    }, { passive: true });
   });
 
-  /* ---- jumps internos (ex: hero → formações) e faixa ---- */
+  updateDots(0, 0);
+
+  /* ──────────────────────────────────────
+     SETAS DESKTOP (Y)
+  ────────────────────────────────────── */
+  document.getElementById('prev').addEventListener('click', function(){ goToWorld(cur - 1); });
+  document.getElementById('next').addEventListener('click', function(){ goToWorld(cur + 1); });
+
+  /* ──────────────────────────────────────
+     TECLADO: ↑↓ mundos · ←→ painéis
+  ────────────────────────────────────── */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowDown'){ e.preventDefault(); goToWorld(cur + 1); }
+    if(e.key === 'ArrowUp'  ){ e.preventDefault(); goToWorld(cur - 1); }
+    if(e.key === 'ArrowRight'){
+      var panels = mundos[cur].querySelectorAll('.panel');
+      var pi = getPanelIdx(mundos[cur]);
+      if(pi < panels.length - 1){
+        mundos[cur].scrollTo({ left: (pi + 1) * mundos[cur].clientWidth, behavior: 'smooth' });
+      }
+    }
+    if(e.key === 'ArrowLeft'){
+      var pi2 = getPanelIdx(mundos[cur]);
+      if(pi2 > 0){
+        mundos[cur].scrollTo({ left: (pi2 - 1) * mundos[cur].clientWidth, behavior: 'smooth' });
+      }
+    }
+  });
+
+  /* ──────────────────────────────────────
+     JUMPS INTERNOS + BAR
+  ────────────────────────────────────── */
   document.querySelectorAll('[data-jump]').forEach(function(el){
-    el.addEventListener('click',function(e){ e.preventDefault(); goTo(parseInt(el.dataset.jump,10)); });
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      goToWorld(parseInt(el.dataset.jump, 10));
+    });
   });
-  document.getElementById('bar').addEventListener('click',function(){ goTo(3); });
+  document.getElementById('bar').addEventListener('click', function(){ goToWorld(2); });
 
-  /* ---- contador da próxima sexta 20h ---- */
+  /* ──────────────────────────────────────
+     CONTADOR DançaDestino (próxima sexta 20h)
+  ────────────────────────────────────── */
   function nextFriday(){
-    var now=new Date(), d=new Date(now);
-    var diff=(5 - d.getDay() + 7)%7;
-    d.setDate(d.getDate()+diff); d.setHours(20,0,0,0);
+    var now = new Date(), d = new Date(now);
+    var diff = (5 - d.getDay() + 7) % 7;
+    d.setDate(d.getDate() + diff);
+    d.setHours(20, 0, 0, 0);
     if(d.getTime() <= now.getTime()){
-      // se já passou das 21h da sexta, vai pra próxima
-      if(now.getDay()===5 && now.getHours()>=21){ d.setDate(d.getDate()+7); }
-      else if(now.getDay()!==5){ d.setDate(d.getDate()+7); }
+      if(now.getDay() === 5 && now.getHours() >= 21){ d.setDate(d.getDate() + 7); }
+      else if(now.getDay() !== 5){ d.setDate(d.getDate() + 7); }
     }
     return d;
   }
-  function isLiveNow(){ var n=new Date(); return n.getDay()===5 && n.getHours()>=20 && n.getHours()<21; }
+  function isLive(){ var n = new Date(); return n.getDay() === 5 && n.getHours() >= 20 && n.getHours() < 21; }
   function tick(){
-    var box=document.getElementById('clockBox');
-    if(isLiveNow()){
-      box.innerHTML='<div class="now-live"><i></i> Acontecendo agora — dance com a gente</div>';
+    var box = document.getElementById('clockBox');
+    if(!box) return;
+    if(isLive()){
+      box.innerHTML = '<div class="now-live"><i></i> Acontecendo agora — dance com a gente</div>';
       return;
     }
-    var t=nextFriday()-new Date();
-    var dd=Math.floor(t/86400000), hh=Math.floor(t%86400000/3600000), mm=Math.floor(t%3600000/60000);
-    var ed=document.getElementById('cd-d'), eh=document.getElementById('cd-h'), em=document.getElementById('cd-m');
-    if(ed){ed.textContent=dd; eh.textContent=hh; em.textContent=mm;}
+    var t  = nextFriday() - new Date();
+    var dd = Math.floor(t / 86400000);
+    var hh = Math.floor(t % 86400000 / 3600000);
+    var mm = Math.floor(t % 3600000  / 60000);
+    var ed = document.getElementById('cd-d');
+    var eh = document.getElementById('cd-h');
+    var em = document.getElementById('cd-m');
+    if(ed){ ed.textContent = dd; eh.textContent = hh; em.textContent = mm; }
   }
-  tick(); setInterval(tick,30000);
+  tick();
+  setInterval(tick, 30000);
 
-  /* ativa primeira aba */
-  if(tabs[0]) tabs[0].classList.add('active');
 })();
 </script>
-
 </body>
 </html>
