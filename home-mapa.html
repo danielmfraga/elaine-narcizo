@@ -200,6 +200,13 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 .song .info .l{font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-3);}
 .song .info .t{font-family:var(--font-display); font-size:1.05rem; margin-top:2px;}
 
+/* ── BANNERS (mundo 00 · lançamentos) ── */
+.banner .b-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+.banner .b-tag{font-size:0.69rem; letter-spacing:0.18em; text-transform:uppercase; display:flex; align-items:center; gap:8px;}
+.banner .b-tag .live-dot{width:7px; height:7px; border-radius:50%; background:#FF5A4D; flex:0 0 auto; animation:pulse 1.8s var(--ease-out) infinite;}
+.banner h2{line-height:0.96; margin-top:18px; margin-bottom:0;}
+.banner .b-sub{font-family:var(--font-display); font-style:italic; font-size:1.03rem; line-height:1.52; max-width:34ch; margin-top:14px;}
+
 /* ── DOTS: indicador de painéis X ── */
 .world-dots{
   position:fixed; left:50%; bottom:calc(var(--dock-h) + 11px);
@@ -277,6 +284,8 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 
   <!-- ══ 00 · INÍCIO ══ -->
   <section class="mundo" data-name="Início" data-color="var(--brega-amarelo)">
+
+    <!-- painel 1: hero -->
     <div class="panel dark">
       <div class="inner">
         <div class="head-row">
@@ -292,10 +301,57 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
         </div>
         <div class="scroll-hint">
           <span>role para explorar <span class="arr-y"><span>↓</span><span>↓</span><span>↓</span></span></span>
-          <span>deslize cada mundo <span class="arr-x"><span>›</span><span>›</span><span>›</span></span></span>
+          <span>deslize para ver mais <span class="arr-x"><span>›</span><span>›</span><span>›</span></span></span>
+        </div>
+      </div>
+      <span class="x-hint">em destaque</span>
+    </div>
+
+    <!-- painel 2: formação em destaque -->
+    <div class="panel banner" style="background:var(--verde-900);">
+      <div class="inner">
+        <div class="b-top">
+          <span class="b-tag" style="color:var(--verde-500);"><i class="live-dot"></i> Inscrições abertas</span>
+          <span class="ord" style="color:rgba(255,255,255,0.22);">01</span>
+        </div>
+        <h2 style="font-size:clamp(2.3rem,10.5vw,4rem); color:var(--cream-50);">Repertórios<br>Sensíveis<br><em>para a Clínica</em></h2>
+        <p class="b-sub" style="color:rgba(255,255,255,0.6);">Formação para psicólogas que querem ampliar seu repertório com arteterapia. Turma 2026.</p>
+        <div style="margin-top:auto; padding-top:24px;">
+          <a class="pill yellow" data-jump="3" href="#">Ver a formação →</a>
         </div>
       </div>
     </div>
+
+    <!-- painel 3: DançaDestino -->
+    <div class="panel banner" style="background:var(--brega-roxo);">
+      <div class="inner">
+        <div class="b-top">
+          <span class="b-tag" style="color:rgba(255,255,255,0.5);">Ritual semanal · toda sexta 20h</span>
+          <span class="ord" style="color:rgba(255,255,255,0.22);">02</span>
+        </div>
+        <h2 style="font-size:clamp(2.3rem,10.5vw,4rem); color:var(--cream-50);">Dança<span class="hand" style="font-size:1.15em;">Destino</span></h2>
+        <p class="b-sub" style="color:rgba(255,255,255,0.65);">Você dança onde estiver, sem câmeras — só o movimento e a sensação de não estar sozinha.</p>
+        <div style="margin-top:auto; padding-top:24px;">
+          <a class="pill" data-jump="2" href="#" style="background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); color:#fff;">Conhecer o ritual →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- painel 4: PONTE -->
+    <div class="panel banner" style="background:var(--brega-amarelo);">
+      <div class="inner">
+        <div class="b-top">
+          <span class="b-tag" style="color:var(--ink-700);">Experiência aberta</span>
+          <span class="ord" style="color:rgba(30,27,22,0.28);">04</span>
+        </div>
+        <h2 style="font-size:clamp(2.3rem,10.5vw,4rem); color:var(--ink-900);">PONTE —<br><em>projeto<br>de vida</em></h2>
+        <p class="b-sub" style="color:var(--ink-700);">Uma oficina para atravessar o presente até o futuro, com beleza e com outras pessoas.</p>
+        <div style="margin-top:auto; padding-top:24px;">
+          <a class="pill solid" data-jump="4" href="#" style="--c:var(--ink-900);">Conhecer a PONTE →</a>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- ══ 01 · ESCRITOS & VOZ ══ -->
