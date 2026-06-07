@@ -37,7 +37,6 @@
   --ease-out:cubic-bezier(0.16,1,0.3,1);
   --dur-2:320ms;
   --bar-top:34px;
-  --dock-h:74px;
 }
 *{box-sizing:border-box;}
 html,body{margin:0; height:100%; overflow:hidden;}
@@ -67,7 +66,7 @@ a{color:inherit; text-decoration:none;}
 /* ── STAGE: container Y (mundos empilhados) ── */
 .stage{
   position:fixed;
-  top:var(--bar-top); left:0; right:0; bottom:var(--dock-h);
+  top:var(--bar-top); left:0; right:0; bottom:0;
   overflow-y:scroll; overflow-x:hidden;
   scroll-snap-type:y mandatory;
   -webkit-overflow-scrolling:touch;
@@ -209,7 +208,7 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 
 /* ── DOTS: indicador de painéis X ── */
 .world-dots{
-  position:fixed; left:50%; bottom:calc(var(--dock-h) + 11px);
+  position:fixed; left:50%; bottom:14px;
   transform:translateX(-50%);
   display:flex; gap:7px; z-index:55; pointer-events:none;
   transition:opacity var(--dur-2);
@@ -223,26 +222,80 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 }
 .world-dots span.active{width:20px; border-radius:4px; background:rgba(255,255,255,0.9);}
 
-/* ── DOCK ── */
-.dock{
-  position:fixed; left:0; right:0; bottom:0; z-index:50; height:var(--dock-h);
-  display:flex; align-items:center; gap:8px; padding:0 12px 8px;
-  overflow-x:auto; scrollbar-width:none;
-  background:linear-gradient(0deg,var(--ink-900) 60%,transparent);
+/* ── BOTÃO HAMBÚRGUER (☰) ── */
+.menu-btn{
+  position:fixed; top:0; right:0; z-index:90;
+  width:54px; height:var(--bar-top);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  cursor:pointer; border:0; background:var(--ink-900);
+  box-shadow:-16px 0 14px var(--ink-900); /* mascara a marquee por trás */
 }
-.dock::-webkit-scrollbar{display:none;}
-.tab{
-  flex:0 0 auto; display:inline-flex; align-items:center; gap:8px;
-  padding:9px 15px; border-radius:999px; cursor:pointer;
-  border:1px solid rgba(255,255,255,0.14);
-  background:rgba(255,255,255,0.04); color:var(--cream-200);
-  font-size:0.77rem; letter-spacing:0.02em; white-space:nowrap;
-  transition:background var(--dur-2),color var(--dur-2),border-color var(--dur-2),transform var(--dur-2);
+.menu-btn i{
+  display:block; width:20px; height:2px; border-radius:2px; background:var(--cream-100);
+  transition:transform var(--dur-2) var(--ease-out), opacity var(--dur-2);
 }
-.tab .dot{width:8px; height:8px; border-radius:50%; background:var(--tc,var(--cream-300)); flex:0 0 auto;}
-.tab:hover{background:rgba(255,255,255,0.10); color:#fff;}
-.tab.active{background:var(--cream-50); color:var(--ink-900); border-color:var(--cream-50); transform:translateY(-2px);}
-.tab.active .dot{box-shadow:0 0 0 3px color-mix(in srgb,var(--tc) 35%,transparent);}
+.menu-btn.open i:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.menu-btn.open i:nth-child(2){ opacity:0; }
+.menu-btn.open i:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* ── OVERLAY DO MENU ── */
+.menu{
+  position:fixed; inset:0; z-index:70;
+  background:var(--ink-900);
+  display:flex; flex-direction:column;
+  padding:calc(var(--bar-top) + 7vh) clamp(26px,8vw,80px) 6vh;
+  overflow:hidden;
+  opacity:0; visibility:hidden; pointer-events:none;
+  transition:opacity var(--dur-3) var(--ease-out), visibility var(--dur-3);
+}
+.menu::before{ /* brilho brega sutil nos cantos */
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:0.55;
+  background:
+    radial-gradient(58% 48% at 100% 0%, color-mix(in srgb,var(--brega-roxo) 42%,transparent) 0%, transparent 62%),
+    radial-gradient(52% 44% at 0% 100%, color-mix(in srgb,var(--brega-amarelo) 20%,transparent) 0%, transparent 58%);
+}
+.menu.open{ opacity:1; visibility:visible; pointer-events:auto; }
+.menu-cap{
+  position:relative; font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--cream-300); margin-bottom:clamp(20px,4.5vh,40px);
+}
+.menu-list{
+  position:relative; list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; gap:clamp(3px,1.2vh,11px);
+}
+.menu-item{
+  display:flex; align-items:baseline; gap:16px; cursor:pointer; padding:clamp(4px,0.9vh,9px) 0;
+  opacity:0; transform:translateY(15px);
+  transition:transform var(--dur-3) var(--ease-out), opacity var(--dur-3);
+  transition-delay:calc(var(--i) * 45ms);
+}
+.menu.open .menu-item{ opacity:1; transform:none; }
+.menu-item .mi-ord{
+  font-family:var(--font-body); font-size:0.74rem; letter-spacing:0.06em;
+  color:var(--ink-300); font-variant-numeric:tabular-nums; flex:0 0 24px;
+  transition:color var(--dur-2);
+}
+.menu-item .mi-name{
+  font-family:var(--font-display); font-weight:300; line-height:1;
+  font-size:clamp(2rem,9vw,3.2rem); color:var(--cream-50);
+  transition:color var(--dur-2);
+}
+.menu-item .mi-dot{
+  align-self:center; width:9px; height:9px; border-radius:50%; margin-left:4px;
+  background:var(--tc,var(--cream-300)); opacity:0; transform:scale(0.4);
+  transition:opacity var(--dur-2), transform var(--dur-2) var(--ease-out);
+}
+.menu-item:hover .mi-name,
+.menu-item.current .mi-name{ color:var(--tc,var(--cream-50)); }
+.menu-item:hover .mi-ord,
+.menu-item.current .mi-ord{ color:var(--tc); }
+.menu-item:hover .mi-dot,
+.menu-item.current .mi-dot{ opacity:1; transform:scale(1); }
+.menu-foot{
+  position:relative; margin-top:auto; padding-top:5vh;
+  font-family:var(--font-display); font-size:1rem; line-height:1.5; color:var(--cream-300);
+}
+.menu-foot b{ display:block; font-size:1.2rem; color:var(--cream-100); font-weight:400; margin-bottom:2px; }
 
 /* ── SETAS DESKTOP (vertical) ── */
 .nav-arrow{
@@ -256,11 +309,10 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 }
 .nav-arrow:hover{background:rgba(30,27,22,0.85);}
 .nav-arrow.up{top:calc(var(--bar-top) + 12px);}
-.nav-arrow.down{bottom:calc(var(--dock-h) + 12px);}
+.nav-arrow.down{bottom:16px;}
 
 @media(min-width:900px){
   .nav-arrow{display:flex;}
-  .dock{justify-content:center;}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important; scroll-behavior:auto!important;}
@@ -556,8 +608,17 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 <!-- DOTS: indicador horizontal (gerado via JS) -->
 <div class="world-dots hidden" id="worldDots"></div>
 
-<!-- DOCK (gerado via JS) -->
-<div class="dock" id="dock"></div>
+<!-- BOTÃO HAMBÚRGUER -->
+<button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false">
+  <i></i><i></i><i></i>
+</button>
+
+<!-- MENU (overlay; lista gerada via JS) -->
+<nav class="menu" id="menu" aria-hidden="true">
+  <p class="menu-cap">Navegar pelos mundos</p>
+  <ul class="menu-list" id="menuList"></ul>
+  <p class="menu-foot"><b>Elaine Narcizo</b>Educadora · Arteterapeuta · Pesquisadora</p>
+</nav>
 
 <!-- SETAS DESKTOP (vertical) -->
 <button class="nav-arrow up" id="prev" aria-label="mundo anterior">↑</button>
@@ -566,26 +627,43 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
 <script>
 (function(){
   'use strict';
-  var stage   = document.getElementById('stage');
-  var dock    = document.getElementById('dock');
-  var dotsEl  = document.getElementById('worldDots');
-  var mundos  = [].slice.call(stage.querySelectorAll('.mundo'));
-  var cur     = 0;
+  var stage    = document.getElementById('stage');
+  var dotsEl   = document.getElementById('worldDots');
+  var menu     = document.getElementById('menu');
+  var menuBtn  = document.getElementById('menuBtn');
+  var menuList = document.getElementById('menuList');
+  var mundos   = [].slice.call(stage.querySelectorAll('.mundo'));
+  var cur      = 0;
 
   /* ──────────────────────────────────────
-     DOCK: gera tabs
+     MENU (☰): gera os itens + abre/fecha
   ────────────────────────────────────── */
   mundos.forEach(function(m, i){
-    var tab = document.createElement('button');
-    tab.className = 'tab';
-    tab.dataset.i = i;
-    tab.style.setProperty('--tc', m.dataset.color || 'var(--cream-300)');
-    tab.innerHTML = '<span class="dot"></span>' + m.dataset.name;
-    tab.addEventListener('click', function(){ goToWorld(i); });
-    dock.appendChild(tab);
+    var li = document.createElement('li');
+    li.className = 'menu-item';
+    li.style.setProperty('--tc', m.dataset.color || 'var(--cream-300)');
+    li.style.setProperty('--i', i);
+    li.innerHTML = '<span class="mi-ord">' + ('0' + i).slice(-2) + '</span>' +
+                   '<span class="mi-name">' + m.dataset.name + '</span>' +
+                   '<span class="mi-dot"></span>';
+    li.addEventListener('click', function(){ goToWorld(i); closeMenu(); });
+    menuList.appendChild(li);
   });
-  var tabs = [].slice.call(dock.querySelectorAll('.tab'));
-  if(tabs[0]) tabs[0].classList.add('active');
+  var items = [].slice.call(menuList.querySelectorAll('.menu-item'));
+  if(items[0]) items[0].classList.add('current');
+
+  function openMenu(){
+    menu.classList.add('open'); menuBtn.classList.add('open');
+    menu.setAttribute('aria-hidden', 'false'); menuBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu(){
+    menu.classList.remove('open'); menuBtn.classList.remove('open');
+    menu.setAttribute('aria-hidden', 'true'); menuBtn.setAttribute('aria-expanded', 'false');
+  }
+  menuBtn.addEventListener('click', function(){
+    if(menu.classList.contains('open')){ closeMenu(); } else { openMenu(); }
+  });
+  menu.addEventListener('click', function(e){ if(e.target === menu) closeMenu(); });
 
   /* ──────────────────────────────────────
      NAVEGAR para um mundo (eixo Y)
@@ -608,9 +686,7 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
         var i = mundos.indexOf(e.target);
         if(i < 0) return;
         cur = i;
-        tabs.forEach(function(t, k){ t.classList.toggle('active', k === i); });
-        var at = tabs[i];
-        if(at) at.scrollIntoView({ inline:'nearest', block:'nearest', behavior:'smooth' });
+        items.forEach(function(t, k){ t.classList.toggle('current', k === i); });
         updateDots(i, getPanelIdx(mundos[i]));
       }
     });
@@ -658,6 +734,7 @@ h2{font-size:clamp(2rem,8.5vw,3.2rem); margin-top:12px;}
      TECLADO: ↑↓ mundos · ←→ painéis
   ────────────────────────────────────── */
   document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeMenu(); return; }
     if(e.key === 'ArrowDown'){ e.preventDefault(); goToWorld(cur + 1); }
     if(e.key === 'ArrowUp'  ){ e.preventDefault(); goToWorld(cur - 1); }
     if(e.key === 'ArrowRight'){
