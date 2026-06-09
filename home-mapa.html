@@ -610,24 +610,14 @@ body.coach-x .world-dots::after{
           <span class="tag">Turma 2026 · inscrições abertas</span>
         </div>
         <div class="foot r" style="--r:4">
-          <a class="btn" href="#">Ver a formação <span class="ar">→</span></a>
+          <a class="btn" href="#" data-slide="1">Ver a formação <span class="ar">→</span></a>
         </div>
       </div>
     </div>
 
-    <div class="panel warm">
-      <div class="inner center">
-        <div class="head r" style="--r:0">
-          <span class="eyebrow">Módulos avulsos</span>
-          <h2>Skills <em>avulsas</em></h2>
-          <p class="sub">Os 10 temas da formação, oferecidos individualmente — um repertório de cada vez.</p>
-        </div>
-        <div class="foot r" style="--r:1"><span class="soon">Grade em breve</span></div>
-        <div class="endcap r" style="--r:2">
-          <span class="cap">fim da seção</span>
-          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
-        </div>
-      </div>
+    <!-- a própria página /repertorios-sensiveis, embutida (mesmo sistema do destaque da capa) -->
+    <div class="panel pframe">
+      <iframe src="repertorios-sensiveis/" title="Repertórios Sensíveis para a Clínica" loading="lazy"></iframe>
     </div>
 
   </section>
@@ -969,7 +959,8 @@ body.coach-x .world-dots::after{
     var locked=pi>0&&!isFrame; /* iframe cuida do próprio Y; trava só os painéis comuns */
     mundos.forEach(function(x){ x.classList.toggle('lockY', x===m&&locked); });
     coachY.classList.toggle('hold',pi>0);
-    backChip.classList.toggle('on', cur===0&&isFrame); /* saída sempre visível sobre a página embutida */
+    backChip.classList.toggle('on', isFrame); /* saída sempre visível sobre a página embutida */
+    if(isFrame) backChip.textContent = cur===0 ? '← tela inicial' : '← início da seção';
   }
   /* wheel (desktop): sobre feed deixa rolar; travado, segura o Y */
   stage.addEventListener('wheel',function(e){
