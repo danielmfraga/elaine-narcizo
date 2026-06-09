@@ -731,8 +731,13 @@ body.coach-x .world-dots::after{
     [].forEach.call(dotsEl.children,function(s,k){ s.classList.toggle('active',k===pi); });
   }
   mundos.forEach(function(m,i){
+    var lastPi=0; /* conta navegações laterais discretas (troca de painel), não eventos de scroll */
     m.addEventListener('scroll',function(){
-      if(i===cur){ updateDots(i,getPanelIdx(m)); revealPanel(panelAt(m)); if(m.scrollLeft>10) gotX(); }
+      if(i===cur){
+        var pi=getPanelIdx(m);
+        updateDots(i,pi); revealPanel(panelAt(m));
+        if(pi!==lastPi){ lastPi=pi; bumpX(); }
+      }
     },{passive:true});
   });
 
@@ -741,18 +746,24 @@ body.coach-x .world-dots::after{
      2) peek: a página demonstra fisicamente os 2 eixos
      3) coaches: hint de cada eixo persiste até o 1º uso DAQUELE eixo */
   var store={
-    get:function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
-    set:function(k){ try{ localStorage.setItem(k,'1'); }catch(e){} }
+    get:function(k){ try{ return +(localStorage.getItem(k)||0); }catch(e){ return 0; } },
+    set:function(k,v){ try{ localStorage.setItem(k,''+v); }catch(e){} }
   };
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var learnedY=!!store.get('en_gy'), learnedX=!!store.get('en_gx');
+  var learnedY=store.get('en_gy')>0;
+  var xCount=store.get('en_gx'), learnedX=xCount>=4; /* chevron › fica até 4 navegações laterais */
+  var tourSeen=store.get('en_tour');                 /* tour aparece até 2x por aparelho */
 
   function syncCoaches(){
     coachY.classList.toggle('off',learnedY);
     document.body.classList.toggle('coach-x',!learnedX);
   }
-  function gotY(){ if(!learnedY){ learnedY=true; store.set('en_gy'); syncCoaches(); } }
-  function gotX(){ if(!learnedX){ learnedX=true; store.set('en_gx'); syncCoaches(); } }
+  function gotY(){ if(!learnedY){ learnedY=true; store.set('en_gy',1); syncCoaches(); } }
+  function bumpX(){
+    if(learnedX) return;
+    xCount++; store.set('en_gx',xCount);
+    if(xCount>=4){ learnedX=true; syncCoaches(); }
+  }
   syncCoaches();
   stage.addEventListener('scroll',function(){ if(stage.scrollTop>10) gotY(); },{passive:true});
 
@@ -781,7 +792,7 @@ body.coach-x .world-dots::after{
     setTimeout(function(){ tour.classList.add('in'); },20);
     var evs=['pointerdown','wheel','keydown','touchstart'];
     function closeTour(){
-      store.set('en_tour');
+      store.set('en_tour',tourSeen+1);
       tour.style.pointerEvents='none'; /* o próximo gesto já navega */
       tour.classList.remove('in');
       tour.setAttribute('aria-hidden','true');
@@ -790,9 +801,9 @@ body.coach-x .world-dots::after{
       setTimeout(demo,420);
     }
     evs.forEach(function(ev){ window.addEventListener(ev,closeTour,true); });
-    setTimeout(closeTour,9000); /* ninguém tocou? fecha e demonstra */
+    setTimeout(closeTour,6000); /* ninguém tocou? fecha e demonstra */
   }
-  if(!store.get('en_tour')){
+  if(tourSeen<2){
     setTimeout(openTour,1100); /* depois do reveal do hero */
   }else if(!learnedX&&!learnedY){
     /* já viu o tour mas nunca gestou: lembrete físico único */
