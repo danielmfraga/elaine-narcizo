@@ -176,6 +176,73 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 }
 .soon::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ac); opacity:.6; }
 
+/* ── FEED: destaque da capa com conteúdo vertical próprio ──
+   O gesto ↓ rola o conteúdo do destaque (scroll chaining natural);
+   overscroll contain impede de vazar para o stage nas bordas. */
+.feed-scroll{
+  height:100%; overflow-y:auto; overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  touch-action:pan-x pan-y;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
+.feed-scroll::-webkit-scrollbar{ display:none; }
+.feed .inner{ height:auto; min-height:100%; }
+.feed-hint{
+  font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--mute); display:inline-flex; align-items:center; gap:8px;
+}
+.feed-hint .chev{ font-size:13px; color:var(--ink); animation:bob 1.9s var(--ease) infinite; }
+.feed-block{
+  padding:clamp(36px,7vh,64px) var(--pad-x);
+  border-top:1px solid var(--line-soft);
+  display:flex; flex-direction:column; gap:14px; align-items:flex-start;
+}
+.js .feed-block{ opacity:0; transform:translateY(18px); transition:opacity .65s var(--ease), transform .65s var(--ease); }
+.js .feed-block.is-in{ opacity:1; transform:none; }
+.fh{ font-size:clamp(1.35rem,5.4vw,1.9rem); font-weight:200; letter-spacing:-0.02em; line-height:1.15; max-width:24ch; margin:0; }
+.fp{ font-size:0.95rem; font-weight:300; line-height:1.65; color:var(--ink-soft); max-width:54ch; }
+.fp.dim{ color:var(--mute); }
+.flist{ width:100%; display:flex; flex-direction:column; }
+.fitem{ display:flex; gap:14px; padding:13px 0; border-top:1px solid var(--line); }
+.flist .fitem:last-child{ border-bottom:1px solid var(--line); }
+.fitem .fn{ font-size:0.7rem; color:var(--mute); font-variant-numeric:tabular-nums; padding-top:4px; flex:0 0 20px; }
+.fitem .ft{ font-size:0.95rem; font-weight:400; line-height:1.35; }
+.fitem .fb{ font-size:0.83rem; font-weight:300; color:var(--mute); line-height:1.55; margin-top:3px; }
+.fmod{ padding:14px 0; border-top:1px solid var(--line); width:100%; }
+.fmod .k{ font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--mute); }
+.fmod .t{ font-size:1.05rem; font-weight:400; margin-top:4px; }
+.fmod .d{ font-size:0.86rem; font-weight:300; color:var(--mute); line-height:1.55; margin-top:6px; }
+.fdata{ width:100%; display:flex; flex-direction:column; }
+.fdata .row{ display:flex; justify-content:space-between; align-items:baseline; gap:14px; padding:12px 0; border-top:1px solid var(--line); }
+.fdata .row .k{ font-size:0.82rem; font-weight:300; color:var(--mute); }
+.fdata .row .v{ font-size:0.92rem; font-weight:400; text-align:right; }
+.fprice{ font-size:clamp(2.4rem,10vw,3.2rem); font-weight:200; letter-spacing:-0.03em; line-height:1; }
+.fprice small{ font-size:0.85rem; font-weight:300; color:var(--mute); letter-spacing:0; margin-left:8px; }
+.fbio{ display:flex; gap:16px; align-items:flex-start; }
+.fbio img{ width:72px; height:72px; border-radius:50%; object-fit:cover; flex:0 0 auto; border:1px solid var(--line); }
+.feed details{ width:100%; border-top:1px solid var(--line); }
+.feed details:last-of-type{ border-bottom:1px solid var(--line); }
+.feed summary{
+  padding:14px 0; font-size:0.93rem; font-weight:400; cursor:pointer;
+  list-style:none; display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+}
+.feed summary::-webkit-details-marker{ display:none; }
+.feed summary::after{ content:"+"; color:var(--mute); flex-shrink:0; }
+.feed details[open] summary::after{ content:"–"; }
+.feed details .ans{ font-size:0.88rem; font-weight:300; color:var(--mute); line-height:1.6; padding:0 0 16px; max-width:54ch; }
+
+/* ── ENDCAP: fim de seção → voltar ── */
+.endcap{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding-top:6px; }
+.endcap .cap{
+  font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mute);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.endcap .cap::before{ content:""; width:24px; height:1px; background:var(--line); }
+
+/* ── TRAVA Y: adentrou a seção (painel > 0) → vertical não troca de mundo ── */
+.mundo.lockY{ touch-action:pan-x; }
+.coach-y.hold{ opacity:0; }
+
 /* ── CONTADOR DançaDestino (preenche o meio) ── */
 .clock-wrap{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:16px; }
 .clock{ display:flex; gap:10px; }
@@ -349,42 +416,155 @@ body.coach-x .world-dots::after{
           <span class="tag">Educadora · Arteterapeuta · Pesquisadora</span>
         </div>
         <div class="foot r" style="--r:3">
-          <a class="btn" href="#" data-jump="3">Repertórios Sensíveis 2026 <span class="ar">→</span></a>
+          <a class="btn" href="#" data-slide="1">Repertórios Sensíveis 2026 <span class="ar">→</span></a>
         </div>
       </div>
     </div>
 
-    <!-- banner Repertórios -->
-    <div class="panel warm" style="--ac:var(--verde)">
-      <div class="inner">
-        <div class="head">
-          <span class="eyebrow live r" style="--r:0">Inscrições abertas</span>
-          <h2 class="r" style="--r:1">Repertórios Sensíveis</h2>
+    <!-- destaque Repertórios: rolar ↓ abre o conteúdo da formação -->
+    <div class="panel warm feed" style="--ac:var(--verde)">
+      <div class="feed-scroll">
+
+        <div class="inner">
+          <div class="head">
+            <span class="eyebrow live r" style="--r:0">Inscrições abertas</span>
+            <h2 class="r" style="--r:1">Repertórios Sensíveis</h2>
+          </div>
+          <div class="plate r" style="--r:2">
+            <img src="assets/colagem bregabrasil organico marrom .webp" alt="Colagem brega-brasil orgânica" loading="lazy" />
+            <span class="tag">Formação · turma 2026</span>
+          </div>
+          <div class="foot r" style="--r:3">
+            <span class="feed-hint">role para conhecer <span class="chev">⌄</span></span>
+          </div>
         </div>
-        <div class="plate r" style="--r:2">
-          <img src="assets/colagem bregabrasil organico marrom .webp" alt="Colagem brega-brasil orgânica" loading="lazy" />
-          <span class="tag">Formação · turma 2026</span>
-        </div>
-        <div class="foot r" style="--r:3">
-          <a class="btn" href="#" data-jump="3">Ver a formação <span class="ar">→</span></a>
-        </div>
+
+        <section class="feed-block">
+          <span class="eyebrow">Sobre a formação</span>
+          <h3 class="fh">Como se constrói uma clínica que faz o corpo <em>sonhar</em>?</h3>
+          <p class="fp">Que novas realidades se insinuam no devaneio criador? O que o espanto e a curiosidade inauguram no espaço clínico?</p>
+          <p class="fp">Essas são algumas das questões que atravessam esta formação, na qual vivências práticas e reflexão teórica se articulam na construção de repertórios para uma clínica viva, sensível e investigativa.</p>
+          <p class="fp dim">Um espaço destinado a psicólogas que desejam ampliar seus modos de presença e atuação clínica a partir das contribuições da arteterapia, das práticas expressivas e da experiência simbólica.</p>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Os dez temas</span>
+          <h3 class="fh">Não são apenas tópicos, mas <em>convites</em> a uma clínica sensível e inventiva.</h3>
+          <div class="flist">
+            <div class="fitem"><span class="fn">01</span><div><div class="ft">Atenção e presença expandida</div><div class="fb">Reativar uma qualidade de atenção que se desloca do controle e da vigilância para a interação com o presente.</div></div></div>
+            <div class="fitem"><span class="fn">02</span><div><div class="ft">Repouso psíquico ativo</div><div class="fb">Experimentar como descansar no campo da criação, como modo de suspender o cotidiano e experimentar uma forma de regeneração psíquica.</div></div></div>
+            <div class="fitem"><span class="fn">03</span><div><div class="ft">Devaneio criador como autoconhecimento</div><div class="fb">Mobilizar a potência imaginativa como mediação para ampliação de perspectivas sobre a vida.</div></div></div>
+            <div class="fitem"><span class="fn">04</span><div><div class="ft">Transformação pela matéria</div><div class="fb">Utilizar materiais expressivos como mediadores de processos de elaboração, simbolização e criação de sentidos.</div></div></div>
+            <div class="fitem"><span class="fn">05</span><div><div class="ft">Linguagens do sensível</div><div class="fb">Vivenciar experiências com dança, teatro, pintura e outras práticas artísticas que podem ampliar a expressão subjetiva.</div></div></div>
+            <div class="fitem"><span class="fn">06</span><div><div class="ft">Curiosidade como potência clínica</div><div class="fb">Retomar a curiosidade como força que desloca a centralidade da compreensão e abre novas formas de percepção.</div></div></div>
+            <div class="fitem"><span class="fn">07</span><div><div class="ft">O corpo que sonha</div><div class="fb">Ativar a criatividade corporal como recurso para integração psíquica.</div></div></div>
+            <div class="fitem"><span class="fn">08</span><div><div class="ft">O prazer da autenticidade</div><div class="fb">Sustentar a espontaneidade como abertura para o prazer de habitar a própria singularidade.</div></div></div>
+            <div class="fitem"><span class="fn">09</span><div><div class="ft">Inaugurar contextos</div><div class="fb">Ressignificar as formas de se relacionar com os contextos de vida, através da investigação de novos modos de habitar a experiência.</div></div></div>
+            <div class="fitem"><span class="fn">10</span><div><div class="ft">Retomar a capacidade de surpreender-se consigo mesmo</div><div class="fb">Criar condições para reencontrar aspectos da experiência subjetiva ainda não automatizados, ampliando abertura ao inesperado e ao novo.</div></div></div>
+          </div>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Como funciona</span>
+          <div class="fmod"><div class="k">Módulo 01</div><div class="t">Imaginação e presença</div><div class="d">A imaginação como potência de presença e criação de novas realidades psíquicas. Como a atenção clínica pode se tornar mais porosa ao corpo, ao sensível e às dimensões sutis da experiência.</div></div>
+          <div class="fmod"><div class="k">Módulo 02</div><div class="t">Descansar dentro da arte</div><div class="d">Imersão em experiências expressivas que articulam corpo, criatividade e linguagem simbólica. A arte não como técnica, mas como território de repouso, criação e transformação subjetiva.</div></div>
+          <div class="fmod"><div class="k">Módulo 03</div><div class="t">Clínica, espontaneidade e reinvenção</div><div class="d">A clínica como espaço de experimentação da espontaneidade, do gesto autêntico e da abertura ao inesperado — reinaugurando contextos e deslocando modos habituais de relação.</div></div>
+          <div class="fdata">
+            <div class="row"><span class="k">Carga horária total</span><span class="v">48 horas</span></div>
+            <div class="row"><span class="k">Encontros</span><span class="v">6 dias · 3 fins de semana</span></div>
+            <div class="row"><span class="k">Grupo mínimo</span><span class="v">5 participantes</span></div>
+          </div>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Investimento</span>
+          <p class="fprice">R$ 620<small>por participante · em 3× sem juros</small></p>
+          <p class="fp dim">Equivale a <b>R$ 103 por encontro</b>. O valor cobre os três módulos da formação. Materiais artísticos básicos inclusos.</p>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Quem facilita</span>
+          <div class="fbio">
+            <img src="assets/elaine-narcizo.jpeg" alt="Retrato de Elaine Narcizo" loading="lazy" />
+            <div>
+              <p class="fp"><b>Elaine Narcizo</b> — arteterapeuta, artista, assistente social e educadora popular, Mestra em Serviço Social, especialista em dança, música e teatro para educadores.</p>
+              <p class="fp dim" style="margin-top:8px">Trabalha na intersecção entre clínica, arte e educação, em consultório, projetos sócio-comunitários e formação continuada para profissionais da saúde e da educação.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Perguntas</span>
+          <details><summary>Tem certificado?</summary><div class="ans">Sim. Ao final é emitido um certificado de participação com a carga horária total — 48 horas — e os temas trabalhados. Válido como formação continuada.</div></details>
+          <details><summary>E se eu não puder ir a um dos módulos?</summary><div class="ans">A presença é parte essencial da experiência — o que acontece nos encontros não se reproduz em gravação. Se uma ausência for inevitável, conversamos caso a caso.</div></details>
+          <details><summary>Como funciona o módulo online?</summary><div class="ans">Ao vivo, por videochamada, com a mesma dinâmica dos presenciais — vivência, elaboração, troca. Não é aula gravada nem webinar.</div></details>
+          <details><summary>Preciso ter experiência com arte?</summary><div class="ans">Não. A formação é para psicólogas, não para artistas. O que se pede não é habilidade técnica — é disponibilidade para experimentar.</div></details>
+          <details><summary>Como é feita a seleção das participantes?</summary><div class="ans">Antes de confirmar a inscrição, fazemos uma conversa breve — por WhatsApp ou chamada. A turma é pequena por escolha, e isso importa.</div></details>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Inscrição</span>
+          <h3 class="fh">Se algo aqui te parou por um momento, <em>mande uma mensagem</em>.</h3>
+          <p class="fp dim">A turma é pequena, e a conversa antes de entrar é parte importante do processo.</p>
+          <a class="btn" href="https://wa.me/5516991595707?text=Ol%C3%A1%20Elaine%2C%20vi%20a%20p%C3%A1gina%20dos%20Repert%C3%B3rios%20Sens%C3%ADveis%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener">Quero conversar <span class="ar">→</span></a>
+        </section>
+
+        <section class="feed-block">
+          <div class="endcap">
+            <span class="cap">fim · Repertórios Sensíveis</span>
+            <a class="btn ghost" href="#" data-cover>← Voltar para a tela inicial</a>
+          </div>
+        </section>
+
       </div>
     </div>
 
-    <!-- banner DançaDestino -->
-    <div class="panel" style="--ac:var(--roxo)">
-      <div class="inner">
-        <div class="head">
-          <span class="eyebrow r" style="--r:0">Toda sexta · 20h</span>
-          <h2 class="r" style="--r:1">Dança<em>Destino</em></h2>
+    <!-- destaque DançaDestino: rolar ↓ abre o conteúdo do ritual -->
+    <div class="panel feed" style="--ac:var(--roxo)">
+      <div class="feed-scroll">
+
+        <div class="inner">
+          <div class="head">
+            <span class="eyebrow r" style="--r:0">Toda sexta · 20h</span>
+            <h2 class="r" style="--r:1">Dança<em>Destino</em></h2>
+          </div>
+          <div class="plate r" style="--r:2">
+            <img src="assets/bg-pattern.webp" alt="Padrão risográfico" loading="lazy" />
+            <span class="tag">Ritual semanal</span>
+          </div>
+          <div class="foot r" style="--r:3">
+            <span class="feed-hint">role para conhecer <span class="chev">⌄</span></span>
+          </div>
         </div>
-        <div class="plate r" style="--r:2">
-          <img src="assets/bg-pattern.webp" alt="Padrão risográfico" loading="lazy" />
-          <span class="tag">Ritual semanal</span>
-        </div>
-        <div class="foot r" style="--r:3">
-          <a class="btn ghost" href="#" data-jump="2">Conhecer o ritual <span class="ar">→</span></a>
-        </div>
+
+        <section class="feed-block">
+          <span class="eyebrow">O ritual</span>
+          <h3 class="fh">Você dança onde estiver — e <em>não está sozinha</em>.</h3>
+          <p class="fp">Toda sexta, às 20h, cada pessoa aperta o play no mesmo momento e dança onde estiver. Sem câmeras, sem plateia — só o movimento e a sensação de fazer parte.</p>
+          <p class="fp dim">Há algo que só se sente em movimento coletivo, mesmo à distância. Quem já dança, sabe.</p>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Música desta semana</span>
+          <div class="song">
+            <span class="disc"></span>
+            <div><div class="l">Semana 35</div><div class="t">One River</div></div>
+          </div>
+        </section>
+
+        <section class="feed-block">
+          <span class="eyebrow">Participar</span>
+          <p class="fp dim">Entre no grupo para receber a música de cada semana e dançar junto.</p>
+          <a class="btn" href="#">Entrar no grupo <span class="ar">→</span></a>
+        </section>
+
+        <section class="feed-block">
+          <div class="endcap">
+            <span class="cap">fim · DançaDestino</span>
+            <a class="btn ghost" href="#" data-cover>← Voltar para a tela inicial</a>
+          </div>
+        </section>
+
       </div>
     </div>
 
@@ -420,6 +600,10 @@ body.coach-x .world-dots::after{
           <a class="card" href="#"><div class="body"><div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div><div class="m">Fev 2026</div></div><span class="go">→</span></a>
           <a class="card" href="#"><div class="body"><div class="t">Descanso e mulheres</div><div class="m">Jan 2026</div></div><span class="go">→</span></a>
           <a class="card" href="#"><div class="body"><div class="t">Ver todos no Medium</div><div class="m">medium.com/@elainenarcizo</div></div><span class="go">→</span></a>
+        </div>
+        <div class="endcap r" style="--r:2">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
         </div>
       </div>
     </div>
@@ -482,6 +666,10 @@ body.coach-x .world-dots::after{
         <div class="foot r" style="--r:3">
           <a class="btn" href="#">Entrar no grupo <span class="ar">→</span></a>
         </div>
+        <div class="endcap r" style="--r:4">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+        </div>
       </div>
     </div>
 
@@ -515,6 +703,10 @@ body.coach-x .world-dots::after{
           <p class="sub">Os 10 temas da formação, oferecidos individualmente — um repertório de cada vez.</p>
         </div>
         <div class="foot r" style="--r:1"><span class="soon">Grade em breve</span></div>
+        <div class="endcap r" style="--r:2">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+        </div>
       </div>
     </div>
 
@@ -548,6 +740,10 @@ body.coach-x .world-dots::after{
           <p class="sub">Workshops, formatos variados, parcerias institucionais.</p>
         </div>
         <div class="foot r" style="--r:1"><span class="soon">Em breve</span></div>
+        <div class="endcap r" style="--r:2">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+        </div>
       </div>
     </div>
 
@@ -581,6 +777,10 @@ body.coach-x .world-dots::after{
           <p class="sub">Um ativo durável, sem algoritmo. A Elaine direto na sua caixa de entrada.</p>
         </div>
         <div class="foot r" style="--r:1"><span class="soon">Inscrição em breve</span></div>
+        <div class="endcap r" style="--r:2">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+        </div>
       </div>
     </div>
 
@@ -615,6 +815,10 @@ body.coach-x .world-dots::after{
           <a class="card" href="#"><div class="body"><div class="t">@elainenarc · Instagram</div><div class="m">Imagens, reels, conversas</div></div><span class="go">→</span></a>
           <a class="card" href="#"><div class="body"><div class="t">@elainenarc · YouTube</div><div class="m">Vídeos e lives</div></div><span class="go">→</span></a>
           <a class="card" href="#"><div class="body"><div class="t">medium.com/@elainenarcizo</div><div class="m">Pensamento longo</div></div><span class="go">→</span></a>
+        </div>
+        <div class="endcap r" style="--r:2">
+          <span class="cap">fim da seção</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
         </div>
       </div>
     </div>
@@ -702,7 +906,8 @@ body.coach-x .world-dots::after{
   function goToWorld(i){
     i=Math.max(0,Math.min(mundos.length-1,i));
     stage.scrollTo({ top:i*stage.clientHeight, behavior:'smooth' });
-    cur=i;
+    if(mundos[i].scrollLeft>0) mundos[i].scrollTo({ left:0, behavior:'auto' }); /* chega sempre pela estação */
+    cur=i; syncLock();
   }
 
   /* OBSERVER: mundo ativo */
@@ -715,6 +920,7 @@ body.coach-x .world-dots::after{
         ticks.forEach(function(t,k){ t.classList.toggle('on',k===i); });
         revealPanel(panelAt(mundos[i]));
         updateDots(i,getPanelIdx(mundos[i]));
+        syncLock();
       }
     });
   },{ root:stage, threshold:[0.55,0.8] });
@@ -736,7 +942,7 @@ body.coach-x .world-dots::after{
       if(i===cur){
         var pi=getPanelIdx(m);
         updateDots(i,pi); revealPanel(panelAt(m));
-        if(pi!==lastPi){ lastPi=pi; bumpX(); }
+        if(pi!==lastPi){ lastPi=pi; bumpX(); syncLock(); }
       }
     },{passive:true});
   });
@@ -815,8 +1021,10 @@ body.coach-x .world-dots::after{
   document.getElementById('next').addEventListener('click',function(){ goToWorld(cur+1); });
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){ closeMenu(); return; }
-    if(e.key==='ArrowDown'){ e.preventDefault(); goToWorld(cur+1); }
-    if(e.key==='ArrowUp'){ e.preventDefault(); goToWorld(cur-1); }
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      if(getPanelIdx(mundos[cur])>0) return; /* adentrado: Y não troca de mundo */
+      e.preventDefault(); goToWorld(e.key==='ArrowDown'?cur+1:cur-1); return;
+    }
     if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
       var m=mundos[cur], pi=getPanelIdx(m), n=getPanelCount(m);
       var to=e.key==='ArrowRight'?Math.min(pi+1,n-1):Math.max(pi-1,0);
@@ -829,6 +1037,50 @@ body.coach-x .world-dots::after{
     el.addEventListener('click',function(e){ e.preventDefault(); goToWorld(+el.dataset.jump); });
   });
   document.getElementById('bar').addEventListener('click',function(){ goToWorld(2); });
+
+  /* ─── EIXO Y CONDICIONAL ───
+     Painel 0 = estação: ↓ troca de mundo. Adentrou (painel>0):
+     o vertical pertence ao painel — feed rola conteúdo, resto trava. */
+  function syncLock(){
+    var m=mundos[cur], locked=getPanelIdx(m)>0;
+    mundos.forEach(function(x){ x.classList.toggle('lockY', x===m&&locked); });
+    coachY.classList.toggle('hold',locked);
+  }
+  /* wheel (desktop): sobre feed deixa rolar; travado, segura o Y */
+  stage.addEventListener('wheel',function(e){
+    if(e.target&&e.target.closest&&e.target.closest('.feed-scroll')) return;
+    if(mundos[cur].classList.contains('lockY')&&Math.abs(e.deltaY)>=Math.abs(e.deltaX)) e.preventDefault();
+  },{passive:false});
+
+  /* desliza para um painel do mundo atual (hero → feed) */
+  [].forEach.call(document.querySelectorAll('[data-slide]'),function(el){
+    el.addEventListener('click',function(e){ e.preventDefault();
+      var m=mundos[cur];
+      m.scrollTo({ left:(+el.dataset.slide)*m.clientWidth, behavior:'smooth' });
+    });
+  });
+  /* fim de seção → volta ao painel inicial da seção */
+  [].forEach.call(document.querySelectorAll('[data-home]'),function(el){
+    el.addEventListener('click',function(e){ e.preventDefault();
+      mundos[cur].scrollTo({ left:0, behavior:'smooth' });
+    });
+  });
+  /* fim de feed → volta ao hero e reseta o feed para a próxima visita */
+  [].forEach.call(document.querySelectorAll('[data-cover]'),function(el){
+    el.addEventListener('click',function(e){ e.preventDefault();
+      var fs=el.closest('.feed-scroll');
+      mundos[cur].scrollTo({ left:0, behavior:'smooth' });
+      if(fs) setTimeout(function(){ fs.scrollTop=0; },700);
+    });
+  });
+
+  /* revelação dos blocos do feed conforme rolam */
+  [].forEach.call(document.querySelectorAll('.feed-scroll'),function(fs){
+    var fio=new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('is-in'); fio.unobserve(en.target); } });
+    },{ root:fs, threshold:0.15 });
+    [].forEach.call(fs.querySelectorAll('.feed-block'),function(b){ fio.observe(b); });
+  });
 
   /* CONTADOR DançaDestino */
   function nextFriday(){
