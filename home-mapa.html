@@ -231,6 +231,18 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .feed details[open] summary::after{ content:"–"; }
 .feed details .ans{ font-size:0.88rem; font-weight:300; color:var(--mute); line-height:1.6; padding:0 0 16px; max-width:54ch; }
 
+/* ── PFRAME: página real embutida como conteúdo do destaque ── */
+.pframe{ background:var(--paper); }
+.pframe iframe{ width:100%; height:100%; border:0; display:block; }
+.back-chip{
+  position:fixed; left:14px; bottom:14px; z-index:56;
+  display:none; align-items:center; gap:7px;
+  background:var(--ink); color:var(--paper);
+  font-size:11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  padding:10px 14px; box-shadow:0 4px 18px rgba(0,0,0,0.18);
+}
+.back-chip.on{ display:inline-flex; }
+
 /* ── ENDCAP: fim de seção → voltar ── */
 .endcap{ display:flex; flex-direction:column; align-items:flex-start; gap:10px; padding-top:6px; }
 .endcap .cap{
@@ -421,102 +433,10 @@ body.coach-x .world-dots::after{
       </div>
     </div>
 
-    <!-- destaque Repertórios: rolar ↓ abre o conteúdo da formação -->
-    <div class="panel warm feed" style="--ac:var(--verde)">
-      <div class="feed-scroll">
-
-        <div class="inner">
-          <div class="head">
-            <span class="eyebrow live r" style="--r:0">Inscrições abertas</span>
-            <h2 class="r" style="--r:1">Repertórios Sensíveis</h2>
-          </div>
-          <div class="plate r" style="--r:2">
-            <img src="assets/colagem bregabrasil organico marrom .webp" alt="Colagem brega-brasil orgânica" loading="lazy" />
-            <span class="tag">Formação · turma 2026</span>
-          </div>
-          <div class="foot r" style="--r:3">
-            <span class="feed-hint">role para conhecer <span class="chev">⌄</span></span>
-          </div>
-        </div>
-
-        <section class="feed-block">
-          <span class="eyebrow">Sobre a formação</span>
-          <h3 class="fh">Como se constrói uma clínica que faz o corpo <em>sonhar</em>?</h3>
-          <p class="fp">Que novas realidades se insinuam no devaneio criador? O que o espanto e a curiosidade inauguram no espaço clínico?</p>
-          <p class="fp">Essas são algumas das questões que atravessam esta formação, na qual vivências práticas e reflexão teórica se articulam na construção de repertórios para uma clínica viva, sensível e investigativa.</p>
-          <p class="fp dim">Um espaço destinado a psicólogas que desejam ampliar seus modos de presença e atuação clínica a partir das contribuições da arteterapia, das práticas expressivas e da experiência simbólica.</p>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Os dez temas</span>
-          <h3 class="fh">Não são apenas tópicos, mas <em>convites</em> a uma clínica sensível e inventiva.</h3>
-          <div class="flist">
-            <div class="fitem"><span class="fn">01</span><div><div class="ft">Atenção e presença expandida</div><div class="fb">Reativar uma qualidade de atenção que se desloca do controle e da vigilância para a interação com o presente.</div></div></div>
-            <div class="fitem"><span class="fn">02</span><div><div class="ft">Repouso psíquico ativo</div><div class="fb">Experimentar como descansar no campo da criação, como modo de suspender o cotidiano e experimentar uma forma de regeneração psíquica.</div></div></div>
-            <div class="fitem"><span class="fn">03</span><div><div class="ft">Devaneio criador como autoconhecimento</div><div class="fb">Mobilizar a potência imaginativa como mediação para ampliação de perspectivas sobre a vida.</div></div></div>
-            <div class="fitem"><span class="fn">04</span><div><div class="ft">Transformação pela matéria</div><div class="fb">Utilizar materiais expressivos como mediadores de processos de elaboração, simbolização e criação de sentidos.</div></div></div>
-            <div class="fitem"><span class="fn">05</span><div><div class="ft">Linguagens do sensível</div><div class="fb">Vivenciar experiências com dança, teatro, pintura e outras práticas artísticas que podem ampliar a expressão subjetiva.</div></div></div>
-            <div class="fitem"><span class="fn">06</span><div><div class="ft">Curiosidade como potência clínica</div><div class="fb">Retomar a curiosidade como força que desloca a centralidade da compreensão e abre novas formas de percepção.</div></div></div>
-            <div class="fitem"><span class="fn">07</span><div><div class="ft">O corpo que sonha</div><div class="fb">Ativar a criatividade corporal como recurso para integração psíquica.</div></div></div>
-            <div class="fitem"><span class="fn">08</span><div><div class="ft">O prazer da autenticidade</div><div class="fb">Sustentar a espontaneidade como abertura para o prazer de habitar a própria singularidade.</div></div></div>
-            <div class="fitem"><span class="fn">09</span><div><div class="ft">Inaugurar contextos</div><div class="fb">Ressignificar as formas de se relacionar com os contextos de vida, através da investigação de novos modos de habitar a experiência.</div></div></div>
-            <div class="fitem"><span class="fn">10</span><div><div class="ft">Retomar a capacidade de surpreender-se consigo mesmo</div><div class="fb">Criar condições para reencontrar aspectos da experiência subjetiva ainda não automatizados, ampliando abertura ao inesperado e ao novo.</div></div></div>
-          </div>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Como funciona</span>
-          <div class="fmod"><div class="k">Módulo 01</div><div class="t">Imaginação e presença</div><div class="d">A imaginação como potência de presença e criação de novas realidades psíquicas. Como a atenção clínica pode se tornar mais porosa ao corpo, ao sensível e às dimensões sutis da experiência.</div></div>
-          <div class="fmod"><div class="k">Módulo 02</div><div class="t">Descansar dentro da arte</div><div class="d">Imersão em experiências expressivas que articulam corpo, criatividade e linguagem simbólica. A arte não como técnica, mas como território de repouso, criação e transformação subjetiva.</div></div>
-          <div class="fmod"><div class="k">Módulo 03</div><div class="t">Clínica, espontaneidade e reinvenção</div><div class="d">A clínica como espaço de experimentação da espontaneidade, do gesto autêntico e da abertura ao inesperado — reinaugurando contextos e deslocando modos habituais de relação.</div></div>
-          <div class="fdata">
-            <div class="row"><span class="k">Carga horária total</span><span class="v">48 horas</span></div>
-            <div class="row"><span class="k">Encontros</span><span class="v">6 dias · 3 fins de semana</span></div>
-            <div class="row"><span class="k">Grupo mínimo</span><span class="v">5 participantes</span></div>
-          </div>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Investimento</span>
-          <p class="fprice">R$ 620<small>por participante · em 3× sem juros</small></p>
-          <p class="fp dim">Equivale a <b>R$ 103 por encontro</b>. O valor cobre os três módulos da formação. Materiais artísticos básicos inclusos.</p>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Quem facilita</span>
-          <div class="fbio">
-            <img src="assets/elaine-narcizo.jpeg" alt="Retrato de Elaine Narcizo" loading="lazy" />
-            <div>
-              <p class="fp"><b>Elaine Narcizo</b> — arteterapeuta, artista, assistente social e educadora popular, Mestra em Serviço Social, especialista em dança, música e teatro para educadores.</p>
-              <p class="fp dim" style="margin-top:8px">Trabalha na intersecção entre clínica, arte e educação, em consultório, projetos sócio-comunitários e formação continuada para profissionais da saúde e da educação.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Perguntas</span>
-          <details><summary>Tem certificado?</summary><div class="ans">Sim. Ao final é emitido um certificado de participação com a carga horária total — 48 horas — e os temas trabalhados. Válido como formação continuada.</div></details>
-          <details><summary>E se eu não puder ir a um dos módulos?</summary><div class="ans">A presença é parte essencial da experiência — o que acontece nos encontros não se reproduz em gravação. Se uma ausência for inevitável, conversamos caso a caso.</div></details>
-          <details><summary>Como funciona o módulo online?</summary><div class="ans">Ao vivo, por videochamada, com a mesma dinâmica dos presenciais — vivência, elaboração, troca. Não é aula gravada nem webinar.</div></details>
-          <details><summary>Preciso ter experiência com arte?</summary><div class="ans">Não. A formação é para psicólogas, não para artistas. O que se pede não é habilidade técnica — é disponibilidade para experimentar.</div></details>
-          <details><summary>Como é feita a seleção das participantes?</summary><div class="ans">Antes de confirmar a inscrição, fazemos uma conversa breve — por WhatsApp ou chamada. A turma é pequena por escolha, e isso importa.</div></details>
-        </section>
-
-        <section class="feed-block">
-          <span class="eyebrow">Inscrição</span>
-          <h3 class="fh">Se algo aqui te parou por um momento, <em>mande uma mensagem</em>.</h3>
-          <p class="fp dim">A turma é pequena, e a conversa antes de entrar é parte importante do processo.</p>
-          <a class="btn" href="https://wa.me/5516991595707?text=Ol%C3%A1%20Elaine%2C%20vi%20a%20p%C3%A1gina%20dos%20Repert%C3%B3rios%20Sens%C3%ADveis%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener">Quero conversar <span class="ar">→</span></a>
-        </section>
-
-        <section class="feed-block">
-          <div class="endcap">
-            <span class="cap">fim · Repertórios Sensíveis</span>
-            <a class="btn ghost" href="#" data-cover>← Voltar para a tela inicial</a>
-          </div>
-        </section>
-
-      </div>
+    <!-- destaque Repertórios: a própria página /repertorios-sensiveis, embutida.
+         Fonte única de verdade — qualquer edição na página aparece aqui. -->
+    <div class="panel pframe" style="--ac:var(--verde)">
+      <iframe src="repertorios-sensiveis/" title="Repertórios Sensíveis para a Clínica" loading="lazy"></iframe>
     </div>
 
     <!-- destaque DançaDestino: rolar ↓ abre o conteúdo do ritual -->
@@ -831,6 +751,7 @@ body.coach-x .world-dots::after{
 <div class="worlds-rail" id="worldsRail"></div>
 <div class="world-dots hidden" id="worldDots"></div>
 <div class="coach-y" id="coachY"><span class="lab">novas seções</span><span class="chev">⌄</span></div>
+<a class="back-chip" id="backChip" href="#" data-cover>← tela inicial</a>
 
 <!-- TOUR: instrução de primeira visita -->
 <div class="tour" id="tour" aria-hidden="true">
@@ -866,6 +787,7 @@ body.coach-x .world-dots::after{
   var dotsEl=document.getElementById('worldDots');
   var railEl=document.getElementById('worldsRail');
   var coachY=document.getElementById('coachY');
+  var backChip=document.getElementById('backChip');
   var tour=document.getElementById('tour');
   var menu=document.getElementById('menu');
   var menuBtn=document.getElementById('menuBtn');
@@ -1042,9 +964,12 @@ body.coach-x .world-dots::after{
      Painel 0 = estação: ↓ troca de mundo. Adentrou (painel>0):
      o vertical pertence ao painel — feed rola conteúdo, resto trava. */
   function syncLock(){
-    var m=mundos[cur], locked=getPanelIdx(m)>0;
+    var m=mundos[cur], pi=getPanelIdx(m), p=panelAt(m);
+    var isFrame=!!(p&&p.classList.contains('pframe'));
+    var locked=pi>0&&!isFrame; /* iframe cuida do próprio Y; trava só os painéis comuns */
     mundos.forEach(function(x){ x.classList.toggle('lockY', x===m&&locked); });
-    coachY.classList.toggle('hold',locked);
+    coachY.classList.toggle('hold',pi>0);
+    backChip.classList.toggle('on', cur===0&&isFrame); /* saída sempre visível sobre a página embutida */
   }
   /* wheel (desktop): sobre feed deixa rolar; travado, segura o Y */
   stage.addEventListener('wheel',function(e){

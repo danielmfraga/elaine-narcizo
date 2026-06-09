@@ -784,6 +784,11 @@
 </head>
 <body>
 
+  <!-- Quando embutida na home (iframe), contém o scroll nas bordas
+       para o gesto não vazar e trocar de mundo no pai. -->
+  <script>if(window!==window.top)document.documentElement.classList.add('embedded');</script>
+  <style>html.embedded,html.embedded body{overscroll-behavior-y:contain;}</style>
+
   <!-- ============ NAV ============ -->
   <nav class="top">
     <div class="row">
