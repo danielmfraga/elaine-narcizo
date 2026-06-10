@@ -902,7 +902,9 @@ body.coach-x .world-dots::after{
     tour.setAttribute('aria-hidden','false');
     setTimeout(function(){ tour.classList.add('in'); },20);
     var evs=['pointerdown','wheel','keydown','touchstart'];
+    var autoClose=setTimeout(closeTour,6000); /* ninguém tocou? fecha e demonstra */
     function closeTour(){
+      clearTimeout(autoClose);
       store.set('en_tour',tourSeen+1);
       tour.style.pointerEvents='none'; /* o próximo gesto já navega */
       tour.classList.remove('in');
@@ -912,7 +914,6 @@ body.coach-x .world-dots::after{
       setTimeout(demo,420);
     }
     evs.forEach(function(ev){ window.addEventListener(ev,closeTour,true); });
-    setTimeout(closeTour,6000); /* ninguém tocou? fecha e demonstra */
   }
   if(tourSeen<2){
     setTimeout(openTour,1100); /* depois do reveal do hero */
