@@ -756,7 +756,7 @@ body.coach-x .world-dots::after{
 <!-- NAV -->
 <div class="worlds-rail" id="worldsRail"></div>
 <div class="world-dots hidden" id="worldDots"></div>
-<a class="back-chip" id="backChip" href="#" data-cover>← tela inicial</a>
+<a class="back-chip" id="backChip" href="#">← tela inicial</a>
 
 <!-- TOUR: instrução de primeira visita -->
 <div class="tour" id="tour" aria-hidden="true">
@@ -1005,19 +1005,31 @@ body.coach-x .world-dots::after{
 
   /* PONTE: capa do percurso → rolar ⌄ inicia a oficina embutida */
   var pz=document.getElementById('pz');
+  function pzDeep(){ return !!pz&&pz.scrollTop>pz.clientHeight*0.5; }
+  function pzScreen(){ /* o app guarda a tela atual no localStorage (mesma origem) */
+    try{ var s=JSON.parse(localStorage.getItem('ponte:v1')); return (s&&s.screen)||'welcome'; }
+    catch(e){ return 'welcome'; }
+  }
   if(pz){
     var pzGo=pz.querySelector('[data-app-go]');
     if(pzGo) pzGo.addEventListener('click',function(e){ e.preventDefault();
       pz.scrollTo({ top:pz.clientHeight, behavior:'smooth' });
     });
     pz.addEventListener('scroll',function(){
-      var deep=pz.scrollTop>pz.clientHeight*0.5;
-      if(deep){ backChip.classList.add('on'); backChip.textContent='← início da seção'; }
+      if(pzDeep()){ backChip.classList.add('on'); backChip.textContent=pzScreen()!=='welcome'?'← início da PONTE':'← início da seção'; }
       else syncLock(); /* volta o chip ao estado do painel */
     },{passive:true});
-    /* saiu pelo chip: rearma a capa (o app não perde nada — autosave) */
-    backChip.addEventListener('click',function(){ setTimeout(function(){ pz.scrollTop=0; },700); });
   }
+  /* chip em 2 estágios: dentro da PONTE leva primeiro ao "Olá!";
+     do "Olá!" (ou sobre qualquer pframe) sai para o início da seção */
+  backChip.addEventListener('click',function(e){ e.preventDefault();
+    if(pzDeep()&&pzScreen()!=='welcome'){
+      var w=pz.querySelector('iframe').contentWindow;
+      if(w&&w.__ponte){ w.__ponte.go('welcome'); backChip.textContent='← início da seção'; return; }
+    }
+    mundos[cur].scrollTo({ left:0, behavior:'smooth' });
+    if(pz) setTimeout(function(){ pz.scrollTop=0; },700); /* rearma a capa; autosave preserva tudo */
+  });
 
   /* revelação dos blocos do feed conforme rolam */
   [].forEach.call(document.querySelectorAll('.feed-scroll'),function(fs){
