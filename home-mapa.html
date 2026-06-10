@@ -191,6 +191,12 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 }
 .feed-scroll::-webkit-scrollbar{ display:none; }
 .feed .inner{ height:auto; min-height:100%; }
+/* feed com snap: tela 1 = capa do item, tela 2 = app embutido */
+.feed-scroll.snapy{ scroll-snap-type:y mandatory; }
+.feed-scroll.snapy > *{ scroll-snap-align:start; scroll-snap-stop:always; }
+.app-screen{ height:100%; }
+.app-screen iframe{ width:100%; height:100%; border:0; display:block; }
+.btn .dn{ display:inline-block; animation:bob 1.9s var(--ease) infinite; }
 .feed-hint{
   font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
   color:var(--mute); display:inline-flex; align-items:center; gap:8px;
@@ -640,23 +646,30 @@ body.coach-x .world-dots::after{
       </div>
     </div>
 
-    <!-- item: a experiência PONTE real, embutida (mesmo sistema do Repertórios em Formações) -->
-    <div class="panel pframe">
-      <iframe src="ui_kits/ponte/" title="PONTE — para elaboração de projetos de vida" loading="lazy"></iframe>
-    </div>
+    <!-- item PONTE: capa no padrão da casa; rolar ⌄ inicia a oficina embutida.
+         (futuro: vários percursos = várias capas lado a lado) -->
+    <div class="panel feed" style="--ac:var(--verde)">
+      <div class="feed-scroll snapy" id="pz">
 
-    <div class="panel warm">
-      <div class="inner center">
-        <div class="head r" style="--r:0">
-          <span class="eyebrow">Outros percursos</span>
-          <h2>Mais <em>experiências</em></h2>
-          <p class="sub">Workshops, formatos variados, parcerias institucionais.</p>
+        <div class="inner">
+          <div class="head">
+            <span class="eyebrow r" style="--r:0">Percurso</span>
+            <h2 class="r" style="--r:1">PONTE — <em>projeto de vida</em></h2>
+            <p class="sub r" style="--r:2">Onde você está, o que deseja — e a ponte entre os dois. Três exercícios guiados.</p>
+          </div>
+          <div class="plate r" style="--r:3">
+            <img src="assets/bg-green_bx.webp" alt="Formas orgânicas verdes" loading="lazy" />
+            <span class="tag">Oficina</span>
+          </div>
+          <div class="foot r" style="--r:4">
+            <a class="btn" href="#" data-app-go>Faça o percurso <span class="dn">⌄</span></a>
+          </div>
         </div>
-        <div class="foot r" style="--r:1"><span class="soon">Em breve</span></div>
-        <div class="endcap r" style="--r:2">
-          <span class="cap">fim da seção</span>
-          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+
+        <div class="app-screen">
+          <iframe src="ui_kits/ponte/" title="PONTE — para elaboração de projetos de vida" loading="lazy"></iframe>
         </div>
+
       </div>
     </div>
 
@@ -989,6 +1002,22 @@ body.coach-x .world-dots::after{
       if(fs) setTimeout(function(){ fs.scrollTop=0; },700);
     });
   });
+
+  /* PONTE: capa do percurso → rolar ⌄ inicia a oficina embutida */
+  var pz=document.getElementById('pz');
+  if(pz){
+    var pzGo=pz.querySelector('[data-app-go]');
+    if(pzGo) pzGo.addEventListener('click',function(e){ e.preventDefault();
+      pz.scrollTo({ top:pz.clientHeight, behavior:'smooth' });
+    });
+    pz.addEventListener('scroll',function(){
+      var deep=pz.scrollTop>pz.clientHeight*0.5;
+      if(deep){ backChip.classList.add('on'); backChip.textContent='← início da seção'; }
+      else syncLock(); /* volta o chip ao estado do painel */
+    },{passive:true});
+    /* saiu pelo chip: rearma a capa (o app não perde nada — autosave) */
+    backChip.addEventListener('click',function(){ setTimeout(function(){ pz.scrollTop=0; },700); });
+  }
 
   /* revelação dos blocos do feed conforme rolam */
   [].forEach.call(document.querySelectorAll('.feed-scroll'),function(fs){
