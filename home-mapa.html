@@ -304,14 +304,6 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .world-dots span.active{ width:18px; border-radius:3px; background:var(--ink); }
 
 /* ── COACHES de gesto: cada eixo persiste até o 1º uso DAQUELE eixo ── */
-.coach-y{
-  position:fixed; left:50%; bottom:34px; transform:translateX(-50%); z-index:54;
-  display:flex; flex-direction:column; align-items:center; gap:3px; pointer-events:none;
-  transition:opacity .5s var(--ease);
-}
-.coach-y.off{ opacity:0; }
-.coach-y .lab{ font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--mute); }
-.coach-y .chev{ font-size:14px; color:var(--ink); animation:bob 1.9s var(--ease) infinite; }
 @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.35; } 50%{ transform:translateY(5px); opacity:1; } }
 /* chevron-professor do eixo X, acoplado às bolinhas de painel */
 body.coach-x .world-dots::after{
@@ -741,7 +733,6 @@ body.coach-x .world-dots::after{
 <!-- NAV -->
 <div class="worlds-rail" id="worldsRail"></div>
 <div class="world-dots hidden" id="worldDots"></div>
-<div class="coach-y" id="coachY"><span class="lab">novas seções</span><span class="chev">⌄</span></div>
 <a class="back-chip" id="backChip" href="#" data-cover>← tela inicial</a>
 
 <!-- TOUR: instrução de primeira visita -->
@@ -777,7 +768,6 @@ body.coach-x .world-dots::after{
   var stage=document.getElementById('stage');
   var dotsEl=document.getElementById('worldDots');
   var railEl=document.getElementById('worldsRail');
-  var coachY=document.getElementById('coachY');
   var backChip=document.getElementById('backChip');
   var tour=document.getElementById('tour');
   var menu=document.getElementById('menu');
@@ -874,7 +864,6 @@ body.coach-x .world-dots::after{
   var tourSeen=store.get('en_tour');                 /* tour aparece até 2x por aparelho */
 
   function syncCoaches(){
-    coachY.classList.toggle('off',learnedY);
     document.body.classList.toggle('coach-x',!learnedX);
   }
   function gotY(){ if(!learnedY){ learnedY=true; store.set('en_gy',1); syncCoaches(); } }
@@ -959,7 +948,6 @@ body.coach-x .world-dots::after{
     var isFrame=!!(p&&p.classList.contains('pframe'));
     var locked=pi>0&&!isFrame; /* iframe cuida do próprio Y; trava só os painéis comuns */
     mundos.forEach(function(x){ x.classList.toggle('lockY', x===m&&locked); });
-    coachY.classList.toggle('hold',pi>0);
     backChip.classList.toggle('on', isFrame); /* saída sempre visível sobre a página embutida */
     if(isFrame) backChip.textContent = cur===0 ? '← tela inicial' : '← início da seção';
   }
