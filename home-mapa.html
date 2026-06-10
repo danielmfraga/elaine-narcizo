@@ -893,7 +893,7 @@ body.coach-x .world-dots::after{
     setTimeout(function(){ [].forEach.call(m.querySelectorAll('.panel'),function(p){ p.style.transform=''; }); },500);
     setTimeout(function(){ m.classList.remove('peek-x'); if(cb)cb(); },1000);
   }
-  function demo(){ if(reduce) return; peekY(function(){ setTimeout(peekX,250); }); }
+  function demo(){ if(reduce) return; peekY(); }
 
   /* tour de 1ª visita */
   function openTour(){
