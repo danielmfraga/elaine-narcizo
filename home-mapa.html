@@ -137,6 +137,8 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 }
 .plate .tag::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--ac); }
 .plate.tall{ flex:1 1 auto; }
+/* feed: inner é height:auto, plate precisa de min-height explícito para object-fit:cover funcionar */
+.feed .inner .plate{ min-height:clamp(160px,36vh,280px); }
 
 /* ── FOOT: ação ── */
 .foot{ flex:0 0 auto; display:flex; flex-direction:column; gap:14px; }
