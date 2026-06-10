@@ -326,7 +326,30 @@ body.coach-x .world-dots::after{
 .stage.peek-y .mundo{ box-shadow:0 -26px 56px rgba(0,0,0,0.10); }
 .mundo.peek-x .panel{ box-shadow:-26px 0 56px rgba(0,0,0,0.10); }
 
-
+/* ── TOUR: instrução de primeira visita ── */
+.tour{
+  position:fixed; inset:0; z-index:80;
+  background:rgba(255,255,255,0.95);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  display:none; flex-direction:column; align-items:center; justify-content:center;
+  gap:clamp(28px,6vh,56px);
+  opacity:0; transition:opacity .5s var(--ease);
+}
+.tour.show{ display:flex; }
+.tour.in{ opacity:1; }
+.tg{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+.tg .track{ position:relative; background:var(--line); }
+.tg .track.ty{ width:1px; height:56px; }
+.tg .track.tx{ width:56px; height:1px; }
+.tg .track i{ position:absolute; width:8px; height:8px; border-radius:50%; }
+.tg .track.ty i{ left:50%; top:0; background:var(--verde); animation:tdY 1.7s var(--ease) infinite; }
+.tg .track.tx i{ top:50%; left:0; background:var(--laranja); animation:tdX 1.7s var(--ease) infinite; }
+@keyframes tdY{ 0%{ transform:translate(-50%,0); opacity:0; } 14%{ opacity:1; } 82%{ opacity:1; } 100%{ transform:translate(-50%,46px); opacity:0; } }
+@keyframes tdX{ 0%{ transform:translate(0,-50%); opacity:0; } 14%{ opacity:1; } 82%{ opacity:1; } 100%{ transform:translate(46px,-50%); opacity:0; } }
+.tg .tl{ font-size:1.02rem; font-weight:300; line-height:1.45; color:var(--ink-soft); text-align:center; margin:0; }
+.tg .tl b{ font-weight:500; }
+.tour .tt{ font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--mute); margin:8px 0 0; animation:bob 1.9s var(--ease) infinite; }
+@media(prefers-reduced-motion:reduce){ .tg .track.ty i{ top:auto; bottom:0; } .tg .track.tx i{ left:auto; right:0; } }
 
 /* ── BOTÃO HAMBÚRGUER ── */
 .menu-btn{
@@ -721,6 +744,18 @@ body.coach-x .world-dots::after{
 <div class="coach-y" id="coachY"><span class="lab">novas seções</span><span class="chev">⌄</span></div>
 <a class="back-chip" id="backChip" href="#" data-cover>← tela inicial</a>
 
+<!-- TOUR: instrução de primeira visita -->
+<div class="tour" id="tour" aria-hidden="true">
+  <div class="tg">
+    <span class="track ty"><i></i></span>
+    <p class="tl"><b>Role para baixo</b><br>e mude de seção</p>
+  </div>
+  <div class="tg">
+    <span class="track tx"><i></i></span>
+    <p class="tl"><b>Deslize para o lado</b><br>e explore a seção</p>
+  </div>
+  <p class="tt">toque para começar</p>
+</div>
 
 <!-- MENU -->
 <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>
@@ -744,7 +779,7 @@ body.coach-x .world-dots::after{
   var railEl=document.getElementById('worldsRail');
   var coachY=document.getElementById('coachY');
   var backChip=document.getElementById('backChip');
-
+  var tour=document.getElementById('tour');
   var menu=document.getElementById('menu');
   var menuBtn=document.getElementById('menuBtn');
   var menuList=document.getElementById('menuList');
@@ -826,8 +861,9 @@ body.coach-x .world-dots::after{
   });
 
   /* ─── DIDÁTICA DE NAVEGAÇÃO ───
-     1) peek: a página demonstra fisicamente os 2 eixos
-     2) coaches: hint de cada eixo persiste até o 1º uso DAQUELE eixo */
+     1) tour: véu instrutivo na 1ª visita (localStorage)
+     2) peek: a página demonstra fisicamente os 2 eixos
+     3) coaches: hint de cada eixo persiste até o 1º uso DAQUELE eixo */
   var store={
     get:function(k){ try{ return +(localStorage.getItem(k)||0); }catch(e){ return 0; } },
     set:function(k,v){ try{ localStorage.setItem(k,''+v); }catch(e){} }
@@ -835,6 +871,7 @@ body.coach-x .world-dots::after{
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   var learnedY=store.get('en_gy')>0;
   var xCount=store.get('en_gx'), learnedX=xCount>=4; /* chevron › fica até 4 navegações laterais */
+  var tourSeen=store.get('en_tour');                 /* tour aparece até 2x por aparelho */
 
   function syncCoaches(){
     coachY.classList.toggle('off',learnedY);
@@ -866,6 +903,31 @@ body.coach-x .world-dots::after{
   }
   function demo(){ if(reduce) return; peekY(function(){ setTimeout(peekX,250); }); }
 
+  /* tour de 1ª visita */
+  function openTour(){
+    if(stage.scrollTop>10||mundos[0].scrollLeft>10) return; /* já está navegando sozinho */
+    tour.classList.add('show');
+    tour.setAttribute('aria-hidden','false');
+    setTimeout(function(){ tour.classList.add('in'); },20);
+    var evs=['pointerdown','wheel','keydown','touchstart'];
+    function closeTour(){
+      store.set('en_tour',tourSeen+1);
+      tour.style.pointerEvents='none'; /* o próximo gesto já navega */
+      tour.classList.remove('in');
+      tour.setAttribute('aria-hidden','true');
+      setTimeout(function(){ tour.classList.remove('show'); },520);
+      evs.forEach(function(ev){ window.removeEventListener(ev,closeTour,true); });
+      setTimeout(demo,420);
+    }
+    evs.forEach(function(ev){ window.addEventListener(ev,closeTour,true); });
+    setTimeout(closeTour,6000); /* ninguém tocou? fecha e demonstra */
+  }
+  if(tourSeen<2){
+    setTimeout(openTour,1100); /* depois do reveal do hero */
+  }else if(!learnedX&&!learnedY){
+    /* já viu o tour mas nunca gestou: lembrete físico único */
+    setTimeout(function(){ if(!learnedX&&!learnedY) demo(); },5000);
+  }
 
   /* SETAS + TECLADO */
   document.getElementById('prev').addEventListener('click',function(){ goToWorld(cur-1); });
