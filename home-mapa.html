@@ -197,6 +197,33 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .app-screen{ height:100%; }
 .app-screen iframe{ width:100%; height:100%; border:0; display:block; }
 .btn .dn{ display:inline-block; animation:bob 1.9s var(--ease) infinite; }
+
+/* ── RÁDIO REMENDO ── */
+.radio-screen{ height:100%; display:flex; flex-direction:column; overflow:hidden; }
+.radio-head{
+  padding:14px 20px 12px; border-bottom:1px solid var(--linha,#e0e0e0);
+  flex-shrink:0; display:flex; align-items:center; justify-content:space-between;
+}
+.radio-head .eyebrow{ font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mute); }
+.radio-hint{ font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); opacity:.6; }
+.radio-screen > iframe{ flex:1; width:100%; border:0; display:block; min-height:0; }
+.yt-wrap{ flex:1; display:flex; flex-direction:column; overflow:hidden; min-height:0; }
+.yt-embed{ flex-shrink:0; background:#000; display:none; }
+.yt-embed.on{ display:block; }
+.yt-embed iframe{ width:100%; aspect-ratio:16/9; border:0; display:block; }
+.yt-list{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.yt-track{
+  display:flex; align-items:center; gap:14px;
+  padding:14px 20px; border-bottom:1px solid var(--linha,#e0e0e0);
+  cursor:pointer; transition:background .15s;
+}
+.yt-track:active,.yt-track.on{ background:var(--fundo-alt,#f7f7f5); }
+.yt-track .t-num{ font-size:.72rem; color:var(--mute); width:18px; text-align:center; flex-shrink:0; }
+.yt-track.on .t-num{ font-size:.9rem; }
+.yt-track .t-info{ flex:1; min-width:0; }
+.yt-track .t-title{ font-size:.9rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.yt-track .t-artist{ font-size:.78rem; color:var(--mute); margin-top:1px; }
+.yt-track .t-icon{ font-size:.8rem; color:var(--mute); flex-shrink:0; }
 .feed-hint{
   font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
   color:var(--mute); display:inline-flex; align-items:center; gap:8px;
@@ -492,41 +519,58 @@ body.coach-x .world-dots::after{
 
   </section>
 
-  <!-- ══ 01 · ESCRITOS & VOZ ══ -->
+  <!-- ══ 01 · ESCRITOS & VOZ — RÁDIO REMENDO ══ -->
   <section class="mundo" data-name="Escritos &amp; Voz" data-color="var(--laranja)" style="--ac:var(--laranja)">
 
+    <!-- capa do nicho -->
     <div class="panel">
       <div class="inner">
         <div class="head">
           <span class="eyebrow r" style="--r:0">Escritos &amp; Voz</span>
-          <h2 class="r" style="--r:1">O pensamento <em>em texto e em voz</em></h2>
+          <h2 class="r" style="--r:1">Rádio <em>Remendo.</em></h2>
+          <p class="sub r" style="--r:2">Elaine lê em voz alta. Uma seleção de músicas do DançaDestino.</p>
         </div>
-        <div class="plate r" style="--r:2">
+        <div class="plate r" style="--r:3">
           <img src="assets/colagem bregabrasil organico marrom .webp" alt="Colagem brega-brasil orgânica" loading="lazy" />
-          <span class="tag">Artigos · podcast</span>
+          <span class="tag">Podcast · Playlist</span>
         </div>
-        <div class="foot r" style="--r:3">
-          <a class="btn ghost" href="#">▸ Ouvir no Spotify</a>
+        <div class="foot r" style="--r:4">
+          <a class="btn" href="#" data-slide="1">Sintonizar <span class="ar">→</span></a>
         </div>
       </div>
     </div>
 
-    <div class="panel warm">
-      <div class="inner center">
-        <div class="head r" style="--r:0">
-          <span class="eyebrow">Arquivo</span>
-          <h2>Mais <em>textos</em></h2>
-          <p class="sub">Do mais recente ao mais antigo. Tudo que a Elaine publicou.</p>
+    <!-- tocador: Spotify (tela 1) + DançaDestino YouTube (tela 2) -->
+    <div class="panel feed" style="--ac:var(--laranja)">
+      <div class="feed-scroll snapy" id="radio">
+
+        <!-- tela 1: Elaine lê (Spotify) -->
+        <div class="radio-screen">
+          <div class="radio-head">
+            <span class="eyebrow">Elaine lê</span>
+            <span class="radio-hint">role ⌄ para DançaDestino</span>
+          </div>
+          <iframe
+            src="https://open.spotify.com/embed/show/3yCNwDaO1KVVuyfAbxXbXV?utm_source=generator&theme=0"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"></iframe>
         </div>
-        <div class="cards r" style="--r:1">
-          <a class="card" href="#"><div class="body"><div class="t">O ridículo é um dispositivo que pode salvar uma mulher</div><div class="m">Fev 2026</div></div><span class="go">→</span></a>
-          <a class="card" href="#"><div class="body"><div class="t">Descanso e mulheres</div><div class="m">Jan 2026</div></div><span class="go">→</span></a>
-          <a class="card" href="#"><div class="body"><div class="t">Ver todos no Medium</div><div class="m">medium.com/@elainenarcizo</div></div><span class="go">→</span></a>
+
+        <!-- tela 2: DançaDestino (YouTube) -->
+        <div class="radio-screen">
+          <div class="radio-head">
+            <span class="eyebrow">DançaDestino · playlist</span>
+          </div>
+          <div class="yt-wrap">
+            <div class="yt-embed" id="yt-embed">
+              <iframe id="yt-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <div class="yt-list" id="yt-list">
+              <!-- preenchido por JS -->
+            </div>
+          </div>
         </div>
-        <div class="endcap r" style="--r:2">
-          <span class="cap">fim da seção</span>
-          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
-        </div>
+
       </div>
     </div>
 
@@ -1027,9 +1071,57 @@ body.coach-x .world-dots::after{
       var w=pz.querySelector('iframe').contentWindow;
       if(w&&w.__ponte){ w.__ponte.go('welcome'); backChip.textContent='← início da seção'; return; }
     }
+    /* rádio: tela 2 → tela 1 antes de sair */
+    if(radioDeep()){
+      radio.scrollTo({ top:0, behavior:'smooth' });
+      setTimeout(function(){ backChip.textContent='← início da seção'; },300);
+      return;
+    }
     mundos[cur].scrollTo({ left:0, behavior:'smooth' });
     if(pz) setTimeout(function(){ pz.scrollTop=0; },700); /* rearma a capa; autosave preserva tudo */
+    if(radio) setTimeout(function(){ radio.scrollTop=0; },700);
   });
+
+  /* RÁDIO REMENDO: Spotify (tela 1) + DançaDestino YouTube (tela 2) */
+  var radio=document.getElementById('radio');
+  function radioDeep(){ return !!radio&&radio.scrollTop>radio.clientHeight*0.5; }
+  if(radio){
+    radio.addEventListener('scroll',function(){
+      if(radio.scrollTop>10){ backChip.classList.add('on'); backChip.textContent='← início da seção'; }
+      else syncLock();
+    },{passive:true});
+  }
+  /* YouTube track list */
+  var ytTracks=[
+    { id:'nAyXMqB_6Kc', title:'Faixa 01', artist:'DançaDestino' },
+    { id:'AA_8wtG62DI', title:'Faixa 02', artist:'DançaDestino' },
+    { id:'rLsP8NgS01Y', title:'Faixa 03', artist:'DançaDestino' }
+  ];
+  var ytList=document.getElementById('yt-list');
+  var ytEmbed=document.getElementById('yt-embed');
+  var ytIframe=document.getElementById('yt-iframe');
+  var ytCur=-1;
+  if(ytList){
+    ytTracks.forEach(function(tr,i){
+      var el=document.createElement('div');
+      el.className='yt-track';
+      el.innerHTML='<span class="t-num">'+(i+1)+'</span>'
+        +'<div class="t-info"><div class="t-title">'+tr.title+'</div><div class="t-artist">'+tr.artist+'</div></div>'
+        +'<span class="t-icon">▶</span>';
+      el.addEventListener('click',function(){
+        if(ytCur===i){ return; }
+        ytCur=i;
+        document.querySelectorAll('.yt-track').forEach(function(t,j){
+          t.classList.toggle('on',j===i);
+          t.querySelector('.t-num').textContent=j===i?'▶':(j+1);
+          t.querySelector('.t-icon').style.display=j===i?'none':'';
+        });
+        ytIframe.src='https://www.youtube.com/embed/'+tr.id+'?autoplay=1';
+        ytEmbed.classList.add('on');
+      });
+      ytList.appendChild(el);
+    });
+  }
 
   /* revelação dos blocos do feed conforme rolam */
   [].forEach.call(document.querySelectorAll('.feed-scroll'),function(fs){
