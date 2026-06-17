@@ -243,7 +243,7 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
   background-image:repeating-radial-gradient(circle at center,
     transparent 0, transparent 5px,
     rgba(255,255,255,0.055) 5px, rgba(255,255,255,0.055) 6px);
-  animation:vinyl-spin 3s linear infinite;
+  animation:vinyl-spin 3.9s linear infinite;
   box-shadow:0 8px 32px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.06);
   position:relative;
 }
@@ -258,9 +258,12 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .vinyl-hole{
   position:absolute; top:50%; left:50%;
   transform:translate(-50%,-50%);
-  width:8px; height:8px; border-radius:50%;
-  background:#1c1c1c; z-index:2;
+  width:11px; height:11px; border-radius:50%;
+  background:#090909;
+  box-shadow:0 0 0 2px rgba(255,255,255,0.18), inset 0 2px 5px rgba(0,0,0,1);
+  z-index:2;
 }
+.vinyl-center{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:var(--gap); }
 .tonearm{
   position:absolute; top:-10px; right:-14px;
   width:40%; overflow:visible;
@@ -576,29 +579,31 @@ body.coach-x .world-dots::after{
             <h2>Rádio <em>Remendo.</em></h2>
             <span class="td-dot"></span>
           </div>
-          <p class="sub r" style="--r:1">relaxe e reflita.</p>
+          <p class="sub r" style="--r:1; text-align:center">Lorem ypsilon Lorem ypsilon<br>Lorem ypsilon Lorem ypsilon.</p>
         </div>
-        <div class="vinyl-plate r" style="--r:2">
-          <div class="vinyl-outer">
-            <div class="vinyl-disc">
-              <div class="vinyl-label">
-                <img src="assets/bg-pattern.webp" alt="DançaDestino" loading="lazy" />
+        <div class="vinyl-center r" style="--r:2">
+          <div class="vinyl-plate">
+            <div class="vinyl-outer">
+              <div class="vinyl-disc">
+                <div class="vinyl-label">
+                  <img src="assets/bg-pattern.webp" alt="DançaDestino" loading="lazy" />
+                </div>
+                <div class="vinyl-hole"></div>
               </div>
-              <div class="vinyl-hole"></div>
+              <svg class="tonearm" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="48" cy="13" r="11" fill="#3a3a3a"/>
+                <circle cx="48" cy="13" r="5" fill="#555"/>
+                <circle cx="48" cy="13" r="2" fill="#888"/>
+                <path d="M42 20 C38 42 26 66 12 96" stroke="#555" stroke-width="3.5" stroke-linecap="round"/>
+                <rect x="7" y="92" width="11" height="6" rx="2" fill="#3a3a3a" transform="rotate(-18 12 95)"/>
+                <line x1="11" y1="97" x2="9" y2="105" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+              </svg>
             </div>
-            <svg class="tonearm" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="48" cy="13" r="11" fill="#3a3a3a"/>
-              <circle cx="48" cy="13" r="5" fill="#555"/>
-              <circle cx="48" cy="13" r="2" fill="#888"/>
-              <path d="M42 20 C38 42 26 66 12 96" stroke="#555" stroke-width="3.5" stroke-linecap="round"/>
-              <rect x="7" y="92" width="11" height="6" rx="2" fill="#3a3a3a" transform="rotate(-18 12 95)"/>
-              <line x1="11" y1="97" x2="9" y2="105" stroke="#444" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <span class="tag">Podcast · Músicas</span>
           </div>
-          <span class="tag">Podcast · Músicas</span>
-        </div>
-        <div class="foot r" style="--r:3">
-          <a class="btn" href="#" data-slide="1">Sintonizar <span class="ar">→</span></a>
+          <div class="foot">
+            <a class="btn" href="#" data-slide="1">Sintonizar <span class="ar">→</span></a>
+          </div>
         </div>
       </div>
     </div>
