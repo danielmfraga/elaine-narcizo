@@ -224,6 +224,51 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .yt-track .t-title{ font-size:.9rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .yt-track .t-artist{ font-size:.78rem; color:var(--mute); margin-top:1px; }
 .yt-track .t-icon{ font-size:.8rem; color:var(--mute); flex-shrink:0; }
+
+/* ── TÍTULO COM DECORAÇÃO (linha + bolinha) ── */
+.title-deco{ display:flex; align-items:center; gap:10px; flex-wrap:nowrap; }
+.title-deco .td-line{ display:block; width:24px; height:1px; background:var(--ink); flex-shrink:0; }
+.title-deco h2{ margin:0; flex:1 1 auto; }
+.title-deco .td-dot{ display:block; width:8px; height:8px; border-radius:50%; background:#c9006a; flex-shrink:0; }
+
+/* ── VINIL ── */
+.vinyl-plate{ display:flex; flex-direction:column; align-items:center; gap:14px; padding:4px 0; }
+.vinyl-outer{
+  position:relative;
+  width:clamp(160px,56vw,220px); height:clamp(160px,56vw,220px);
+}
+.vinyl-disc{
+  width:100%; height:100%; border-radius:50%;
+  background:#0d0d0d;
+  background-image:repeating-radial-gradient(circle at center,
+    transparent 0, transparent 5px,
+    rgba(255,255,255,0.055) 5px, rgba(255,255,255,0.055) 6px);
+  animation:vinyl-spin 3s linear infinite;
+  box-shadow:0 8px 32px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.06);
+  position:relative;
+}
+.vinyl-label{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:35%; height:35%; border-radius:50%; overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+  z-index:1;
+}
+.vinyl-label img{ width:100%; height:100%; object-fit:cover; }
+.vinyl-hole{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:8px; height:8px; border-radius:50%;
+  background:#1c1c1c; z-index:2;
+}
+.tonearm{
+  position:absolute; top:-10px; right:-14px;
+  width:40%; overflow:visible;
+  transform-origin:80% 10%;
+  animation:tonearm-swing 4.5s ease-in-out alternate infinite;
+}
+@keyframes vinyl-spin{ to{ transform:rotate(360deg); } }
+@keyframes tonearm-swing{ from{ transform:rotate(-11deg); } to{ transform:rotate(-4deg); } }
 .feed-hint{
   font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
   color:var(--mute); display:inline-flex; align-items:center; gap:8px;
@@ -526,15 +571,33 @@ body.coach-x .world-dots::after{
     <div class="panel">
       <div class="inner">
         <div class="head">
-          <span class="eyebrow r" style="--r:0">Escritos &amp; Voz</span>
-          <h2 class="r" style="--r:1">Rádio <em>Remendo.</em></h2>
-          <p class="sub r" style="--r:2">Elaine lê em voz alta. Uma seleção de músicas do DançaDestino.</p>
+          <div class="title-deco r" style="--r:0">
+            <span class="td-line"></span>
+            <h2>Rádio <em>Remendo.</em></h2>
+            <span class="td-dot"></span>
+          </div>
+          <p class="sub r" style="--r:1">relaxe e reflita.</p>
         </div>
-        <div class="plate r" style="--r:3">
-          <img src="assets/colagem bregabrasil organico marrom .webp" alt="Colagem brega-brasil orgânica" loading="lazy" />
-          <span class="tag">Podcast · Playlist</span>
+        <div class="vinyl-plate r" style="--r:2">
+          <div class="vinyl-outer">
+            <div class="vinyl-disc">
+              <div class="vinyl-label">
+                <img src="assets/bg-pattern.webp" alt="DançaDestino" loading="lazy" />
+              </div>
+              <div class="vinyl-hole"></div>
+            </div>
+            <svg class="tonearm" viewBox="0 0 60 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="48" cy="13" r="11" fill="#3a3a3a"/>
+              <circle cx="48" cy="13" r="5" fill="#555"/>
+              <circle cx="48" cy="13" r="2" fill="#888"/>
+              <path d="M42 20 C38 42 26 66 12 96" stroke="#555" stroke-width="3.5" stroke-linecap="round"/>
+              <rect x="7" y="92" width="11" height="6" rx="2" fill="#3a3a3a" transform="rotate(-18 12 95)"/>
+              <line x1="11" y1="97" x2="9" y2="105" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="tag">Podcast · Músicas</span>
         </div>
-        <div class="foot r" style="--r:4">
+        <div class="foot r" style="--r:3">
           <a class="btn" href="#" data-slide="1">Sintonizar <span class="ar">→</span></a>
         </div>
       </div>
