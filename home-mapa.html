@@ -304,6 +304,61 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 
 /* fundo da capa: gradiente quente centrado no disco */
 .radio-cover{ background:radial-gradient(ellipse 88% 52% at 50% 72%, #f4e9e1 0%, var(--paper) 68%); }
+
+/* ── PLAYER "ELAINE LÊ" (Spotify via IFrame API) ── */
+.sp-player{
+  position:relative; z-index:1; height:100%;
+  display:flex; flex-direction:column; gap:12px;
+  padding:16px 20px 18px; background:var(--paper);
+}
+.sp-top{ display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.sp-eyebrow{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); display:inline-flex; align-items:center; gap:8px; }
+.sp-eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background:#e0003c; animation:pulse 1.9s var(--ease) infinite; }
+.sp-hint{ font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); opacity:.55; }
+
+.sp-cover{
+  position:relative; flex-shrink:0; align-self:center;
+  width:clamp(140px,44vw,186px); aspect-ratio:1;
+  border-radius:94px 94px 22px 22px; overflow:hidden;
+  box-shadow:0 12px 34px rgba(0,0,0,.26);
+}
+.sp-cover img{ width:100%; height:100%; object-fit:cover; }
+.sp-cover-grad{ position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,.68) 0%, rgba(0,0,0,0) 54%); }
+.sp-cover-meta{ position:absolute; left:0; right:0; bottom:13px; text-align:center; color:#fff; padding:0 14px; }
+.sp-show{ font-size:1rem; font-weight:700; letter-spacing:-.01em; }
+.sp-ep{ font-size:.64rem; opacity:.82; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+.sp-list{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; touch-action:pan-y; margin:0 -4px; min-height:0; }
+.sp-list::-webkit-scrollbar{ display:none; }
+.sp-row{ display:flex; align-items:center; gap:12px; padding:9px 8px; border-radius:8px; cursor:default; }
+.sp-row.live{ background:var(--fundo-alt,#f7f7f5); }
+.sp-row.playable{ cursor:pointer; }
+.sp-row.playable:active{ background:var(--fundo-alt,#f7f7f5); }
+.sp-row.dim{ opacity:.5; }
+.sp-row .sp-n{ font-size:.7rem; color:var(--mute); width:18px; text-align:center; flex-shrink:0; font-variant-numeric:tabular-nums; }
+.sp-row .sp-ti{ flex:1; min-width:0; font-size:.84rem; line-height:1.3; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sp-row .sp-du{ font-size:.72rem; color:var(--mute); flex-shrink:0; font-variant-numeric:tabular-nums; }
+
+.sp-bar{ display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.sp-bar .sp-t{ font-size:.66rem; color:var(--mute); font-variant-numeric:tabular-nums; width:34px; flex-shrink:0; }
+.sp-bar .sp-t.rt{ text-align:right; }
+.sp-track{ flex:1; height:4px; background:var(--line,#e0e0e0); border-radius:3px; position:relative; cursor:pointer; }
+.sp-fill{ position:absolute; left:0; top:0; height:100%; width:0%; background:var(--ink); border-radius:3px; }
+
+.sp-ctrls{ display:flex; align-items:center; justify-content:center; gap:20px; flex-shrink:0; padding-top:2px; }
+.sp-ic{ background:none; border:0; font-size:1.05rem; color:var(--ink); cursor:pointer; line-height:1; padding:4px; }
+.sp-ic:disabled{ opacity:.26; cursor:default; }
+.sp-play{
+  width:54px; height:54px; border-radius:50%; border:0; cursor:pointer;
+  background:var(--ink); color:var(--paper); font-size:1.1rem;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,.22);
+}
+.sp-play:active{ transform:scale(.95); }
+
+/* engine: iframe do Spotify renderizado mas oculto atrás da UI */
+.sp-engine{ position:absolute; left:0; right:0; bottom:0; height:80px; opacity:0; pointer-events:none; z-index:0; }
+.sp-engine iframe{ width:100%; height:100%; border:0; }
 .feed-hint{
   font-size:11px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
   color:var(--mute); display:inline-flex; align-items:center; gap:8px;
@@ -651,16 +706,38 @@ body.coach-x .world-dots::after{
     <div class="panel feed" style="--ac:var(--laranja)">
       <div class="feed-scroll snapy" id="radio">
 
-        <!-- tela 1: Elaine lê (Spotify) -->
+        <!-- tela 1: Elaine lê — player custom (Spotify IFrame API) -->
         <div class="radio-screen">
-          <div class="radio-head">
-            <span class="eyebrow">Elaine lê</span>
-            <span class="radio-hint">role ⌄ para DançaDestino</span>
+          <div class="sp-player">
+            <div class="sp-top">
+              <span class="sp-eyebrow">no ar · Elaine lê</span>
+              <span class="sp-hint">role ⌄ p/ DançaDestino</span>
+            </div>
+            <div class="sp-cover">
+              <img id="sp-art" src="https://i.scdn.co/image/ab67656300005f1f38ed43f487ec24cb455a9330"
+                   alt="Elaine Narcizo — podcast"
+                   onerror="this.onerror=null;this.src='assets/bg-pattern.webp'" />
+              <div class="sp-cover-grad"></div>
+              <div class="sp-cover-meta">
+                <div class="sp-show">Rádio Remendo</div>
+                <div class="sp-ep" id="sp-now">A leitura mais recente</div>
+              </div>
+            </div>
+            <div class="sp-list" id="sp-list"><!-- episódios via JS --></div>
+            <div class="sp-bar">
+              <span class="sp-t" id="sp-cur">0:00</span>
+              <div class="sp-track" id="sp-track"><div class="sp-fill" id="sp-fill"></div></div>
+              <span class="sp-t rt" id="sp-dur">--:--</span>
+            </div>
+            <div class="sp-ctrls">
+              <button class="sp-ic" aria-label="Aleatório" disabled>⇆</button>
+              <button class="sp-ic" id="sp-prev" aria-label="Anterior" disabled>⏮</button>
+              <button class="sp-play" id="sp-play" aria-label="Tocar">▶</button>
+              <button class="sp-ic" id="sp-next" aria-label="Próximo" disabled>⏭</button>
+              <button class="sp-ic" aria-label="Fila" disabled>☰</button>
+            </div>
           </div>
-          <iframe
-            src="https://open.spotify.com/embed/show/3yCNwDaO1KVVuyfAbxXbXV?utm_source=generator&theme=0"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"></iframe>
+          <div class="sp-engine" id="sp-engine"></div>
         </div>
 
         <!-- tela 2: DançaDestino (YouTube) -->
@@ -1228,6 +1305,90 @@ body.coach-x .world-dots::after{
       });
       ytList.appendChild(el);
     });
+  }
+
+  /* RÁDIO REMENDO · player "Elaine lê" — Spotify IFrame API.
+     Hoje só temos o ID do episódio mais recente (raspagem dos demais é
+     bloqueada pelo Spotify). A lista mostra os 12 títulos reais; o play
+     toca a leitura mais recente completa (podcast = sem limite de prévia).
+     Quando chegarem os 12 links, é só preencher `id` que cada linha vira
+     clicável (clique já está ligado para itens com id). */
+  var spEpisodes=[
+    { id:'5oFlNS1P7ndnuPiJzvOal8', title:`📢 Quando dizemos "parabéns" no Dia da Mulher, estamos celebrando exatamente o quê?`, dur:'1 min' },
+    { id:null, title:`📢 O ridículo é um dispositivo que pode salvar uma mulher.`, dur:'1 min' },
+    { id:null, title:`📢 Mulher, você já pensou que, na maior parte da sua vida, passa respondendo perguntas que nunca escolheu?`, dur:'1 min' },
+    { id:null, title:`Descanso e mulheres: não basta igualdade na corrida quando ninguém pode parar`, dur:'5 min' },
+    { id:null, title:`Atenção, 2026. Realidade.`, dur:'2 min' },
+    { id:null, title:`Deserção das lágrimas: um sonho para 2026`, dur:'3 min' },
+    { id:null, title:`📢 Reescrevendo o agora: o papel estrutural do planejamento feminino`, dur:'8 min' },
+    { id:null, title:`Não desista.`, dur:'2 min' },
+    { id:null, title:`📢 A Tristeza Aleatória`, dur:'4 min' },
+    { id:null, title:`📢 ORIGINAR-SE: TERRITÓRIOS DE FORMAÇÃO`, dur:'5 min' },
+    { id:null, title:`"Quero ter um filho, quero dar a morte para alguém..." pensando sobre o amor e finitude.`, dur:'6 min' },
+    { id:null, title:`Curar sem resolver: territórios da criatividade, autenticidade e do aprender`, dur:'12 min' }
+  ];
+  var spEngine=document.getElementById('sp-engine');
+  var spListEl=document.getElementById('sp-list');
+  var spNowEl=document.getElementById('sp-now');
+  var spPlayBtn=document.getElementById('sp-play');
+  var spTrackEl=document.getElementById('sp-track');
+  var spCtrl=null, spCur=0, spDurMs=0, spPlaying=false;
+  function spFmt(ms){ ms=Math.max(0,ms||0); var t=Math.floor(ms/1000),m=Math.floor(t/60),s=t%60; return m+':'+(s<10?'0'+s:s); }
+  function spMark(){
+    if(!spListEl) return;
+    [].forEach.call(spListEl.children,function(row,i){
+      row.classList.toggle('live',i===spCur);
+      var n=row.querySelector('.sp-n'); if(n) n.textContent = i===spCur ? '♪' : String(i+1);
+    });
+    if(spNowEl&&spEpisodes[spCur]) spNowEl.textContent=spEpisodes[spCur].title;
+  }
+  function spPlayIndex(i){
+    var ep=spEpisodes[i]; if(!ep||!ep.id||!spCtrl) return;
+    if(i===spCur){ spCtrl.togglePlay(); return; }   /* mesmo episódio → play/pause */
+    spCur=i; spMark();
+    spCtrl.loadUri('spotify:episode:'+ep.id);        /* troca de episódio */
+  }
+  function spRender(){
+    if(!spListEl) return;
+    spListEl.innerHTML='';
+    spEpisodes.forEach(function(ep,i){
+      var row=document.createElement('div');
+      row.className='sp-row'+(ep.id?' playable':' dim')+(i===spCur?' live':'');
+      var n=document.createElement('span'); n.className='sp-n'; n.textContent = i===spCur ? '♪' : String(i+1);
+      var ti=document.createElement('span'); ti.className='sp-ti'; ti.textContent=ep.title;
+      var du=document.createElement('span'); du.className='sp-du'; du.textContent=ep.dur;
+      row.appendChild(n); row.appendChild(ti); row.appendChild(du);
+      if(ep.id) row.addEventListener('click',function(){ spPlayIndex(i); });
+      spListEl.appendChild(row);
+    });
+  }
+  function spOnUpdate(e){
+    var d=(e&&e.data)||{};
+    if(d.duration) spDurMs=d.duration;
+    var pos=d.position||0;
+    var fill=document.getElementById('sp-fill'); if(fill&&spDurMs) fill.style.width=(100*pos/spDurMs)+'%';
+    var c=document.getElementById('sp-cur'); if(c) c.textContent=spFmt(pos);
+    var du=document.getElementById('sp-dur'); if(du) du.textContent=spFmt(spDurMs);
+    spPlaying=!d.isPaused;
+    if(spPlayBtn) spPlayBtn.textContent=spPlaying?'⏸':'▶';
+  }
+  if(spEngine){
+    spRender();
+    if(spPlayBtn) spPlayBtn.addEventListener('click',function(){ if(spCtrl) spCtrl.togglePlay(); });
+    if(spTrackEl) spTrackEl.addEventListener('click',function(ev){
+      if(!spCtrl||!spDurMs) return;
+      var r=spTrackEl.getBoundingClientRect();
+      var frac=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
+      spCtrl.seek(frac*spDurMs/1000);
+    });
+    window.onSpotifyIframeApiReady=function(IFrameAPI){
+      IFrameAPI.createController(spEngine,
+        { uri:'spotify:episode:'+spEpisodes[0].id, width:'100%', height:'80' },
+        function(ctrl){ spCtrl=ctrl; ctrl.addListener('playback_update',spOnUpdate); });
+    };
+    var spS=document.createElement('script');
+    spS.src='https://open.spotify.com/embed/iframe-api/v1'; spS.async=true;
+    document.body.appendChild(spS);
   }
 
   /* revelação dos blocos do feed conforme rolam */
