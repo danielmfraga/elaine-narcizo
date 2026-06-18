@@ -310,6 +310,7 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
   position:relative; z-index:1; height:100%;
   display:flex; flex-direction:column; gap:10px;
   padding:12px 12px 12px; background:var(--paper);
+  touch-action:pan-y; /* bloqueia scroll horizontal do painel pai */
 }
 
 /* ── EXPANDING CARDS (Podcast ↔ DançaDestino) ── */
