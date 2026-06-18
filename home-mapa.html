@@ -309,11 +309,11 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .sp-player{
   position:relative; z-index:1; height:100%;
   display:flex; flex-direction:column; gap:10px;
-  padding:12px 12px 18px; background:var(--paper);
+  padding:12px 12px 12px; background:var(--paper);
 }
 
 /* ── EXPANDING CARDS (Podcast ↔ DançaDestino) ── */
-.sp-cards{ flex:0 0 auto; display:flex; gap:8px; height:260px; }
+.sp-cards{ flex:1 1 auto; display:flex; gap:8px; min-height:0; }
 .sp-card{
   position:relative; border-radius:20px; overflow:hidden;
   flex:0 0 52px; transition:flex .45s cubic-bezier(.4,0,.2,1); cursor:pointer;
@@ -325,8 +325,8 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .sp-card-grad{ position:absolute; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.76) 100%); }
 .sp-card-type{
   position:absolute; top:13px; left:0; right:0; text-align:center;
-  font-size:.55rem; letter-spacing:.13em; text-transform:uppercase;
-  color:rgba(255,255,255,.92); opacity:0; transition:opacity .25s .2s;
+  font-size:.55rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
+  color:rgba(255,255,255,.95); opacity:0; transition:opacity .25s .2s;
 }
 .sp-card.active .sp-card-type{ opacity:1; }
 .sp-card-meta{ position:absolute; left:14px; right:14px; bottom:14px; color:#fff; opacity:0; transition:opacity .25s .1s; }
@@ -336,8 +336,8 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .sp-card-vert{
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
   writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
-  font-size:.5rem; letter-spacing:.1em; text-transform:uppercase;
-  color:rgba(255,255,255,.82); opacity:0; transition:opacity .2s;
+  font-size:.58rem; letter-spacing:.07em; text-transform:uppercase; font-weight:700;
+  color:rgba(255,255,255,.95); opacity:0; transition:opacity .2s;
 }
 .sp-card:not(.active) .sp-card-vert{ opacity:1; }
 
@@ -1380,6 +1380,20 @@ body.coach-x .world-dots::after{
   }
   if(spCardDanca) spCardDanca.addEventListener('click',function(){ spSwitchMode('danca'); });
   if(spCardPodcast) spCardPodcast.addEventListener('click',function(){ spSwitchMode('podcast'); });
+  /* swipe horizontal nos cards: distingue gesto de navegação (diagonal/vertical) */
+  var spCardsEl=document.querySelector('.sp-cards');
+  var _spTsX=0,_spTsY=0;
+  if(spCardsEl){
+    spCardsEl.addEventListener('touchstart',function(e){ _spTsX=e.touches[0].clientX; _spTsY=e.touches[0].clientY; },{passive:true});
+    spCardsEl.addEventListener('touchend',function(e){
+      var dx=e.changedTouches[0].clientX-_spTsX;
+      var dy=e.changedTouches[0].clientY-_spTsY;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){
+        e.stopPropagation();
+        spSwitchMode(dx<0?'danca':'podcast');
+      }
+    });
+  }
 
   /* RÁDIO REMENDO · player "Elaine lê" — Spotify IFrame API.
      Hoje só temos o ID do episódio mais recente (raspagem dos demais é
