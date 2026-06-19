@@ -330,7 +330,7 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
   color:rgba(255,255,255,.95); opacity:0; transition:opacity .25s .2s;
 }
 .sp-card.active .sp-card-type{ opacity:1; }
-.sp-card-meta{ position:absolute; left:14px; right:14px; bottom:14px; color:#fff; opacity:0; transition:opacity .25s .1s; }
+.sp-card-meta{ position:absolute; left:14px; right:14px; bottom:14px; color:#fff; opacity:0; transition:opacity .25s .1s; text-align:center; }
 .sp-card.active .sp-card-meta{ opacity:1; }
 .sp-show{ font-size:1rem; font-weight:700; letter-spacing:-.01em; }
 .sp-ep{ font-size:.63rem; opacity:.85; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -342,13 +342,11 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 }
 .sp-card:not(.active) .sp-card-vert{ opacity:1; }
 
-/* modo DançaDestino: oculta controles Spotify */
-.sp-player.danca .sp-bar,
-.sp-player.danca .sp-ctrls{ display:none; }
-/* lista cresce para preencher o espaço no modo dança */
-.sp-player.danca .sp-list{ flex:1 1 auto; height:auto; min-height:0; }
+/* layout unificado: dança usa exatamente o mesmo chrome do podcast
+   (lista de 5, mesma barra + controles). Template único p/ todo novo
+   programa/playlist. */
 
-/* embed YT dentro do player unificado */
+/* embed YT dentro do player unificado (temporário até áudio nativo R2) */
 .sp-player .yt-embed{ border-radius:12px; overflow:hidden; }
 .sp-player:not(.danca) .yt-embed{ display:none !important; }
 
@@ -1353,6 +1351,7 @@ body.coach-x .world-dots::after{
       row.appendChild(n); row.appendChild(ti); row.appendChild(du);
       row.addEventListener('click',function(){
         ytCur=i;
+        var ynt=document.getElementById('yt-now-title'); if(ynt) ynt.textContent=spTrim(tr.title,false);
         if(ytIframe) ytIframe.src='https://www.youtube.com/embed/'+tr.id+'?autoplay=1';
         if(ytEmbed) ytEmbed.classList.add('on');
         [].forEach.call(spListEl.children,function(r,j){
@@ -1485,8 +1484,9 @@ body.coach-x .world-dots::after{
   if(spEngine){
     spRender();
     spMark();
-    if(spPlayBtn) spPlayBtn.addEventListener('click',function(){ if(spCtrl) spCtrl.togglePlay(); });
+    if(spPlayBtn) spPlayBtn.addEventListener('click',function(){ if(spMode!=='podcast') return; if(spCtrl) spCtrl.togglePlay(); });
     if(spTrackEl) spTrackEl.addEventListener('click',function(ev){
+      if(spMode!=='podcast') return;
       if(!spCtrl||!spDurMs) return;
       var r=spTrackEl.getBoundingClientRect();
       var frac=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
