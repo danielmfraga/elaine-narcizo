@@ -525,19 +525,28 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .ft.open .ft-chev svg{ transform:rotate(180deg); }
 .ft-stub{ flex:0 0 12px; background:var(--rosa); }
 
-/* corpo que desdobra */
-.ft-body{ max-height:0; overflow:hidden; transition:max-height .55s var(--ease); }
-.ft.open .ft-body{ max-height:240px; }
-.ft-perf{ border-top:2px dashed var(--line); margin:0 15px; }
-.ft-seg{ transform-origin:top center; transform:rotateX(-92deg); opacity:0;
-  transition:transform .5s var(--ease), opacity .4s var(--ease); }
-.ft.open .ft-seg{ transform:rotateX(0); opacity:1; }
-.ft.open .ft-seg.s2{ transition-delay:.12s; }
-.ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:15px 17px 8px; }
+/* corpo que desdobra — cada banda é uma DOBRA: cresce em altura E gira no
+   rotateX a partir da costura de cima (transform-origin top), em cascata */
+.ft-body{ perspective:1100px; perspective-origin:top center; }
+.ft-fold{ height:0; opacity:0; overflow:hidden;
+  transform-origin:top center; transform:rotateX(-90deg);
+  transition:height .45s var(--ease), transform .55s var(--ease), opacity .3s var(--ease); }
+.ft.open .ft-fold{ opacity:1; transform:rotateX(0); }
+.ft.open .ft-fold.b1{ height:62px; transition-delay:0s; }
+.ft.open .ft-fold.b2{ height:54px; transition-delay:.13s; }
+.ft.open .ft-fold.b3{ height:72px; transition-delay:.26s; }
+.ft-fold.b1{ border-top:2px dashed var(--line); }   /* picote aparece na 1ª dobra */
+/* banda 1: grade de detalhes */
+.ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:13px 17px; }
 .ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
-.ft-cell b{ font-size:.9rem; font-weight:600; color:var(--ink); }
+.ft-cell b{ font-size:.88rem; font-weight:600; color:var(--ink); }
 .ft-cell span{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); }
-.ft-cta{ padding:6px 15px 15px; }
+/* banda 2: investimento + categoria + código de barras */
+.ft-fare{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:11px 17px; border-top:1px dashed var(--line); }
+.ft-fare .ft-cell{ flex-shrink:0; }
+.ft-barcode{ flex:0 0 auto; width:74px; height:30px; background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 9px,transparent 9px 12px); opacity:.82; }
+/* banda 3: botão embarcar */
+.ft-cta{ padding:10px 15px 16px; }
 .ft-embark{ width:100%; display:inline-flex; align-items:center; justify-content:center; gap:9px;
   background:var(--rosa); color:#fff; border:0; border-radius:24px; padding:13px;
   font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
@@ -953,15 +962,21 @@ body.coach-x .world-dots::after{
                 <div class="ft-stub"></div>
               </div>
               <div class="ft-body">
-                <div class="ft-perf"></div>
-                <div class="ft-seg s1">
+                <div class="ft-fold b1">
                   <div class="ft-grid">
                     <div class="ft-cell"><b>a definir</b><span>Datas</span></div>
                     <div class="ft-cell"><b>ao vivo</b><span>Formato</span></div>
                     <div class="ft-cell"><b>limitadas</b><span>Vagas</span></div>
                   </div>
                 </div>
-                <div class="ft-seg s2">
+                <div class="ft-fold b2">
+                  <div class="ft-fare">
+                    <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
+                    <div class="ft-cell"><b>aberta</b><span>Categoria</span></div>
+                    <div class="ft-barcode"></div>
+                  </div>
+                </div>
+                <div class="ft-fold b3">
                   <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
                 </div>
               </div>
@@ -978,15 +993,21 @@ body.coach-x .world-dots::after{
                 <div class="ft-stub"></div>
               </div>
               <div class="ft-body">
-                <div class="ft-perf"></div>
-                <div class="ft-seg s1">
+                <div class="ft-fold b1">
                   <div class="ft-grid">
                     <div class="ft-cell"><b>temporada</b><span>Quando</span></div>
                     <div class="ft-cell"><b>presencial</b><span>Formato</span></div>
                     <div class="ft-cell"><b>única</b><span>Sessão</span></div>
                   </div>
                 </div>
-                <div class="ft-seg s2">
+                <div class="ft-fold b2">
+                  <div class="ft-fare">
+                    <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
+                    <div class="ft-cell"><b>limitada</b><span>Categoria</span></div>
+                    <div class="ft-barcode"></div>
+                  </div>
+                </div>
+                <div class="ft-fold b3">
                   <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
                 </div>
               </div>
