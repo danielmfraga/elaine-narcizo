@@ -378,6 +378,11 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
   box-shadow:0 6px 18px rgba(0,0,0,.22);
 }
 .sp-play:active{ transform:scale(.95); }
+/* play/pause: SVG vetorial (evita o "quadradinho" do emoji ⏸) */
+.sp-play svg{ width:22px; height:22px; display:block; fill:currentColor; }
+.sp-play .ic-pause{ display:none; }
+.sp-play.playing .ic-play{ display:none; }
+.sp-play.playing .ic-pause{ display:block; }
 /* prev/next: só o ícone (sem caixa); SVG monocromático evita o "quadradinho" do emoji */
 .sp-ic svg{ width:24px; height:24px; display:block; fill:currentColor; }
 
@@ -788,7 +793,7 @@ body.coach-x .world-dots::after{
             <div class="sp-ctrls">
               <button class="sp-ic" aria-label="Aleatório" disabled>⇆</button>
               <button class="sp-ic" id="sp-prev" aria-label="Anterior" disabled><svg viewBox="0 0 24 24"><path d="M6 6H8V18H6Z M18 6V18L10 12Z"/></svg></button>
-              <button class="sp-play" id="sp-play" aria-label="Tocar">▶</button>
+              <button class="sp-play" id="sp-play" aria-label="Tocar"><svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg></button>
               <button class="sp-ic" id="sp-next" aria-label="Próximo" disabled><svg viewBox="0 0 24 24"><path d="M6 6L14 12L6 18Z M16 6H18V18H16Z"/></svg></button>
               <button class="sp-ic" aria-label="Fila" disabled>☰</button>
             </div>
@@ -1479,7 +1484,7 @@ body.coach-x .world-dots::after{
     var c=document.getElementById('sp-cur'); if(c) c.textContent=spFmt(pos);
     var du=document.getElementById('sp-dur'); if(du) du.textContent=spFmt(spDurMs);
     spPlaying=!d.isPaused;
-    if(spPlayBtn) spPlayBtn.textContent=spPlaying?'⏸':'▶';
+    if(spPlayBtn){ spPlayBtn.classList.toggle('playing',spPlaying); spPlayBtn.setAttribute('aria-label',spPlaying?'Pausar':'Tocar'); }
   }
   if(spEngine){
     spRender();
