@@ -32,6 +32,7 @@
   --laranja: #E87A32;
   --amarelo: #F5D731;
   --roxo:    #6C4BB6;
+  --rosa:    #D6336C;
   --ac: var(--verde);
 
   --font:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
@@ -490,6 +491,57 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .song .l{ font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--mute); }
 .song .t{ font-size:1.02rem; font-weight:300; margin-top:3px; }
 
+/* ════════ BILHETERIA — experiências vivas ════════ */
+.bilhe-cover{ background:radial-gradient(ellipse 92% 56% at 50% 58%, #FBE7EE 0%, var(--paper) 66%); }
+.bilhe-cover .inner{ justify-content:space-between; }
+.bilhe-cover .head{ align-items:center; text-align:center; }
+.bilhe-cover h2{ max-width:none; }
+.bilhe-cover .sub{ max-width:30ch; }
+
+/* palco: centraliza o bilhete no espaço livre */
+.ticket-stage{ flex:1 1 auto; min-height:0; display:flex; align-items:center; justify-content:center; padding:6px 0; }
+
+/* o passe de embarque */
+.ticket{
+  position:relative; display:flex; width:min(84vw,400px);
+  background:var(--paper); border-radius:18px; cursor:pointer;
+  box-shadow:0 26px 60px -24px rgba(214,51,108,.5), 0 6px 16px rgba(0,0,0,.09);
+  transform:rotate(-2.4deg); transition:transform .5s var(--ease);
+}
+.ticket:active{ transform:rotate(-1deg) scale(.99); }
+
+/* corpo principal do bilhete */
+.ticket-main{ flex:1 1 auto; padding:22px 18px 20px; min-width:0; text-align:left; }
+.tk-brand{ font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--mute); display:flex; align-items:center; gap:7px; }
+.tk-brand::before{ content:""; width:14px; height:1px; background:var(--rosa); flex-shrink:0; }
+.tk-name{ font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.6rem; line-height:1.06; letter-spacing:-.01em; margin:13px 0 18px; color:var(--ink); }
+.tk-row{ display:flex; gap:16px; }
+.tk-row > div{ display:flex; flex-direction:column; gap:3px; }
+.tk-k{ font-size:8px; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); }
+.tk-v{ font-size:.8rem; font-weight:500; color:var(--ink); }
+
+/* canhoto colorido + picote */
+.ticket-stub{
+  position:relative; flex:0 0 74px; background:var(--rosa); color:#fff;
+  border-radius:0 18px 18px 0;
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between; padding:17px 0;
+}
+.ticket-stub::before{ content:""; position:absolute; left:-1px; top:11px; bottom:11px; border-left:2px dashed rgba(255,255,255,.6); }
+.ticket-notch{ position:absolute; left:-9px; width:18px; height:18px; border-radius:50%; background:#FBE7EE; }
+.ticket-notch.top{ top:-9px; }
+.ticket-notch.bot{ bottom:-9px; }
+.tk-stub-txt{ writing-mode:vertical-rl; transform:rotate(180deg); font-size:10px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; }
+.tk-barcode{ width:34px; height:44px; background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 3px,#fff 3px 6px,transparent 6px 7px,#fff 7px 8px,transparent 8px 10px); opacity:.92; }
+
+/* dica de gesto horizontal (deslize → embarque) */
+.swipe-hint{ font-size:11px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); display:inline-flex; align-items:center; gap:9px; }
+.swipe-hint .arx{ color:var(--rosa); font-size:14px; animation:nudgeX 1.7s var(--ease) infinite; }
+@keyframes nudgeX{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(5px); } }
+
+/* painel de experiência: tarja "portão" sobre o plate */
+.exp-gate{ position:absolute; top:0; left:0; background:var(--rosa); color:#fff; padding:8px 13px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:500; display:flex; align-items:center; gap:8px; }
+.exp-gate::before{ content:""; width:6px; height:6px; border-radius:50%; background:#fff; }
+
 /* ── REVELAÇÃO ao chegar (progressive enhancement: oculto só com .js) ── */
 .r{ transition:opacity .7s var(--ease), transform .7s var(--ease); transition-delay:calc(var(--r,0) * 85ms); }
 .js .r{ opacity:0; transform:translateY(20px); }
@@ -871,7 +923,83 @@ body.coach-x .world-dots::after{
 
   </section>
 
-  <!-- ══ 03 · FORMAÇÕES ══ -->
+  <!-- ══ BILHETERIA · experiências vivas ══ -->
+  <section class="mundo" data-name="Bilheteria" data-color="var(--rosa)" style="--ac:var(--rosa)">
+
+    <!-- capa: o passe de embarque -->
+    <div class="panel bilhe-cover">
+      <div class="inner">
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Experiências vivas</span>
+          <h2 class="r" style="--r:1">Bilhe<em>teria</em></h2>
+          <p class="sub r" style="--r:2">Passe para o lado e embarque.</p>
+        </div>
+        <div class="ticket-stage r" style="--r:3">
+          <div class="ticket" data-slide="1">
+            <div class="ticket-main">
+              <span class="tk-brand">Bilheteria · Elaine Narcizo</span>
+              <h3 class="tk-name">Passe para o lado<br>e embarque.</h3>
+              <div class="tk-row">
+                <div><span class="tk-k">Portão</span><span class="tk-v">→ 01</span></div>
+                <div><span class="tk-k">Assento</span><span class="tk-v">o seu</span></div>
+                <div><span class="tk-k">Sessão</span><span class="tk-v">ao vivo</span></div>
+              </div>
+            </div>
+            <div class="ticket-stub">
+              <span class="ticket-notch top"></span>
+              <span class="ticket-notch bot"></span>
+              <span class="tk-stub-txt">Admit one</span>
+              <div class="tk-barcode"></div>
+            </div>
+          </div>
+        </div>
+        <div class="foot r" style="--r:4">
+          <a class="btn" href="#" data-slide="1">Embarcar <span class="ar">→</span></a>
+          <span class="swipe-hint">deslize para o lado <span class="arx">→</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- experiência · Portão 01 -->
+    <div class="panel">
+      <div class="inner">
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Portão 01</span>
+          <h2 class="r" style="--r:1">Encontros que <em>respiram</em></h2>
+          <p class="sub r" style="--r:2">Vivências em grupo, ao vivo — onde a presença é o material de trabalho.</p>
+        </div>
+        <div class="plate r" style="--r:3">
+          <img src="assets/bg-mao.webp" alt="Experiência viva — encontros" loading="lazy" />
+          <span class="exp-gate">Portão 01 · embarque</span>
+        </div>
+        <div class="foot r" style="--r:4">
+          <span class="soon">Em breve · inscrições abertas</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- experiência · Portão 02 + fim da seção -->
+    <div class="panel warm">
+      <div class="inner">
+        <div class="head">
+          <span class="eyebrow r" style="--r:0">Portão 02</span>
+          <h2 class="r" style="--r:1">Laboratórios de <em>presença</em></h2>
+          <p class="sub r" style="--r:2">Encontros temáticos em temporada. Cada sessão é única e não se repete.</p>
+        </div>
+        <div class="plate r" style="--r:3">
+          <img src="assets/bg-collage.webp" alt="Laboratório de presença" loading="lazy" />
+          <span class="exp-gate">Portão 02 · em breve</span>
+        </div>
+        <div class="endcap r" style="--r:4">
+          <span class="cap">fim · Bilheteria</span>
+          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══ FORMAÇÕES ══ -->
   <section class="mundo" data-name="Formações" data-color="var(--verde)" style="--ac:var(--verde)">
 
     <!-- capa do NICHO: apresenta a categoria; os itens moram ao lado → -->
