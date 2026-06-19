@@ -492,13 +492,22 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .song .t{ font-size:1.02rem; font-weight:300; margin-top:3px; }
 
 /* ════════ BILHETERIA — experiências participativas ════════ */
-.bilhe-cover{ background:radial-gradient(ellipse 96% 60% at 50% 40%, #FBE7EE 0%, var(--paper) 64%); }
+.bilhe-cover{ background:radial-gradient(ellipse 96% 60% at 50% 38%, #FBE7EE 0%, var(--paper) 62%); }
 .bilhe-cover .inner{ justify-content:space-between; }
 .bilhe-cover h2{ max-width:none; }
-.bilhe-cover .sub{ max-width:34ch; }
+.bilhe-cover .head{ gap:9px; }
+
+/* selo "aberta" (mesmo estilo do "no ar" do rádio) */
+.bilhe-open{ display:inline-flex; align-items:center; gap:7px; font-size:10px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--rosa); }
+.bilhe-open i{ display:block; width:6px; height:6px; border-radius:50%; background:var(--rosa); animation:pulse 1.9s var(--ease) infinite; flex-shrink:0; }
+/* descritor sob o título, sem travessão */
+.bilhe-desc{ font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--mute); }
+/* chamada perto dos ingressos */
+.bilhe-cta{ font-size:1rem; font-weight:300; color:var(--ink-soft); text-align:center; }
 
 /* dois ingressos: cada um leva a um item interno (arte + texto do item) */
-.tickets{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:16px; padding:6px 0; }
+.tickets-zone{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+.tickets{ display:flex; flex-direction:column; gap:16px; }
 .ticket{
   position:relative; display:flex; align-items:stretch; width:100%;
   background:var(--paper); border-radius:16px; overflow:hidden; cursor:pointer;
@@ -913,14 +922,13 @@ body.coach-x .world-dots::after{
     <div class="panel bilhe-cover">
       <div class="inner">
         <div class="head">
-          <span class="eyebrow r" style="--r:0">Experiências participativas</span>
-          <div class="title-deco r" style="--r:1">
-            <span class="td-line"></span>
-            <h2>Bilhe<em>teria</em></h2>
-          </div>
-          <p class="sub r" style="--r:2">Escolha e embarque.</p>
+          <span class="bilhe-open r" style="--r:0"><i></i> aberta</span>
+          <h2 class="r" style="--r:1">Bilhe<em>teria</em></h2>
+          <span class="bilhe-desc r" style="--r:2">Experiências participativas</span>
         </div>
-        <div class="tickets r" style="--r:3">
+        <div class="tickets-zone">
+          <p class="bilhe-cta r" style="--r:3">Escolha e embarque.</p>
+          <div class="tickets r" style="--r:4">
           <a class="ticket" href="#" data-slide="1">
             <div class="ticket-art"><img src="assets/bg-mao.webp" alt="Encontros que respiram" loading="lazy" /></div>
             <div class="ticket-main">
@@ -939,6 +947,7 @@ body.coach-x .world-dots::after{
             </div>
             <div class="ticket-stub"><div class="tk-barcode"></div></div>
           </a>
+          </div>
         </div>
       </div>
     </div>
