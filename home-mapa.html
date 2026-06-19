@@ -502,37 +502,49 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .bilhe-open i{ display:block; width:6px; height:6px; border-radius:50%; background:var(--rosa); animation:pulse 1.9s var(--ease) infinite; flex-shrink:0; }
 /* descritor sob o título, sem travessão */
 .bilhe-desc{ font-size:11px; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:var(--mute); }
-/* chamada perto dos ingressos */
-.bilhe-cta{ font-size:1rem; font-weight:300; color:var(--ink-soft); text-align:center; }
+/* chamada (bold, sobe pro cabeçalho) */
+.bilhe-cta{ margin-top:5px; font-size:1.06rem; font-weight:500; letter-spacing:-.01em; color:var(--ink); }
 
-/* dois ingressos: cada um leva a um item interno (arte + texto do item) */
+/* zona dos ingressos */
 .tickets-zone{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; gap:14px; }
-.tickets{ display:flex; flex-direction:column; gap:16px; }
-.ticket{
-  position:relative; display:flex; align-items:stretch; width:100%;
-  background:var(--paper); border-radius:16px; overflow:hidden; cursor:pointer;
-  box-shadow:0 18px 38px -22px rgba(214,51,108,.5), 0 4px 12px rgba(0,0,0,.07);
-  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
-}
-.ticket:active{ transform:scale(.985); }
-.ticket:hover{ box-shadow:0 22px 44px -20px rgba(214,51,108,.6), 0 5px 14px rgba(0,0,0,.09); }
-.ticket-art{ flex:0 0 98px; position:relative; overflow:hidden; background:var(--warm); }
-.ticket-art img{ width:100%; height:100%; object-fit:cover; }
-.ticket-main{ flex:1 1 auto; min-width:0; padding:15px 6px 15px 15px; display:flex; flex-direction:column; justify-content:center; gap:7px; }
-.tk-brand{ font-size:8.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--mute); display:flex; align-items:center; gap:7px; }
-.tk-brand::before{ content:""; width:13px; height:1px; background:var(--rosa); flex-shrink:0; }
-.tk-name{ font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.2rem; line-height:1.08; letter-spacing:-.01em; color:var(--ink); }
-.tk-go{ font-size:9.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--rosa); display:inline-flex; align-items:center; gap:6px; }
-.tk-go .arx{ transition:transform .3s var(--ease); }
-.ticket:hover .tk-go .arx,.ticket:active .tk-go .arx{ transform:translateX(4px); }
-/* canhoto rosa: picote tracejado + código de barras */
-.ticket-stub{ position:relative; flex:0 0 38px; background:var(--rosa); display:flex; align-items:center; justify-content:center; }
-.ticket-stub::before{ content:""; position:absolute; left:-1px; top:10px; bottom:10px; border-left:2px dashed rgba(255,255,255,.6); }
-.tk-barcode{ width:18px; height:58%; background:repeating-linear-gradient(90deg,#fff 0 1.5px,transparent 1.5px 3.5px); opacity:.9; }
+.tickets{ display:flex; flex-direction:column; gap:14px; }
 
-/* painel de experiência: tarja "portão" sobre o plate */
-.exp-gate{ position:absolute; top:0; left:0; background:var(--rosa); color:#fff; padding:8px 13px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:500; display:flex; align-items:center; gap:8px; }
-.exp-gate::before{ content:""; width:6px; height:6px; border-radius:50%; background:#fff; }
+/* ── INGRESSO QUE DESDOBRA (folding ticket) ── */
+.ft{ position:relative; background:var(--paper); border-radius:16px; perspective:1000px;
+  box-shadow:0 16px 36px -22px rgba(214,51,108,.5), 0 3px 10px rgba(0,0,0,.07); }
+/* cabeça sempre visível (clicável) */
+.ft-head{ position:relative; display:flex; align-items:stretch; cursor:pointer; border-radius:16px; overflow:hidden; }
+.ft-art{ flex:0 0 78px; overflow:hidden; background:var(--warm); }
+.ft-art img{ width:100%; height:100%; object-fit:cover; }
+.ft-main{ flex:1 1 auto; min-width:0; padding:14px 2px 14px 15px; display:flex; flex-direction:column; justify-content:center; gap:5px; }
+.ft-brand{ font-size:8.5px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--mute); display:flex; align-items:center; gap:7px; }
+.ft-brand::before{ content:""; width:13px; height:1px; background:var(--rosa); flex-shrink:0; }
+.ft-name{ font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.18rem; line-height:1.08; color:var(--ink); }
+.ft-chev{ flex:0 0 32px; display:flex; align-items:center; justify-content:center; color:var(--rosa); }
+.ft-chev svg{ width:15px; height:15px; fill:currentColor; transition:transform .4s var(--ease); }
+.ft.open .ft-chev svg{ transform:rotate(180deg); }
+.ft-stub{ flex:0 0 12px; background:var(--rosa); }
+
+/* corpo que desdobra */
+.ft-body{ max-height:0; overflow:hidden; transition:max-height .55s var(--ease); }
+.ft.open .ft-body{ max-height:240px; }
+.ft-perf{ border-top:2px dashed var(--line); margin:0 15px; }
+.ft-seg{ transform-origin:top center; transform:rotateX(-92deg); opacity:0;
+  transition:transform .5s var(--ease), opacity .4s var(--ease); }
+.ft.open .ft-seg{ transform:rotateX(0); opacity:1; }
+.ft.open .ft-seg.s2{ transition-delay:.12s; }
+.ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:15px 17px 8px; }
+.ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
+.ft-cell b{ font-size:.9rem; font-weight:600; color:var(--ink); }
+.ft-cell span{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); }
+.ft-cta{ padding:6px 15px 15px; }
+.ft-embark{ width:100%; display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  background:var(--rosa); color:#fff; border:0; border-radius:24px; padding:13px;
+  font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+  transition:gap .3s var(--ease), filter .3s; }
+.ft-embark .arx{ transition:transform .3s var(--ease); }
+.ft-embark:hover{ filter:brightness(1.06); }
+.ft-embark:hover .arx{ transform:translateX(4px); }
 
 /* ── REVELAÇÃO ao chegar (progressive enhancement: oculto só com .js) ── */
 .r{ transition:opacity .7s var(--ease), transform .7s var(--ease); transition-delay:calc(var(--r,0) * 85ms); }
@@ -925,66 +937,62 @@ body.coach-x .world-dots::after{
           <span class="bilhe-open r" style="--r:0"><i></i> aberta</span>
           <h2 class="r" style="--r:1">Bilhe<em>teria</em></h2>
           <span class="bilhe-desc r" style="--r:2">Experiências participativas</span>
+          <p class="bilhe-cta r" style="--r:3">Escolha seu embarque.</p>
         </div>
         <div class="tickets-zone">
-          <p class="bilhe-cta r" style="--r:3">Escolha e embarque.</p>
           <div class="tickets r" style="--r:4">
-          <a class="ticket" href="#" data-slide="1">
-            <div class="ticket-art"><img src="assets/bg-mao.webp" alt="Encontros que respiram" loading="lazy" /></div>
-            <div class="ticket-main">
-              <span class="tk-brand">Portão 01</span>
-              <h3 class="tk-name">Encontros que respiram</h3>
-              <span class="tk-go">embarcar <span class="arx">→</span></span>
+
+            <div class="ft">
+              <div class="ft-head">
+                <div class="ft-art"><img src="assets/bg-mao.webp" alt="Encontros que respiram" loading="lazy" /></div>
+                <div class="ft-main">
+                  <span class="ft-brand">Portão 01</span>
+                  <h3 class="ft-name">Encontros que respiram</h3>
+                </div>
+                <div class="ft-chev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>
+                <div class="ft-stub"></div>
+              </div>
+              <div class="ft-body">
+                <div class="ft-perf"></div>
+                <div class="ft-seg s1">
+                  <div class="ft-grid">
+                    <div class="ft-cell"><b>a definir</b><span>Datas</span></div>
+                    <div class="ft-cell"><b>ao vivo</b><span>Formato</span></div>
+                    <div class="ft-cell"><b>limitadas</b><span>Vagas</span></div>
+                  </div>
+                </div>
+                <div class="ft-seg s2">
+                  <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                </div>
+              </div>
             </div>
-            <div class="ticket-stub"><div class="tk-barcode"></div></div>
-          </a>
-          <a class="ticket" href="#" data-slide="2">
-            <div class="ticket-art"><img src="assets/bg-collage.webp" alt="Laboratórios de presença" loading="lazy" /></div>
-            <div class="ticket-main">
-              <span class="tk-brand">Portão 02</span>
-              <h3 class="tk-name">Laboratórios de presença</h3>
-              <span class="tk-go">embarcar <span class="arx">→</span></span>
+
+            <div class="ft">
+              <div class="ft-head">
+                <div class="ft-art"><img src="assets/bg-collage.webp" alt="Laboratórios de presença" loading="lazy" /></div>
+                <div class="ft-main">
+                  <span class="ft-brand">Portão 02</span>
+                  <h3 class="ft-name">Laboratórios de presença</h3>
+                </div>
+                <div class="ft-chev"><svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>
+                <div class="ft-stub"></div>
+              </div>
+              <div class="ft-body">
+                <div class="ft-perf"></div>
+                <div class="ft-seg s1">
+                  <div class="ft-grid">
+                    <div class="ft-cell"><b>temporada</b><span>Quando</span></div>
+                    <div class="ft-cell"><b>presencial</b><span>Formato</span></div>
+                    <div class="ft-cell"><b>única</b><span>Sessão</span></div>
+                  </div>
+                </div>
+                <div class="ft-seg s2">
+                  <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                </div>
+              </div>
             </div>
-            <div class="ticket-stub"><div class="tk-barcode"></div></div>
-          </a>
+
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- experiência · Portão 01 -->
-    <div class="panel">
-      <div class="inner">
-        <div class="head">
-          <span class="eyebrow r" style="--r:0">Portão 01</span>
-          <h2 class="r" style="--r:1">Encontros que <em>respiram</em></h2>
-          <p class="sub r" style="--r:2">Vivências em grupo, ao vivo — onde a presença é o material de trabalho.</p>
-        </div>
-        <div class="plate r" style="--r:3">
-          <img src="assets/bg-mao.webp" alt="Experiência viva — encontros" loading="lazy" />
-          <span class="exp-gate">Portão 01 · embarque</span>
-        </div>
-        <div class="foot r" style="--r:4">
-          <span class="soon">Em breve · inscrições abertas</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- experiência · Portão 02 + fim da seção -->
-    <div class="panel warm">
-      <div class="inner">
-        <div class="head">
-          <span class="eyebrow r" style="--r:0">Portão 02</span>
-          <h2 class="r" style="--r:1">Laboratórios de <em>presença</em></h2>
-          <p class="sub r" style="--r:2">Encontros temáticos em temporada. Cada sessão é única e não se repete.</p>
-        </div>
-        <div class="plate r" style="--r:3">
-          <img src="assets/bg-collage.webp" alt="Laboratório de presença" loading="lazy" />
-          <span class="exp-gate">Portão 02 · em breve</span>
-        </div>
-        <div class="endcap r" style="--r:4">
-          <span class="cap">fim · Bilheteria</span>
-          <a class="btn ghost" href="#" data-home>← Voltar ao início</a>
         </div>
       </div>
     </div>
@@ -1389,6 +1397,14 @@ body.coach-x .world-dots::after{
     el.addEventListener('click',function(e){ e.preventDefault();
       var m=mundos[cur];
       m.scrollTo({ left:(+el.dataset.slide)*m.clientWidth, behavior:'smooth' });
+    });
+  });
+  /* BILHETERIA: folding tickets (acordeão — toca, desdobra; abre um fecha o outro) */
+  [].forEach.call(document.querySelectorAll('.ft .ft-head'),function(h){
+    h.addEventListener('click',function(){
+      var ft=h.parentNode, willOpen=!ft.classList.contains('open');
+      [].forEach.call(document.querySelectorAll('.ft'),function(x){ x.classList.remove('open'); });
+      if(willOpen) ft.classList.add('open');
     });
   });
   /* fim de seção → volta ao painel inicial da seção */
