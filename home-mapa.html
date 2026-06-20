@@ -857,9 +857,9 @@ body.coach-x .world-dots::after{
             </div>
             <div class="sp-ctrls">
               <button class="sp-ic" aria-label="Aleatório" disabled>⇆</button>
-              <button class="sp-ic" id="sp-prev" aria-label="Anterior" disabled><svg viewBox="0 0 24 24"><path d="M6 6H8V18H6Z M18 6V18L10 12Z"/></svg></button>
+              <button class="sp-ic" id="sp-prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M6 6H8V18H6Z M18 6V18L10 12Z"/></svg></button>
               <button class="sp-play" id="sp-play" aria-label="Tocar"><svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg></button>
-              <button class="sp-ic" id="sp-next" aria-label="Próximo" disabled><svg viewBox="0 0 24 24"><path d="M6 6L14 12L6 18Z M16 6H18V18H16Z"/></svg></button>
+              <button class="sp-ic" id="sp-next" aria-label="Próximo"><svg viewBox="0 0 24 24"><path d="M6 6L14 12L6 18Z M16 6H18V18H16Z"/></svg></button>
               <button class="sp-ic" aria-label="Fila" disabled>☰</button>
             </div>
           </div>
@@ -1557,35 +1557,39 @@ body.coach-x .world-dots::after{
     });
   }
 
-  /* RÁDIO REMENDO · player "Elaine lê" — Spotify IFrame API.
-     Hoje só temos o ID do episódio mais recente (raspagem dos demais é
-     bloqueada pelo Spotify). A lista mostra os 12 títulos reais; o play
-     toca a leitura mais recente completa (podcast = sem limite de prévia).
-     Quando chegarem os 12 links, é só preencher `id` que cada linha vira
-     clicável (clique já está ligado para itens com id). */
+  /* RÁDIO REMENDO · player "Elaine lê" — áudio nativo hospedado no Cloudflare R2.
+     17 episódios (voz da Elaine). Cada faixa é clicável; play/pause, prev/next
+     e barra de progresso funcionam de verdade. Durações carregam dos metadados. */
+  var R2='https://pub-f3ec44b3e1a04ea5a87f65ee49b7a81c.r2.dev/';
   var spEpisodes=[
-    { id:'5oFlNS1P7ndnuPiJzvOal8', cover:'https://i.scdn.co/image/ab67656300005f1f38ed43f487ec24cb455a9330', title:`📢 Quando dizemos "parabéns" no Dia da Mulher, estamos celebrando exatamente o quê?`, dur:'1 min' },
-    { id:null, title:`📢 O ridículo é um dispositivo que pode salvar uma mulher.`, dur:'1 min' },
-    { id:null, title:`📢 Mulher, você já pensou que, na maior parte da sua vida, passa respondendo perguntas que nunca escolheu?`, dur:'1 min' },
-    { id:null, title:`Descanso e mulheres: não basta igualdade na corrida quando ninguém pode parar`, dur:'5 min' },
-    { id:null, title:`Atenção, 2026. Realidade.`, dur:'2 min' },
-    { id:null, title:`Deserção das lágrimas: um sonho para 2026`, dur:'3 min' },
-    { id:null, title:`📢 Reescrevendo o agora: o papel estrutural do planejamento feminino`, dur:'8 min' },
-    { id:null, title:`Não desista.`, dur:'2 min' },
-    { id:null, title:`📢 A Tristeza Aleatória`, dur:'4 min' },
-    { id:null, title:`📢 ORIGINAR-SE: TERRITÓRIOS DE FORMAÇÃO`, dur:'5 min' },
-    { id:null, title:`"Quero ter um filho, quero dar a morte para alguém..." pensando sobre o amor e finitude.`, dur:'6 min' },
-    { id:null, title:`Curar sem resolver: territórios da criatividade, autenticidade e do aprender`, dur:'12 min' }
+    { title:'O Poder da Palavra', url:R2+'01_O%20Poder%20da%20Palavra.mp3' },
+    { title:'Salvação Não Se Discute', url:R2+'02_Salva%C3%A7%C3%A3o%20N%C3%A3o%20Se%20Discute.mp3' },
+    { title:'O Vício do Convencido', url:R2+'03_O%20V%C3%ADcio%20do%20Convencido.mp3' },
+    { title:'Curar Sem Resolver — A Dignidade do que Não Melhora', url:R2+'04_Curar%20Sem%20Resolver_A%20Dignidade%20do%20que%20N%C3%A3o%20Melhora.mp3' },
+    { title:'Curar Sem Resolver — Nomear o Cuidado', url:R2+'05_Curar%20Sem%20Resolver%20Sugest%C3%B5es%20Pr%C3%A1ticas_Nomear%20o%20Cuidado.mp3' },
+    { title:'Curar Sem Resolver — Territórios da Criatividade', url:R2+'06_Curar%20Sem%20Resolver_Territ%C3%B3rios%20da%20Criatividade%20Autenticidade%20e%20do%20Aprender.mp3' },
+    { title:'Pensando Sobre o Amor e a Finitude', url:R2+'07_Pensando%20Sobre%20o%20Amor%20e%20Finitude.mp3' },
+    { title:'Originar-se — Territórios de Formação', url:R2+'08_Originar-se_Territ%C3%B3rios%20de%20Forma%C3%A7%C3%A3o.mp3' },
+    { title:'A Tristeza Aleatória', url:R2+'09_A%20Tristeza%20Aleat%C3%B3ria.mp3' },
+    { title:'Não Desista', url:R2+'10_N%C3%A3o%20desista.mp3' },
+    { title:'Reescrevendo o Agora', url:R2+'11_Reescrevendo%20o%20Agora.mp3' },
+    { title:'Deserção das Lágrimas', url:R2+'12_Deser%C3%A7%C3%A3o%20das%20Lagrimas.mp3' },
+    { title:'Atenção, 2026 — Realidade', url:R2+'13_Aten%C3%A7%C3%A3o%202026_Realidade.mp3' },
+    { title:'Descanso e Mulheres', url:R2+'14_Descanso%20e%20Mulheres.mp3' },
+    { title:'Você Responde Perguntas que Não Escolheu', url:R2+'15_Voc%C3%AA%20Responde%20Perguntas%20que%20n%C3%A3o%20Escolheu.mp3' },
+    { title:'O Ridículo pode Salvar Mulheres', url:R2+'16_O%20Rid%C3%ADculo%20pode%20Salvar%20Mulheres.mp3' },
+    { title:'Dia das Mulheres — Estamos Celebrando Exatamente o Quê?', url:R2+'17_Dia%20das%20Mulheres_Estamos%20Celebrando%20Exatamente%20o%20Que.mp3' }
   ];
-  var spEngine=document.getElementById('sp-engine');
   var spListEl=document.getElementById('sp-list');
   var spNowEl=document.getElementById('sp-now');
   var spPlayBtn=document.getElementById('sp-play');
+  var spPrevBtn=document.getElementById('sp-prev');
+  var spNextBtn=document.getElementById('sp-next');
   var spTrackEl=document.getElementById('sp-track');
   var spArtEl=document.getElementById('sp-art');
   var spArtistEl=document.getElementById('sp-artist');
   var spCoverEl=spArtEl?spArtEl.parentNode:null;
-  var spCtrl=null, spCur=0, spDurMs=0, spPlaying=false;
+  var spCur=0, spPlaying=false;
   /* paleta de cores puras do site (fallback de capa) */
   var spPalette=['#E87A32','#6C4BB6','#A8B73F','#F5D731','#C9006A'];
   function spFmt(ms){ ms=Math.max(0,ms||0); var t=Math.floor(ms/1000),m=Math.floor(t/60),s=t%60; return m+':'+(s<10?'0'+s:s); }
@@ -1610,58 +1614,86 @@ body.coach-x .world-dots::after{
       var n=row.querySelector('.sp-n'); if(n) n.textContent = i===spCur ? '♪' : String(i+1);
     });
     if(spArtistEl) spArtistEl.textContent=(ep&&ep.artist)||'Elaine Narcizo';
-    if(spNowEl&&ep) spNowEl.textContent=spTrim(ep.title,false);
+    if(spNowEl&&ep) spNowEl.textContent=ep.title;
     spApplyCover(ep,spCur);
   }
   function spPlayIndex(i){
-    var ep=spEpisodes[i]; if(!ep||!ep.id||!spCtrl) return;
-    if(i===spCur){ spCtrl.togglePlay(); return; }   /* mesmo episódio → play/pause */
+    var ep=spEpisodes[i]; if(!ep) return;
+    if(i===spCur){ if(spAudio.paused) spAudio.play().catch(noop); else spAudio.pause(); return; }
     spCur=i; spMark();
-    spCtrl.loadUri('spotify:episode:'+ep.id);        /* troca de episódio */
+    spAudio.src=ep.url;
+    var du=document.getElementById('sp-dur'); if(du) du.textContent= ep.durSec ? spFmt(ep.durSec*1000) : '--:--';
+    var c=document.getElementById('sp-cur'); if(c) c.textContent='0:00';
+    var fill=document.getElementById('sp-fill'); if(fill) fill.style.width='0%';
+    spAudio.play().catch(noop);
+  }
+  function noop(){}
+  function spPrev(){ if(spEpisodes.length) spPlayIndex((spCur-1+spEpisodes.length)%spEpisodes.length); }
+  function spNext(){ if(spEpisodes.length) spPlayIndex((spCur+1)%spEpisodes.length); }
+  function spSyncBtn(){ if(spPlayBtn){ spPlayBtn.classList.toggle('playing',spPlaying); spPlayBtn.setAttribute('aria-label',spPlaying?'Pausar':'Tocar'); } }
+  function spUpdateRowDur(i){
+    if(!spListEl||!spListEl.children[i]) return;
+    var ep=spEpisodes[i], du=spListEl.children[i].querySelector('.sp-du');
+    if(du&&ep&&ep.durSec) du.textContent=spFmt(ep.durSec*1000);
   }
   function spRender(){
     if(!spListEl) return;
     spListEl.innerHTML='';
     spEpisodes.forEach(function(ep,i){
       var row=document.createElement('div');
-      row.className='sp-row'+(ep.id?' playable':' dim')+(i===spCur?' live':'');
+      row.className='sp-row playable'+(i===spCur?' live':'');
       var n=document.createElement('span'); n.className='sp-n'; n.textContent = i===spCur ? '♪' : String(i+1);
-      var ti=document.createElement('span'); ti.className='sp-ti'; ti.textContent=spTrim(ep.title,true);
-      var du=document.createElement('span'); du.className='sp-du'; du.textContent=ep.dur;
+      var ti=document.createElement('span'); ti.className='sp-ti'; ti.textContent=ep.title;
+      var du=document.createElement('span'); du.className='sp-du'; du.textContent= ep.durSec ? spFmt(ep.durSec*1000) : '▶';
       row.appendChild(n); row.appendChild(ti); row.appendChild(du);
-      if(ep.id) row.addEventListener('click',function(){ spPlayIndex(i); });
+      row.addEventListener('click',function(){ spPlayIndex(i); });
       spListEl.appendChild(row);
     });
   }
-  function spOnUpdate(e){
-    var d=(e&&e.data)||{};
-    if(d.duration) spDurMs=d.duration;
-    var pos=d.position||0;
-    var fill=document.getElementById('sp-fill'); if(fill&&spDurMs) fill.style.width=(100*pos/spDurMs)+'%';
-    var c=document.getElementById('sp-cur'); if(c) c.textContent=spFmt(pos);
-    var du=document.getElementById('sp-dur'); if(du) du.textContent=spFmt(spDurMs);
-    spPlaying=!d.isPaused;
-    if(spPlayBtn){ spPlayBtn.classList.toggle('playing',spPlaying); spPlayBtn.setAttribute('aria-label',spPlaying?'Pausar':'Tocar'); }
+  /* motor de áudio nativo (Cloudflare R2) — substitui o Spotify IFrame API */
+  var spAudio=new Audio(); spAudio.preload='metadata';
+  if(spEpisodes[0]) spAudio.src=spEpisodes[0].url;
+  spAudio.addEventListener('loadedmetadata',function(){
+    var ep=spEpisodes[spCur]; if(ep) ep.durSec=spAudio.duration||0;
+    var du=document.getElementById('sp-dur'); if(du) du.textContent=spFmt((spAudio.duration||0)*1000);
+    spUpdateRowDur(spCur);
+  });
+  spAudio.addEventListener('timeupdate',function(){
+    var pos=spAudio.currentTime||0, dur=spAudio.duration||0;
+    var fill=document.getElementById('sp-fill'); if(fill&&dur) fill.style.width=(100*pos/dur)+'%';
+    var c=document.getElementById('sp-cur'); if(c) c.textContent=spFmt(pos*1000);
+  });
+  spAudio.addEventListener('play',function(){ spPlaying=true; spSyncBtn(); });
+  spAudio.addEventListener('pause',function(){ spPlaying=false; spSyncBtn(); });
+  spAudio.addEventListener('ended',function(){ spNext(); });
+  /* preenche as durações da lista em segundo plano (sequencial, sem rajada) */
+  function spPreloadDurations(){
+    var i=0, a=new Audio(); a.preload='metadata';
+    (function step(){
+      if(i>=spEpisodes.length) return;
+      if(spEpisodes[i].durSec){ i++; return step(); }
+      a.onloadedmetadata=function(){ spEpisodes[i].durSec=a.duration||0; spUpdateRowDur(i); i++; step(); };
+      a.onerror=function(){ i++; step(); };
+      a.src=spEpisodes[i].url;
+    })();
   }
-  if(spEngine){
+  if(spListEl){
     spRender();
     spMark();
-    if(spPlayBtn) spPlayBtn.addEventListener('click',function(){ if(spMode!=='podcast') return; if(spCtrl) spCtrl.togglePlay(); });
+    if(spPlayBtn) spPlayBtn.addEventListener('click',function(){
+      if(spMode!=='podcast') return;
+      if(spAudio.paused) spAudio.play().catch(noop); else spAudio.pause();
+    });
+    if(spPrevBtn) spPrevBtn.addEventListener('click',function(){ if(spMode==='podcast') spPrev(); });
+    if(spNextBtn) spNextBtn.addEventListener('click',function(){ if(spMode==='podcast') spNext(); });
     if(spTrackEl) spTrackEl.addEventListener('click',function(ev){
       if(spMode!=='podcast') return;
-      if(!spCtrl||!spDurMs) return;
+      var dur=spAudio.duration||0; if(!dur) return;
       var r=spTrackEl.getBoundingClientRect();
       var frac=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
-      spCtrl.seek(frac*spDurMs/1000);
+      spAudio.currentTime=frac*dur;
     });
-    window.onSpotifyIframeApiReady=function(IFrameAPI){
-      IFrameAPI.createController(spEngine,
-        { uri:'spotify:episode:'+spEpisodes[0].id, width:'100%', height:'80' },
-        function(ctrl){ spCtrl=ctrl; ctrl.addListener('playback_update',spOnUpdate); });
-    };
-    var spS=document.createElement('script');
-    spS.src='https://open.spotify.com/embed/iframe-api/v1'; spS.async=true;
-    document.body.appendChild(spS);
+    setTimeout(spPreloadDurations,1200);
   }
 
   /* revelação dos blocos do feed conforme rolam */
