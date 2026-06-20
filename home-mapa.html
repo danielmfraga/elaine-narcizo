@@ -1553,7 +1553,7 @@ body.coach-x .world-dots::after{
       spPlaying=!spAudio.paused; spSyncBtn();
     } else {
       try{ spAudio.pause(); }catch(e){}
-      ytLoadApi();              /* pré-carrega a API p/ o 1º play ser rápido */
+      ytPrewarm();              /* pré-aquece API + player + cue (1º play rápido) */
       ytRenderInSpList();
       spPlaying=ytIsPlaying(); spSyncBtn();
     }
@@ -1579,14 +1579,14 @@ body.coach-x .world-dots::after{
      vídeo VISÍVEL (controles nativos do YouTube ocultos); NOSSOS botões dirigem:
      play/pause atuam no vídeo do YouTube; avançar/voltar/aleatório operam na
      nossa playlist (ytTracks) carregando o vídeo certo. */
-  var ytPlayer=null, ytApiReady=false, ytApiLoading=false, ytReady=false, ytPendingIdx=null, ytPoll=null;
+  var ytPlayer=null, ytApiReady=false, ytApiLoading=false, ytReady=false, ytPendingIdx=null, ytPoll=null, ytLoadedId=null;
   function ytLoadApi(){
     if(ytApiReady||ytApiLoading) return;
     ytApiLoading=true;
     var prev=window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady=function(){
       if(typeof prev==='function'){ try{ prev(); }catch(e){} }
-      ytApiReady=true; if(ytPendingIdx!=null) ytCreatePlayer();
+      ytApiReady=true; if(ytPendingIdx!=null||spMode==='danca') ytCreatePlayer();
     };
     var s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; s.async=true;
     document.body.appendChild(s);
@@ -1597,10 +1597,19 @@ body.coach-x .world-dots::after{
       width:'100%', height:'100%',
       playerVars:{ controls:0, rel:0, modestbranding:1, playsinline:1, fs:0, iv_load_policy:3 },
       events:{
-        onReady:function(){ ytReady=true; if(ytPendingIdx!=null){ var i=ytPendingIdx; ytPendingIdx=null; ytPlayIndex(i); } },
+        onReady:function(){ ytReady=true;
+          if(ytPendingIdx!=null){ var i=ytPendingIdx; ytPendingIdx=null; ytPlayIndex(i); }
+          else { var t=ytTracks[ytCur>=0?ytCur:0]; if(t){ try{ ytPlayer.cueVideoById(t.id); ytLoadedId=t.id; }catch(e){} } }
+        },
         onStateChange:ytOnState
       }
     });
+  }
+  /* pré-aquece ao entrar no card da dança: API + player + cue da 1ª faixa */
+  function ytPrewarm(){
+    ytLoadApi();
+    if(ytApiReady) ytCreatePlayer();
+    if(ytPlayer&&ytReady&&!ytLoadedId){ var t=ytTracks[ytCur>=0?ytCur:0]; if(t){ try{ ytPlayer.cueVideoById(t.id); ytLoadedId=t.id; }catch(e){} } }
   }
   function ytIsPlaying(){ try{ return !!(ytPlayer&&ytPlayer.getPlayerState&&ytPlayer.getPlayerState()===1); }catch(e){ return false; } }
   function ytOnState(e){
@@ -1634,7 +1643,8 @@ body.coach-x .world-dots::after{
     ytMarkRows();
     if(!ytPlayer){ ytPendingIdx=i; ytLoadApi(); if(ytApiReady) ytCreatePlayer(); return; }
     if(!ytReady){ ytPendingIdx=i; return; }
-    try{ ytPlayer.loadVideoById(tr.id); }catch(e){}
+    if(ytLoadedId===tr.id){ try{ ytPlayer.playVideo(); }catch(e){} return; }  /* já engatilhada → play instantâneo */
+    ytLoadedId=tr.id; try{ ytPlayer.loadVideoById(tr.id); }catch(e){}
   }
   function ytTogglePlay(){
     if(!ytPlayer||!ytReady){ ytPlayIndex(ytCur>=0?ytCur:0); return; }
