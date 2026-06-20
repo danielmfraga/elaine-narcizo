@@ -337,11 +337,14 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .sp-show{ font-size:1rem; font-weight:700; letter-spacing:-.01em; }
 .sp-ep{ font-size:.63rem; opacity:.85; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .sp-card-vert{
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
-  font-size:.58rem; letter-spacing:.07em; text-transform:uppercase; font-weight:700;
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  text-align:center; white-space:nowrap;
+  font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700;
   color:rgba(255,255,255,.95); opacity:0; transition:opacity .2s;
 }
+.sp-card-vert span{ display:block; line-height:1.05; }
 .sp-card:not(.active) .sp-card-vert{ opacity:1; }
 
 /* layout unificado: dança usa exatamente o mesmo chrome do podcast
@@ -845,7 +848,7 @@ body.coach-x .world-dots::after{
                   <div class="sp-show" id="sp-artist">Elaine Narcizo</div>
                   <div class="sp-ep" id="sp-now">Quando dizemos "parabéns"…</div>
                 </div>
-                <div class="sp-card-vert">Podcast · Elaine lê</div>
+                <div class="sp-card-vert"><span>Podcast</span><span>Elaine lê</span></div>
               </div>
               <!-- Card DançaDestino (filete por padrão) -->
               <div class="sp-card" id="sp-card-danca">
@@ -858,7 +861,7 @@ body.coach-x .world-dots::after{
                   <div class="sp-show">DançaDestino</div>
                   <div class="sp-ep" id="yt-now-title">Casaco Marron…</div>
                 </div>
-                <div class="sp-card-vert">Playlist · DançaDestino</div>
+                <div class="sp-card-vert"><span>Playlist</span><span>DançaDestino</span></div>
               </div>
             </div>
 
