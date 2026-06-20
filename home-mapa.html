@@ -211,7 +211,8 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .yt-wrap{ flex:1; display:flex; flex-direction:column; overflow:hidden; min-height:0; }
 .yt-embed{ flex-shrink:0; background:#000; display:none; }
 .yt-embed.on{ display:block; }
-.yt-embed iframe{ width:100%; aspect-ratio:16/9; border:0; display:block; }
+.yt-embed #yt-player{ width:100%; aspect-ratio:16/9; display:block; }
+.yt-embed iframe{ width:100%; height:100%; border:0; display:block; }
 .yt-list{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
 .yt-track{
   display:flex; align-items:center; gap:14px;
@@ -863,7 +864,7 @@ body.coach-x .world-dots::after{
 
             <!-- embed YouTube (aparece ao clicar faixa no modo dança) -->
             <div class="yt-embed" id="yt-embed">
-              <iframe id="yt-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+              <div id="yt-player"></div>
             </div>
 
             <div class="sp-list" id="sp-list"><!-- via JS --></div>
@@ -1518,7 +1519,6 @@ body.coach-x .world-dots::after{
     { id:'rLsP8NgS01Y', title:'Faixa 03', artist:'DançaDestino' }
   ];
   var ytEmbed=document.getElementById('yt-embed');
-  var ytIframe=document.getElementById('yt-iframe');
   var ytCur=-1;
   var spMode='podcast';
   var spPlayerEl=document.querySelector('.sp-player');
@@ -1535,17 +1535,7 @@ body.coach-x .world-dots::after{
       var ti=document.createElement('span'); ti.className='sp-ti'; ti.textContent=tr.title;
       var du=document.createElement('span'); du.className='sp-du'; du.textContent=i===ytCur?'':'▶';
       row.appendChild(n); row.appendChild(ti); row.appendChild(du);
-      row.addEventListener('click',function(){
-        ytCur=i;
-        var ynt=document.getElementById('yt-now-title'); if(ynt) ynt.textContent=spTrim(tr.title,false);
-        if(ytIframe) ytIframe.src='https://www.youtube.com/embed/'+tr.id+'?autoplay=1';
-        if(ytEmbed) ytEmbed.classList.add('on');
-        [].forEach.call(spListEl.children,function(r,j){
-          r.classList.toggle('live',j===i);
-          var rn=r.querySelector('.sp-n'); if(rn) rn.textContent=j===i?'♪':String(j+1);
-          var rd=r.querySelector('.sp-du'); if(rd) rd.textContent=j===i?'':'▶';
-        });
-      });
+      row.addEventListener('click',function(){ ytPlayIndex(i); });
       spListEl.appendChild(row);
     });
   }
@@ -1555,13 +1545,17 @@ body.coach-x .world-dots::after{
     if(spCardPodcast) spCardPodcast.classList.toggle('active',mode==='podcast');
     if(spCardDanca) spCardDanca.classList.toggle('active',mode==='danca');
     if(spPlayerEl) spPlayerEl.classList.toggle('danca',mode==='danca');
+    if(spInfo) spInfo.classList.remove('on');
     if(mode==='podcast'){
-      if(ytIframe) ytIframe.src='';
-      if(ytEmbed) ytEmbed.classList.remove('on');
-      ytCur=-1;
-      spRender();
+      try{ if(ytPlayer&&ytPlayer.pauseVideo) ytPlayer.pauseVideo(); }catch(e){}
+      ytStopPoll();
+      spRender(); spMark();
+      spPlaying=!spAudio.paused; spSyncBtn();
     } else {
+      try{ spAudio.pause(); }catch(e){}
+      ytLoadApi();              /* pré-carrega a API p/ o 1º play ser rápido */
       ytRenderInSpList();
+      spPlaying=ytIsPlaying(); spSyncBtn();
     }
   }
   if(spCardDanca) spCardDanca.addEventListener('click',function(){ spSwitchMode('danca'); });
@@ -1580,6 +1574,75 @@ body.coach-x .world-dots::after{
       }
     });
   }
+
+  /* ── DANÇADESTINO · YouTube IFrame Player API ──
+     vídeo VISÍVEL (controles nativos do YouTube ocultos); NOSSOS botões dirigem:
+     play/pause atuam no vídeo do YouTube; avançar/voltar/aleatório operam na
+     nossa playlist (ytTracks) carregando o vídeo certo. */
+  var ytPlayer=null, ytApiReady=false, ytApiLoading=false, ytReady=false, ytPendingIdx=null, ytPoll=null;
+  function ytLoadApi(){
+    if(ytApiReady||ytApiLoading) return;
+    ytApiLoading=true;
+    var prev=window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady=function(){
+      if(typeof prev==='function'){ try{ prev(); }catch(e){} }
+      ytApiReady=true; if(ytPendingIdx!=null) ytCreatePlayer();
+    };
+    var s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; s.async=true;
+    document.body.appendChild(s);
+  }
+  function ytCreatePlayer(){
+    if(ytPlayer||!ytApiReady||!window.YT||!YT.Player||!document.getElementById('yt-player')) return;
+    ytPlayer=new YT.Player('yt-player',{
+      width:'100%', height:'100%',
+      playerVars:{ controls:0, rel:0, modestbranding:1, playsinline:1, fs:0, iv_load_policy:3 },
+      events:{
+        onReady:function(){ ytReady=true; if(ytPendingIdx!=null){ var i=ytPendingIdx; ytPendingIdx=null; ytPlayIndex(i); } },
+        onStateChange:ytOnState
+      }
+    });
+  }
+  function ytIsPlaying(){ try{ return !!(ytPlayer&&ytPlayer.getPlayerState&&ytPlayer.getPlayerState()===1); }catch(e){ return false; } }
+  function ytOnState(e){
+    var S=window.YT&&YT.PlayerState; if(!S) return;
+    if(e.data===S.PLAYING){ spPlaying=true; spSyncBtn(); ytStartPoll(); }
+    else if(e.data===S.PAUSED){ spPlaying=false; spSyncBtn(); ytStopPoll(); }
+    else if(e.data===S.ENDED){ spPlaying=false; spSyncBtn(); ytStopPoll(); ytNext(); }
+  }
+  function ytStartPoll(){ if(!ytPoll) ytPoll=setInterval(ytTick,250); }
+  function ytStopPoll(){ if(ytPoll){ clearInterval(ytPoll); ytPoll=null; } }
+  function ytTick(){
+    if(!ytPlayer||!ytPlayer.getDuration) return;
+    var dur=ytPlayer.getDuration()||0, pos=ytPlayer.getCurrentTime()||0;
+    var fill=document.getElementById('sp-fill'); if(fill&&dur) fill.style.width=(100*pos/dur)+'%';
+    var c=document.getElementById('sp-cur'); if(c) c.textContent=spFmt(pos*1000);
+    var du=document.getElementById('sp-dur'); if(du) du.textContent=spFmt(dur*1000);
+  }
+  function ytMarkRows(){
+    if(!spListEl) return;
+    [].forEach.call(spListEl.children,function(r,j){
+      r.classList.toggle('live',j===ytCur);
+      var rn=r.querySelector('.sp-n'); if(rn) rn.textContent=j===ytCur?'♪':String(j+1);
+      var rd=r.querySelector('.sp-du'); if(rd) rd.textContent=j===ytCur?'':'▶';
+    });
+  }
+  function ytPlayIndex(i){
+    var tr=ytTracks[i]; if(!tr) return;
+    ytCur=i;
+    var ynt=document.getElementById('yt-now-title'); if(ynt) ynt.textContent=tr.title;
+    if(ytEmbed) ytEmbed.classList.add('on');
+    ytMarkRows();
+    if(!ytPlayer){ ytPendingIdx=i; ytLoadApi(); if(ytApiReady) ytCreatePlayer(); return; }
+    if(!ytReady){ ytPendingIdx=i; return; }
+    try{ ytPlayer.loadVideoById(tr.id); }catch(e){}
+  }
+  function ytTogglePlay(){
+    if(!ytPlayer||!ytReady){ ytPlayIndex(ytCur>=0?ytCur:0); return; }
+    if(ytIsPlaying()) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
+  }
+  function ytRandIdx(){ if(ytTracks.length<2) return ytCur<0?0:ytCur; var r; do{ r=Math.floor(Math.random()*ytTracks.length); }while(r===ytCur); return r; }
+  function ytPrev(){ if(!ytTracks.length) return; ytPlayIndex(spShuffle?ytRandIdx():((ytCur<=0?ytTracks.length:ytCur)-1)); }
+  function ytNext(){ if(!ytTracks.length) return; ytPlayIndex(spShuffle?ytRandIdx():(ytCur+1)%ytTracks.length); }
 
   /* RÁDIO REMENDO · player "Elaine lê" — áudio nativo hospedado no Cloudflare R2.
      17 episódios (voz da Elaine). Cada faixa é clicável; play/pause, prev/next
@@ -1722,27 +1785,25 @@ body.coach-x .world-dots::after{
     spRender();
     spMark();
     if(spPlayBtn) spPlayBtn.addEventListener('click',function(){
-      if(spMode!=='podcast') return;
-      if(spAudio.paused) spAudio.play().catch(noop); else spAudio.pause();
+      if(spMode==='podcast'){ if(spAudio.paused) spAudio.play().catch(noop); else spAudio.pause(); }
+      else ytTogglePlay();
     });
-    if(spPrevBtn) spPrevBtn.addEventListener('click',function(){ if(spMode==='podcast') spPrev(); });
-    if(spNextBtn) spNextBtn.addEventListener('click',function(){ if(spMode==='podcast') spNext(); });
-    if(spShufBtn) spShufBtn.addEventListener('click',function(){
-      if(spMode!=='podcast') return;
+    if(spPrevBtn) spPrevBtn.addEventListener('click',function(){ spMode==='podcast'?spPrev():ytPrev(); });
+    if(spNextBtn) spNextBtn.addEventListener('click',function(){ spMode==='podcast'?spNext():ytNext(); });
+    if(spShufBtn) spShufBtn.addEventListener('click',function(){   /* aleatório vale p/ os dois modos */
       spShuffle=!spShuffle; spShufBtn.classList.toggle('on',spShuffle);
       spShufBtn.setAttribute('aria-label', spShuffle?'Aleatório ligado':'Aleatório');
     });
     if(spQueueBtn) spQueueBtn.addEventListener('click',function(){
-      if(spMode!=='podcast') return;
+      if(spMode!=='podcast') return;   /* painel de info é do podcast */
       spFillInfo(); if(spInfo) spInfo.classList.toggle('on');
     });
     if(spInfoX) spInfoX.addEventListener('click',function(){ if(spInfo) spInfo.classList.remove('on'); });
     if(spTrackEl) spTrackEl.addEventListener('click',function(ev){
-      if(spMode!=='podcast') return;
-      var dur=spAudio.duration||0; if(!dur) return;
       var r=spTrackEl.getBoundingClientRect();
       var frac=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width));
-      spAudio.currentTime=frac*dur;
+      if(spMode==='podcast'){ var dur=spAudio.duration||0; if(dur) spAudio.currentTime=frac*dur; }
+      else if(ytPlayer&&ytReady&&ytPlayer.getDuration){ var d=ytPlayer.getDuration()||0; if(d) ytPlayer.seekTo(frac*d,true); }
     });
     setTimeout(spPreloadDurations,1200);
   }
