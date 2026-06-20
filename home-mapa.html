@@ -386,6 +386,23 @@ h2{ font-size:clamp(2rem,8.2vw,3.4rem); font-weight:200; letter-spacing:-0.03em;
 .sp-play.playing .ic-pause{ display:block; }
 /* prev/next: só o ícone (sem caixa); SVG monocromático evita o "quadradinho" do emoji */
 .sp-ic svg{ width:24px; height:24px; display:block; fill:currentColor; }
+/* estado ativo (aleatório ligado): acende no acento da seção */
+.sp-ic.on{ color:var(--laranja); opacity:1; }
+.sp-ic.on::after{ content:""; position:absolute; left:50%; bottom:-5px; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:var(--laranja); }
+.sp-ic{ position:relative; }
+
+/* painel de informações do episódio (☰) — sobrepõe o player */
+.sp-info{ position:absolute; inset:0; z-index:6; background:var(--paper);
+  padding:54px 22px 24px; display:flex; flex-direction:column; gap:10px; overflow-y:auto;
+  opacity:0; visibility:hidden; transform:translateY(8px);
+  transition:opacity .28s var(--ease), transform .28s var(--ease), visibility .28s; }
+.sp-info.on{ opacity:1; visibility:visible; transform:none; }
+.sp-info-x{ position:absolute; top:14px; left:14px; width:32px; height:32px; border:0; border-radius:50%;
+  background:var(--fundo-alt,#f3f2ef); color:var(--ink); font-size:14px; cursor:pointer; line-height:1; z-index:1; }
+.sp-info-eyebrow{ font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--mute); }
+.sp-info-title{ margin:0; font-family:var(--serif); font-style:italic; font-weight:400; font-size:1.45rem; line-height:1.12; color:var(--ink); max-width:26ch; }
+.sp-info-desc{ margin:0; font-size:.92rem; font-weight:300; line-height:1.62; color:var(--ink-soft); }
+.sp-info-desc.empty{ color:var(--mute); font-style:italic; }
 
 /* engine: iframe do Spotify renderizado mas oculto atrás da UI */
 .sp-engine{ position:absolute; left:0; right:0; bottom:0; height:80px; opacity:0; pointer-events:none; z-index:0; }
@@ -856,11 +873,18 @@ body.coach-x .world-dots::after{
               <span class="sp-t rt" id="sp-dur">--:--</span>
             </div>
             <div class="sp-ctrls">
-              <button class="sp-ic" aria-label="Aleatório" disabled>⇆</button>
+              <button class="sp-ic" id="sp-shuffle" aria-label="Aleatório"><svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4V8h-2.5l-2.3 3 -1.2-1.7L13 7H17V3zM3 7h4.2l9.6 13H21v-4l4 4-4 4v-3h-5.2L6.2 8H3V7zM3 17h4.2l2.3-3 1.2 1.7L8.8 19H3v-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
               <button class="sp-ic" id="sp-prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M6 6H8V18H6Z M18 6V18L10 12Z"/></svg></button>
               <button class="sp-play" id="sp-play" aria-label="Tocar"><svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg></button>
               <button class="sp-ic" id="sp-next" aria-label="Próximo"><svg viewBox="0 0 24 24"><path d="M6 6L14 12L6 18Z M16 6H18V18H16Z"/></svg></button>
-              <button class="sp-ic" aria-label="Fila" disabled>☰</button>
+              <button class="sp-ic" id="sp-queue" aria-label="Informações do episódio"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+            </div>
+            <!-- painel de informações do episódio (☰) -->
+            <div class="sp-info" id="sp-info">
+              <button class="sp-info-x" id="sp-info-x" aria-label="Fechar">✕</button>
+              <span class="sp-info-eyebrow">Sobre o episódio</span>
+              <h4 class="sp-info-title" id="sp-info-title"></h4>
+              <p class="sp-info-desc" id="sp-info-desc"></p>
             </div>
           </div>
           <div class="sp-engine" id="sp-engine"></div>
@@ -1585,11 +1609,17 @@ body.coach-x .world-dots::after{
   var spPlayBtn=document.getElementById('sp-play');
   var spPrevBtn=document.getElementById('sp-prev');
   var spNextBtn=document.getElementById('sp-next');
+  var spShufBtn=document.getElementById('sp-shuffle');
+  var spQueueBtn=document.getElementById('sp-queue');
+  var spInfo=document.getElementById('sp-info');
+  var spInfoTitle=document.getElementById('sp-info-title');
+  var spInfoDesc=document.getElementById('sp-info-desc');
+  var spInfoX=document.getElementById('sp-info-x');
   var spTrackEl=document.getElementById('sp-track');
   var spArtEl=document.getElementById('sp-art');
   var spArtistEl=document.getElementById('sp-artist');
   var spCoverEl=spArtEl?spArtEl.parentNode:null;
-  var spCur=0, spPlaying=false;
+  var spCur=0, spPlaying=false, spShuffle=false;
   /* paleta de cores puras do site (fallback de capa) */
   var spPalette=['#E87A32','#6C4BB6','#A8B73F','#F5D731','#C9006A'];
   function spFmt(ms){ ms=Math.max(0,ms||0); var t=Math.floor(ms/1000),m=Math.floor(t/60),s=t%60; return m+':'+(s<10?'0'+s:s); }
@@ -1616,6 +1646,16 @@ body.coach-x .world-dots::after{
     if(spArtistEl) spArtistEl.textContent=(ep&&ep.artist)||'Elaine Narcizo';
     if(spNowEl&&ep) spNowEl.textContent=ep.title;
     spApplyCover(ep,spCur);
+    spFillInfo();
+  }
+  function spFillInfo(){
+    var ep=spEpisodes[spCur]; if(!ep) return;
+    if(spInfoTitle) spInfoTitle.textContent=ep.title;
+    if(spInfoDesc){
+      var has=ep.desc&&String(ep.desc).trim();
+      spInfoDesc.textContent= has ? ep.desc : 'A descrição deste episódio chega em breve.';
+      spInfoDesc.classList.toggle('empty',!has);
+    }
   }
   function spPlayIndex(i){
     var ep=spEpisodes[i]; if(!ep) return;
@@ -1628,8 +1668,9 @@ body.coach-x .world-dots::after{
     spAudio.play().catch(noop);
   }
   function noop(){}
-  function spPrev(){ if(spEpisodes.length) spPlayIndex((spCur-1+spEpisodes.length)%spEpisodes.length); }
-  function spNext(){ if(spEpisodes.length) spPlayIndex((spCur+1)%spEpisodes.length); }
+  function spRandIdx(){ if(spEpisodes.length<2) return spCur; var r; do{ r=Math.floor(Math.random()*spEpisodes.length); }while(r===spCur); return r; }
+  function spPrev(){ if(!spEpisodes.length) return; spPlayIndex(spShuffle?spRandIdx():(spCur-1+spEpisodes.length)%spEpisodes.length); }
+  function spNext(){ if(!spEpisodes.length) return; spPlayIndex(spShuffle?spRandIdx():(spCur+1)%spEpisodes.length); }
   function spSyncBtn(){ if(spPlayBtn){ spPlayBtn.classList.toggle('playing',spPlaying); spPlayBtn.setAttribute('aria-label',spPlaying?'Pausar':'Tocar'); } }
   function spUpdateRowDur(i){
     if(!spListEl||!spListEl.children[i]) return;
@@ -1686,6 +1727,16 @@ body.coach-x .world-dots::after{
     });
     if(spPrevBtn) spPrevBtn.addEventListener('click',function(){ if(spMode==='podcast') spPrev(); });
     if(spNextBtn) spNextBtn.addEventListener('click',function(){ if(spMode==='podcast') spNext(); });
+    if(spShufBtn) spShufBtn.addEventListener('click',function(){
+      if(spMode!=='podcast') return;
+      spShuffle=!spShuffle; spShufBtn.classList.toggle('on',spShuffle);
+      spShufBtn.setAttribute('aria-label', spShuffle?'Aleatório ligado':'Aleatório');
+    });
+    if(spQueueBtn) spQueueBtn.addEventListener('click',function(){
+      if(spMode!=='podcast') return;
+      spFillInfo(); if(spInfo) spInfo.classList.toggle('on');
+    });
+    if(spInfoX) spInfoX.addEventListener('click',function(){ if(spInfo) spInfo.classList.remove('on'); });
     if(spTrackEl) spTrackEl.addEventListener('click',function(ev){
       if(spMode!=='podcast') return;
       var dur=spAudio.duration||0; if(!dur) return;
