@@ -531,8 +531,10 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .tickets{ display:flex; flex-direction:column; gap:14px; }
 
 /* ── INGRESSO QUE DESDOBRA (folding ticket) ── */
-.ft{ position:relative; background:var(--paper); border-radius:16px; perspective:1000px;
-  box-shadow:0 16px 36px -22px rgba(214,51,108,.5), 0 3px 10px rgba(0,0,0,.07); }
+.ft{ position:relative; background:var(--paper); border-radius:16px; perspective:900px;
+  box-shadow:0 16px 36px -22px rgba(214,51,108,.5), 0 3px 10px rgba(0,0,0,.07);
+  height:92px; overflow:hidden; transition:height .9s var(--ease); }
+.ft.open{ height:280px; }
 /* cabeça sempre visível (clicável) */
 .ft-head{ position:relative; display:flex; align-items:stretch; cursor:pointer; border-radius:16px; overflow:hidden; height:92px; }
 .ft-art{ flex:0 0 78px; overflow:hidden; background:var(--warm); }
@@ -555,17 +557,25 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .ft:not(.open) .ft-chev{ animation:chevBob 2.4s var(--ease) infinite; }
 @keyframes chevBob{ 0%,100%{ transform:translateY(-1.5px); } 50%{ transform:translateY(2px); } }
 
-/* corpo que desdobra — cada banda é uma DOBRA: cresce em altura E gira no
-   rotateX a partir da costura de cima (transform-origin top), em cascata */
-.ft-body{ perspective:1100px; perspective-origin:top center; }
-.ft-fold{ height:0; opacity:0; overflow:hidden;
-  transform-origin:top center; transform:rotateX(-90deg);
-  transition:height .45s var(--ease), transform .55s var(--ease), opacity .3s var(--ease); }
-.ft.open .ft-fold{ opacity:1; transform:rotateX(0); }
-.ft.open .ft-fold.b1{ height:62px; transition-delay:0s; }
-.ft.open .ft-fold.b2{ height:54px; transition-delay:.13s; }
-.ft.open .ft-fold.b3{ height:72px; transition-delay:.26s; }
-.ft-fold.b1{ border-top:2px dashed var(--line); }   /* picote aparece na 1ª dobra */
+/* corpo que desdobra — 3D flip real: cada banda tem frente (placeholder) + verso (conteúdo).
+   A frente some quando o segmento vira (backface-hidden), o verso aparece — mesma mecânica do CodePen. */
+.ft-body{ position:relative; }
+.ft-seg{ position:relative;
+  transform-style:preserve-3d; -webkit-transform-style:preserve-3d;
+  transform-origin:top center;
+  transition:transform .6s var(--ease); }
+.ft-s1{ height:62px; }
+.ft-s2{ height:54px; }
+.ft-s3{ height:72px; }
+.ft-sf,.ft-sb{ position:absolute; inset:0;
+  backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+.ft-sf{ background:var(--warm); }                   /* placeholder quente — some na virada */
+.ft-s1 .ft-sf{ border-top:2px dashed var(--line); } /* picote na costura da cabeça */
+.ft-sb{ transform:rotateX(180deg); background:var(--paper); } /* verso pré-girado: aparece na virada */
+.ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado no último */
+.ft.open .ft-s1{ transform:rotateX(180deg); transition-delay:0s; }
+.ft.open .ft-s2{ transform:rotateX(180deg); transition-delay:.2s; }
+.ft.open .ft-s3{ transform:rotateX(180deg); transition-delay:.4s; }
 /* banda 1: grade de detalhes */
 .ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:13px 17px; }
 .ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
@@ -999,22 +1009,31 @@ body.coach-x .world-dots::after{
                 <div class="ft-stub"></div>
               </div>
               <div class="ft-body">
-                <div class="ft-fold b1">
-                  <div class="ft-grid">
-                    <div class="ft-cell"><b>a definir</b><span>Datas</span></div>
-                    <div class="ft-cell"><b>ao vivo</b><span>Formato</span></div>
-                    <div class="ft-cell"><b>limitadas</b><span>Vagas</span></div>
+                <div class="ft-seg ft-s1">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-grid">
+                      <div class="ft-cell"><b>a definir</b><span>Datas</span></div>
+                      <div class="ft-cell"><b>ao vivo</b><span>Formato</span></div>
+                      <div class="ft-cell"><b>limitadas</b><span>Vagas</span></div>
+                    </div>
                   </div>
                 </div>
-                <div class="ft-fold b2">
-                  <div class="ft-fare">
-                    <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
-                    <div class="ft-cell"><b>aberta</b><span>Categoria</span></div>
-                    <div class="ft-barcode"></div>
+                <div class="ft-seg ft-s2">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-fare">
+                      <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
+                      <div class="ft-cell"><b>aberta</b><span>Categoria</span></div>
+                      <div class="ft-barcode"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="ft-fold b3">
-                  <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                <div class="ft-seg ft-s3">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1030,22 +1049,31 @@ body.coach-x .world-dots::after{
                 <div class="ft-stub"></div>
               </div>
               <div class="ft-body">
-                <div class="ft-fold b1">
-                  <div class="ft-grid">
-                    <div class="ft-cell"><b>temporada</b><span>Quando</span></div>
-                    <div class="ft-cell"><b>presencial</b><span>Formato</span></div>
-                    <div class="ft-cell"><b>única</b><span>Sessão</span></div>
+                <div class="ft-seg ft-s1">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-grid">
+                      <div class="ft-cell"><b>temporada</b><span>Quando</span></div>
+                      <div class="ft-cell"><b>presencial</b><span>Formato</span></div>
+                      <div class="ft-cell"><b>única</b><span>Sessão</span></div>
+                    </div>
                   </div>
                 </div>
-                <div class="ft-fold b2">
-                  <div class="ft-fare">
-                    <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
-                    <div class="ft-cell"><b>limitada</b><span>Categoria</span></div>
-                    <div class="ft-barcode"></div>
+                <div class="ft-seg ft-s2">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-fare">
+                      <div class="ft-cell"><b>a definir</b><span>Investimento</span></div>
+                      <div class="ft-cell"><b>limitada</b><span>Categoria</span></div>
+                      <div class="ft-barcode"></div>
+                    </div>
                   </div>
                 </div>
-                <div class="ft-fold b3">
-                  <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                <div class="ft-seg ft-s3">
+                  <div class="ft-sf"></div>
+                  <div class="ft-sb">
+                    <div class="ft-cta"><button class="ft-embark" type="button">Embarcar <span class="arx">→</span></button></div>
+                  </div>
                 </div>
               </div>
             </div>
