@@ -574,19 +574,19 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.22) 0%, rgba(214,51,108,.11) 100%); }
 .ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.27) 0%, rgba(214,51,108,.15) 100%); }
 .ft-sb{ transform:rotateX(180deg); background:var(--paper); } /* verso: aparece na virada */
-.ft-s2 .ft-sb{ background:rgba(214,51,108,.07); display:flex; flex-direction:column; justify-content:center;
-  border-top:2px dashed var(--line); border-bottom:2px dashed var(--line); } /* fare: rosa + pontilhado em cima e embaixo */
+.ft-s2 .ft-sb{ background:rgba(214,51,108,.14);
+  border-top:2px dashed rgba(214,51,108,.35); border-bottom:2px dashed rgba(214,51,108,.35); }
 .ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado no último */
 .ft.open .ft-s1{ transform:rotateX(180deg); transition-delay:0s; }
 .ft.open .ft-s2{ transform:rotateX(180deg); transition-delay:.2s; }
 .ft.open .ft-s3{ transform:rotateX(180deg); transition-delay:.4s; }
 /* banda 1: grade de detalhes */
-.ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:13px 17px; }
+.ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:18px 17px; }
 .ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
 .ft-cell b{ font-size:.88rem; font-weight:600; color:var(--ink); }
 .ft-cell span{ font-size:8.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); }
 /* banda 2: investimento + categoria + código de barras */
-.ft-fare{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 17px; width:100%; }
+.ft-fare{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:24px 17px; width:100%; }
 .ft-fare .ft-cell{ flex-shrink:0; }
 .ft-barcode{ flex:0 0 auto; width:74px; height:30px; background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 9px,transparent 9px 12px); opacity:.82; }
 /* banda 3: botão embarcar */
