@@ -531,7 +531,7 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .tickets{ display:flex; flex-direction:column; gap:14px; }
 
 /* ── INGRESSO QUE DESDOBRA (folding ticket) ── */
-.ft{ position:relative; background:var(--paper); border-radius:16px; perspective:900px;
+.ft{ position:relative; background:var(--paper); border-radius:16px;
   box-shadow:0 16px 36px -22px rgba(214,51,108,.5), 0 3px 10px rgba(0,0,0,.07);
   height:92px; overflow:hidden; transition:height .9s var(--ease); }
 .ft.open{ height:310px; }
@@ -557,31 +557,30 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .ft:not(.open) .ft-chev{ animation:chevBob 2.4s var(--ease) infinite; }
 @keyframes chevBob{ 0%,100%{ transform:translateY(-1.5px); } 50%{ transform:translateY(2px); } }
 
-/* corpo que desdobra — 3D flip real: cada banda tem frente (placeholder) + verso (conteúdo).
-   A frente some quando o segmento vira (backface-hidden), o verso aparece — mesma mecânica do CodePen. */
+/* corpo que desdobra — SEM 3D (à prova de iOS): o CONTEÚDO (.ft-sb) é a camada de baixo,
+   já no layout aprovado; uma CORTINA rosa (.ft-sf) cobre e DESLIZA pra fora, revelando o
+   branco em cascata. Nenhum preserve-3d/backface/rotateX → o WebKit não tem como quebrar. */
 .ft-body{ position:relative; }
-.ft-seg{ position:relative; perspective:900px; }   /* JANELA estática: segura o layout (altura nunca colapsa no iOS) */
-.ft-flip{ position:absolute; inset:0;              /* FLIPPER: o único que gira, carrega as 2 faces */
-  transform-style:preserve-3d; -webkit-transform-style:preserve-3d;
-  transform-origin:top center;
-  transition:transform .6s var(--ease); }
+.ft-seg{ position:relative; overflow:hidden; }     /* JANELA estática que recorta a cortina */
+.ft-flip{ position:absolute; inset:0; }            /* contêiner das 2 camadas */
 .ft-s1{ height:62px; }
 .ft-s2{ height:84px; }
 .ft-s3{ height:72px; }
-.ft-sf,.ft-sb{ position:absolute; inset:0;
-  backface-visibility:hidden; -webkit-backface-visibility:hidden; }
-.ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.18) 0%, rgba(214,51,108,.07) 100%); } /* frente rosinha — some na virada */
-.ft-s1 .ft-sf{ border-top:2px dashed rgba(214,51,108,.35); } /* picote na costura da cabeça */
-.ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.22) 0%, rgba(214,51,108,.11) 100%); }
-.ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.27) 0%, rgba(214,51,108,.15) 100%); }
-.ft-sb{ transform:rotateX(180deg); background:var(--paper); } /* verso: aparece na virada */
+.ft-sf,.ft-sb{ position:absolute; inset:0; }
+/* camada de CONTEÚDO (embaixo) = o layout aprovado */
+.ft-sb{ z-index:1; background:var(--paper); }
 .ft-s2 .ft-sb{ background:rgba(214,51,108,.14);
   border-top:2px dashed rgba(214,51,108,.35); border-bottom:2px dashed rgba(214,51,108,.35); }
-.ft-s1 .ft-sb{ border-top:2px dashed rgba(214,51,108,.35); } /* picote cabeça↓grade (aparece aberto) */
-.ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado no último */
-.ft.open .ft-s1 .ft-flip{ transform:rotateX(180deg); transition-delay:0s; }
-.ft.open .ft-s2 .ft-flip{ transform:rotateX(180deg); transition-delay:.2s; }
-.ft.open .ft-s3 .ft-flip{ transform:rotateX(180deg); transition-delay:.4s; }
+.ft-s1 .ft-sb{ border-top:2px dashed rgba(214,51,108,.35); } /* picote cabeça↓grade */
+.ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado */
+/* camada CORTINA (em cima): rosa que desliza pra baixo e some, revelando o branco (cascata) */
+.ft-sf{ z-index:2; transition:transform .5s var(--ease);
+  background:linear-gradient(175deg, rgba(214,51,108,.20) 0%, rgba(214,51,108,.09) 100%); }
+.ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.24) 0%, rgba(214,51,108,.12) 100%); }
+.ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.28) 0%, rgba(214,51,108,.15) 100%); }
+.ft.open .ft-s1 .ft-sf{ transform:translateY(100%); transition-delay:0s; }
+.ft.open .ft-s2 .ft-sf{ transform:translateY(100%); transition-delay:.13s; }
+.ft.open .ft-s3 .ft-sf{ transform:translateY(100%); transition-delay:.26s; }
 /* banda 1: grade de detalhes */
 .ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:18px 17px; }
 .ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
