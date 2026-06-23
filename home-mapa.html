@@ -568,19 +568,26 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 .ft-s3{ height:72px; }
 .ft-sf,.ft-sb{ position:absolute; inset:0; }
 /* camada de CONTEÚDO (embaixo) = o layout aprovado */
-.ft-sb{ z-index:1; background:var(--paper); }
+.ft-sb{ z-index:1; background:var(--paper); opacity:0; transform:translateY(8px);
+  transition:transform .55s cubic-bezier(.2,.85,.25,1.1), opacity .4s ease; } /* conteúdo sobe+assenta ao revelar */
 .ft-s2 .ft-sb{ background:rgba(214,51,108,.14);
   border-top:2px dashed rgba(214,51,108,.35); border-bottom:2px dashed rgba(214,51,108,.35); }
 .ft-s1 .ft-sb{ border-top:2px dashed rgba(214,51,108,.35); } /* picote cabeça↓grade */
 .ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado */
 /* camada CORTINA (em cima): rosa que desliza pra baixo e some, revelando o branco (cascata) */
-.ft-sf{ z-index:2; transition:transform .5s var(--ease);
+.ft-sf{ z-index:2; transition:transform .55s cubic-bezier(.45,0,.15,1);
+  box-shadow:0 -6px 13px -4px rgba(150,28,70,.22);   /* sombra do vinco viaja com a cortina */
   background:linear-gradient(175deg, rgba(214,51,108,.20) 0%, rgba(214,51,108,.09) 100%); }
+.ft-sf::after{ content:""; position:absolute; left:0; right:0; top:0; height:2px;
+  background:rgba(255,255,255,.5); }                  /* linha de luz no fio da dobra */
 .ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.24) 0%, rgba(214,51,108,.12) 100%); }
 .ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.28) 0%, rgba(214,51,108,.15) 100%); }
 .ft.open .ft-s1 .ft-sf{ transform:translateY(100%); transition-delay:0s; }
 .ft.open .ft-s2 .ft-sf{ transform:translateY(100%); transition-delay:.13s; }
 .ft.open .ft-s3 .ft-sf{ transform:translateY(100%); transition-delay:.26s; }
+.ft.open .ft-s1 .ft-sb{ opacity:1; transform:none; transition-delay:.08s; }
+.ft.open .ft-s2 .ft-sb{ opacity:1; transform:none; transition-delay:.21s; }
+.ft.open .ft-s3 .ft-sb{ opacity:1; transform:none; transition-delay:.34s; }
 /* banda 1: grade de detalhes */
 .ft-grid{ display:flex; justify-content:space-between; gap:10px; padding:18px 17px; }
 .ft-cell{ display:flex; flex-direction:column; gap:2px; text-align:left; }
