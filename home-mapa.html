@@ -32,7 +32,7 @@
   --laranja: #E87A32;
   --amarelo: #F5D731;
   --roxo:    #6C4BB6;
-  --rosa:    #D6336C;
+  --rosa:    #B9A7DC;
   --ac: var(--verde);
 
   --font:"DM Sans",-apple-system,BlinkMacSystemFont,sans-serif;
@@ -532,7 +532,7 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 
 /* ── INGRESSO QUE DESDOBRA (folding ticket) ── */
 .ft{ position:relative; background:var(--paper); border-radius:16px;
-  box-shadow:0 16px 36px -22px rgba(214,51,108,.5), 0 3px 10px rgba(0,0,0,.07);
+  box-shadow:0 16px 36px -22px rgba(185,167,220,.5), 0 3px 10px rgba(0,0,0,.07);
   height:92px; overflow:hidden; transition:height .9s var(--ease); }
 .ft.open{ height:310px; }
 /* cabeça sempre visível (clicável) */
@@ -570,18 +570,18 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 /* camada de CONTEÚDO (embaixo) = o layout aprovado */
 .ft-sb{ z-index:1; background:var(--paper); opacity:0; transform:translateY(8px);
   transition:transform .55s cubic-bezier(.2,.85,.25,1.1), opacity .4s ease; } /* conteúdo sobe+assenta ao revelar */
-.ft-s2 .ft-sb{ background:rgba(214,51,108,.14);
-  border-top:2px dashed rgba(214,51,108,.35); }
-.ft-s1 .ft-sb{ border-top:2px dashed rgba(214,51,108,.35); } /* picote cabeça↓grade */
+.ft-s2 .ft-sb{ background:rgba(185,167,220,.14);
+  border-top:2px dashed rgba(185,167,220,.35); }
+.ft-s1 .ft-sb{ border-top:2px dashed rgba(185,167,220,.35); } /* picote cabeça↓grade */
 .ft-s3 .ft-sb{ border-radius:0 0 16px 16px; }       /* canto inferior arredondado */
 /* camada CORTINA (em cima): rosa que desliza pra baixo e some, revelando o branco (cascata) */
 .ft-sf{ z-index:2; transition:transform .55s cubic-bezier(.45,0,.15,1);
   box-shadow:0 -6px 13px -4px rgba(150,28,70,.22);   /* sombra do vinco viaja com a cortina */
-  background:linear-gradient(175deg, rgba(214,51,108,.20) 0%, rgba(214,51,108,.09) 100%); }
+  background:linear-gradient(175deg, rgba(185,167,220,.20) 0%, rgba(185,167,220,.09) 100%); }
 .ft-sf::after{ content:""; position:absolute; left:0; right:0; top:0; height:2px;
   background:rgba(255,255,255,.5); }                  /* linha de luz no fio da dobra */
-.ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.24) 0%, rgba(214,51,108,.12) 100%); }
-.ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(214,51,108,.28) 0%, rgba(214,51,108,.15) 100%); }
+.ft-s2 .ft-sf{ background:linear-gradient(175deg, rgba(185,167,220,.24) 0%, rgba(185,167,220,.12) 100%); }
+.ft-s3 .ft-sf{ background:linear-gradient(175deg, rgba(185,167,220,.28) 0%, rgba(185,167,220,.15) 100%); }
 .ft.open .ft-s1 .ft-sf{ transform:translateY(100%); transition-delay:0s; }
 .ft.open .ft-s2 .ft-sf{ transform:translateY(100%); transition-delay:.13s; }
 .ft.open .ft-s3 .ft-sf{ transform:translateY(100%); transition-delay:.26s; }
@@ -596,7 +596,7 @@ body.nav-hidden .menu-btn{ box-shadow:0 7px 16px rgba(0,0,0,.3); }
 /* banda 2: investimento + categoria + código de barras */
 .ft-fare{ display:flex; align-items:center; justify-content:space-between; gap:12px;
   margin-top:32px; padding:9px 17px; width:100%;
-  border-top:2px dashed rgba(214,51,108,.35); } /* faixa vazia (32px) + perfuração do meio + conteúdo */
+  border-top:2px dashed rgba(185,167,220,.35); } /* faixa vazia (32px) + perfuração do meio + conteúdo */
 .ft-fare .ft-cell{ flex-shrink:0; }
 .ft-barcode{ flex:0 0 auto; width:74px; height:30px; background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 9px,transparent 9px 12px); opacity:.82; }
 /* banda 3: botão embarcar */
