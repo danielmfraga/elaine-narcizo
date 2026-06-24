@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>DançaDestino — um ritual para nosso tempo</title>
+<meta name="description" content="DançaDestino — um ritual para nosso tempo. Toda sexta, 20h." />
+<style>
+  :root{
+    --roxo:#6D28D9; --roxo-fundo:#5B21B6; --roxo-escuro:#3B1278;
+    --amarelo:#FBE029; --branco:#FDFBFF; --serif:"Newsreader",Georgia,serif;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--roxo-fundo); color:var(--branco);
+    font-family:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  img{ display:block; max-width:100%; }
+  .wrap{ max-width:540px; margin:0 auto; }
+
+  /* HERO nativo (prévia da identidade reconstruída) */
+  .hero{ min-height:100svh; min-height:100vh; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center; padding:48px 26px; position:relative;
+    background:radial-gradient(120% 80% at 50% 20%, var(--roxo) 0%, var(--roxo-fundo) 60%, var(--roxo-escuro) 100%); }
+  .eyebrow{ font-size:11px; letter-spacing:.26em; text-transform:uppercase; color:var(--amarelo); font-weight:700; }
+  .hero h1{ font-size:clamp(3rem,17vw,5.4rem); font-weight:800; letter-spacing:-.02em; line-height:.9;
+    margin:20px 0 18px; text-transform:uppercase; }
+  .hero h1 em{ font-style:normal; color:var(--amarelo); }
+  .hero .tag{ font-size:1.1rem; font-weight:600; }
+  .hero .when{ margin-top:6px; font-size:.98rem; color:var(--amarelo); font-weight:600; }
+  .cue{ position:absolute; bottom:24px; font-size:26px; line-height:1; animation:bob 1.6s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.55; } 50%{ transform:translateY(7px); opacity:1; } }
+
+  /* CARTAZES — placeholder com o pôster; viram nativos com texto + colagens */
+  .note{ font-size:10px; letter-spacing:.22em; text-transform:uppercase; text-align:center;
+    color:rgba(255,255,255,.4); padding:28px 20px 14px; }
+  .cartaz{ padding:14px 16px; }
+  .cartaz img{ width:100%; border-radius:10px; box-shadow:0 18px 40px -18px rgba(0,0,0,.55); }
+
+  footer{ padding:54px 26px 90px; text-align:center; }
+  footer img{ width:170px; margin:18px auto 0; }
+  footer .closing{ font-family:var(--serif); font-style:italic; font-size:1.4rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <span class="eyebrow">#projetodançadestino</span>
+      <h1>Dança<em>destino</em></h1>
+      <p class="tag">Um ritual para nosso tempo.</p>
+      <p class="when">Toda sexta, 20h.</p>
+      <div class="cue" aria-hidden="true">⌄</div>
+    </header>
+
+    <main>
+      <p class="note">— cartazes (placeholder) · viram nativos com seu texto + colagens —</p>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_1.webp" alt="O que é DançaDestino" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_2.webp" alt="Micro-reocupação" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_3.jpg" alt="Um lugar para nosso destino" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_4.webp" alt="Dança e música" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_5.webp" alt="Restaurar a magia do comum" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_6.webp" alt="A economia política do íntimo" loading="lazy" /></section>
+      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_7.webp" alt="Dançar o presente com a presença que nos falta" loading="lazy" /></section>
+    </main>
+
+    <footer>
+      <p class="closing">Você dança, onde estiver.</p>
+      <img src="../assets/Dancadestino/Lettering%20Redondo.webp" alt="Você dança, onde estiver" loading="lazy" />
+    </footer>
+
+  </div>
+  <script>if(window!==window.top)document.documentElement.classList.add('embedded');</script>
+  <style>html.embedded,html.embedded body{ overscroll-behavior-y:contain; }</style>
+</body>
+</html>
