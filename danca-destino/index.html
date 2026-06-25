@@ -23,21 +23,21 @@
   @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.55; } 50%{ transform:translateY(7px); opacity:1; } }
 
   /* ── CAPA (composição fiel ao Capa_0: quadro cheio, elementos em sinergia) ── */
-  .capa{ position:relative; height:100svh; height:100vh; min-height:580px; overflow:hidden;
+  .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden;
     background:radial-gradient(130% 78% at 48% 12%, var(--roxo) 0%, var(--roxo-fundo) 60%, var(--roxo-escuro) 100%); }
   /* wordmark vertical = espinha na borda direita (lê de baixo p/ cima) */
-  .cv-wm{ position:absolute; right:1vw; top:49%; transform:translateY(-50%);
-    height:74vh; width:8.7vh; display:flex; align-items:center; justify-content:center; z-index:4; }
-  .cv-wm img{ width:74vh; max-width:none; transform:rotate(-90deg); }
-  /* hashtag vertical, fina, à esquerda do wordmark */
-  .cv-ht{ position:absolute; right:12.5vw; top:6%; height:33vh; width:2.4vh;
+  .cv-wm{ position:absolute; right:1vw; top:50%; transform:translateY(-50%);
+    height:92svh; width:10.6svh; display:flex; align-items:center; justify-content:center; z-index:4; }
+  .cv-wm img{ width:92svh; max-width:none; transform:rotate(-90deg); }
+  /* hashtag vertical, fina, paralela à esquerda do wordmark (não encosta) */
+  .cv-ht{ position:absolute; right:14svh; top:6%; height:30svh; width:2.2svh;
     display:flex; align-items:center; justify-content:center; z-index:4; }
-  .cv-ht img{ width:33vh; max-width:none; transform:rotate(-90deg); }
+  .cv-ht img{ width:30svh; max-width:none; transform:rotate(-90deg); }
   /* bloco amarelo atrás da colagem */
-  .cv-yb{ position:absolute; left:2%; top:30%; width:58%; height:35%;
+  .cv-yb{ position:absolute; left:1%; top:26%; width:63%; height:43%;
     background:var(--amarelo); transform:rotate(-2deg); z-index:1; }
-  /* colagem dominante, centro-esquerda */
-  .cv-col{ position:absolute; left:-4%; top:48%; transform:translateY(-50%); width:78%; z-index:2;
+  /* colagem dominante, centro-esquerda (maior) */
+  .cv-col{ position:absolute; left:-5%; top:50%; transform:translateY(-50%); width:86%; z-index:2;
     filter:drop-shadow(0 18px 26px rgba(0,0,0,.3)); }
   /* vela na base, junto da tagline e ao pé do wordmark */
   .cv-candle{ position:absolute; bottom:2%; left:47%; width:26%; z-index:3;
