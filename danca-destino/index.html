@@ -22,24 +22,34 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.55; } 50%{ transform:translateY(7px); opacity:1; } }
 
-  /* ── CAPA (nativa, com os elementos do Daniel) ── */
-  .capa{ position:relative; min-height:100svh; min-height:100vh; overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; text-align:center; padding:30px 24px 28px;
-    background:radial-gradient(125% 80% at 50% 16%, var(--roxo) 0%, var(--roxo-fundo) 58%, var(--roxo-escuro) 100%); }
-  .hashtag-svg{ width:min(56%,210px); margin-top:2px; }            /* SVG branco do Daniel */
-  .wordmark-svg{ width:min(94%,470px); margin:16px 0 6px; }        /* SVG amarelo do Daniel (hero) */
-  .capa-art{ position:relative; width:min(70%,260px); margin:auto 0; }
-  .capa-art .ybox{ position:absolute; left:4%; bottom:8%; width:74%; height:54%;
-    background:var(--amarelo); transform:rotate(-3.5deg); }
-  .capa-art .collage{ position:relative; width:100%; filter:drop-shadow(0 16px 26px rgba(0,0,0,.32)); }
-  .capa-art .candle{ position:absolute; right:-13%; bottom:-7%; width:34%; z-index:2;
-    filter:drop-shadow(0 10px 16px rgba(0,0,0,.3)); }
-  .capa-art .seal{ position:absolute; left:-15px; top:-10px; width:86px; z-index:3; }
-  .capa-art .seal img{ width:100%; animation:spin 22s linear infinite; }
-  .tag{ font-family:var(--disp); font-weight:500; font-size:1.18rem; margin-top:16px; }
-  .when{ font-size:.92rem; color:var(--amarelo); margin-top:4px; }
-  .cue{ position:absolute; bottom:16px; left:50%; transform:translateX(-50%); font-size:24px; line-height:1;
-    animation:bob 1.6s ease-in-out infinite; }
+  /* ── CAPA (composição fiel ao Capa_0: quadro cheio, elementos em sinergia) ── */
+  .capa{ position:relative; height:100svh; height:100vh; min-height:580px; overflow:hidden;
+    background:radial-gradient(130% 78% at 48% 12%, var(--roxo) 0%, var(--roxo-fundo) 60%, var(--roxo-escuro) 100%); }
+  /* wordmark vertical = espinha na borda direita (lê de baixo p/ cima) */
+  .cv-wm{ position:absolute; right:1vw; top:49%; transform:translateY(-50%);
+    height:74vh; width:8.7vh; display:flex; align-items:center; justify-content:center; z-index:4; }
+  .cv-wm img{ width:74vh; transform:rotate(-90deg); }
+  /* hashtag vertical, fina, à esquerda do wordmark */
+  .cv-ht{ position:absolute; right:12.5vw; top:6%; height:33vh; width:2.4vh;
+    display:flex; align-items:center; justify-content:center; z-index:4; }
+  .cv-ht img{ width:33vh; transform:rotate(-90deg); }
+  /* bloco amarelo atrás da colagem */
+  .cv-yb{ position:absolute; left:2%; top:30%; width:58%; height:35%;
+    background:var(--amarelo); transform:rotate(-2deg); z-index:1; }
+  /* colagem dominante, centro-esquerda */
+  .cv-col{ position:absolute; left:-4%; top:48%; transform:translateY(-50%); width:78%; z-index:2;
+    filter:drop-shadow(0 18px 26px rgba(0,0,0,.3)); }
+  /* vela na base, junto da tagline e ao pé do wordmark */
+  .cv-candle{ position:absolute; bottom:2%; left:47%; width:26%; z-index:3;
+    filter:drop-shadow(0 10px 14px rgba(0,0,0,.32)); }
+  /* selo girando (você dança onde estiver), topo-esquerda */
+  .cv-seal{ position:absolute; left:3%; top:2.5%; width:24vw; max-width:106px; z-index:5; }
+  .cv-seal img{ width:100%; animation:spin 22s linear infinite; }
+  /* tagline base-esquerda */
+  .cv-tag{ position:absolute; left:5%; bottom:5%; z-index:5; text-align:left; }
+  .cv-tag .r1{ font-family:var(--disp); font-weight:700; font-size:1.32rem; line-height:1.05;
+    color:var(--amarelo); text-transform:uppercase; }
+  .cv-tag .r2{ font-family:var(--disp); font-weight:500; font-size:1.02rem; color:var(--branco); margin-top:6px; }
 
   /* ── CARTAZES (placeholder) — viram nativos a seguir ── */
   .note{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase;
@@ -55,17 +65,16 @@
   <div class="wrap">
 
     <header class="capa">
-      <img class="hashtag-svg" src="../assets/Dancadestino/SVG/Lettering%20hashtag%20dAN%C3%87ADESTINO.svg" alt="#ProjetoDançaDestino" />
-      <img class="wordmark-svg" src="../assets/Dancadestino/SVG/Lettering%20dAN%C3%87ADESTINO.svg" alt="DançaDestino" />
-      <div class="capa-art">
-        <div class="ybox" aria-hidden="true"></div>
-        <img class="collage" src="../assets/Dancadestino/Imagem%20principal%20Capa_0.webp" alt="Estátua dançante entre flores" />
-        <img class="candle" src="../assets/Dancadestino/Imagem%20secundaria%20Capa_0.webp" alt="Vela acesa" />
-        <div class="seal"><img src="../assets/Dancadestino/Lettering%20Redondo.webp" alt="Você dança, onde estiver" /></div>
+      <div class="cv-yb" aria-hidden="true"></div>
+      <img class="cv-col" src="../assets/Dancadestino/Imagem%20principal%20Capa_0.webp" alt="Estátua dançante entre flores" />
+      <img class="cv-candle" src="../assets/Dancadestino/Imagem%20secundaria%20Capa_0.webp" alt="Vela acesa" />
+      <div class="cv-wm"><img src="../assets/Dancadestino/SVG/Lettering%20dAN%C3%87ADESTINO.svg" alt="DançaDestino" /></div>
+      <div class="cv-ht"><img src="../assets/Dancadestino/SVG/Lettering%20hashtag%20dAN%C3%87ADESTINO.svg" alt="#ProjetoDançaDestino" /></div>
+      <div class="cv-seal"><img src="../assets/Dancadestino/Lettering%20Redondo.webp" alt="Você dança, onde estiver" /></div>
+      <div class="cv-tag">
+        <p class="r1">Um ritual<br>para nosso tempo.</p>
+        <p class="r2">Toda sexta, 20h.</p>
       </div>
-      <p class="tag">Um ritual para nosso tempo.</p>
-      <p class="when">Toda sexta, 20h.</p>
-      <div class="cue" aria-hidden="true">⌄</div>
     </header>
 
     <main>
