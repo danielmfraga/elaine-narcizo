@@ -17,13 +17,14 @@
   *{ margin:0; padding:0; box-sizing:border-box; }
   html,body{ background:var(--roxo-fundo); color:var(--branco); font-family:var(--mono);
     -webkit-font-smoothing:antialiased; }
+  html{ scroll-snap-type:y mandatory; }    /* cada tela roda pra próxima (uma de cada vez) */
   img{ display:block; max-width:100%; }
   .wrap{ max-width:540px; margin:0 auto; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.55; } 50%{ transform:translateY(7px); opacity:1; } }
 
   /* ── CAPA (composição fiel ao Capa_0: quadro cheio, elementos em sinergia) ── */
-  .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden;
+  .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden; scroll-snap-align:start;
     background:radial-gradient(130% 78% at 48% 12%, var(--roxo) 0%, var(--roxo-fundo) 60%, var(--roxo-escuro) 100%); }
   /* wordmark vertical = espinha na borda direita (lê de baixo p/ cima) */
   .cv-wm{ position:absolute; right:1vw; top:50%; transform:translateY(-50%);
@@ -36,14 +37,14 @@
   /* bloco amarelo atrás da colagem */
   .cv-yb{ position:absolute; left:1%; top:26%; width:63%; height:43%;
     background:var(--amarelo); transform:rotate(-2deg); z-index:1; }
-  /* colagem dominante, centro-esquerda (maior) */
-  .cv-col{ position:absolute; left:-5%; top:50%; transform:translateY(-50%); width:86%; z-index:2;
+  /* colagem dominante, centro-esquerda (maior, ancorada embaixo p/ crescer na diagonal) */
+  .cv-col{ position:absolute; left:-7%; bottom:22%; width:91%; z-index:2;
     filter:drop-shadow(0 18px 26px rgba(0,0,0,.3)); }
-  /* vela na base, junto da tagline e ao pé do wordmark */
-  .cv-candle{ position:absolute; bottom:2%; left:47%; width:26%; z-index:3;
+  /* vela: rente ao fim da tela (sem vão — emenda com a próxima tela) */
+  .cv-candle{ position:absolute; bottom:0; left:47%; width:26%; z-index:3;
     filter:drop-shadow(0 10px 14px rgba(0,0,0,.32)); }
-  /* selo girando (você dança onde estiver), topo-esquerda */
-  .cv-seal{ position:absolute; left:3%; top:2.5%; width:24vw; max-width:106px; z-index:5; }
+  /* selo girando — maior, encostando na mão da estátua */
+  .cv-seal{ position:absolute; left:5%; top:7%; width:31vw; max-width:132px; z-index:5; }
   .cv-seal img{ width:100%; animation:spin 22s linear infinite; }
   /* tagline base-esquerda */
   .cv-tag{ position:absolute; left:5%; bottom:5%; z-index:5; text-align:left; }
@@ -54,10 +55,12 @@
   /* ── CARTAZES (placeholder) — viram nativos a seguir ── */
   .note{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase;
     text-align:center; color:rgba(255,255,255,.4); padding:30px 20px 12px; }
-  .cartaz{ padding:14px 16px; }
+  .cartaz{ min-height:100svh; display:flex; align-items:center; justify-content:center;
+    padding:24px 16px; scroll-snap-align:start; }
   .cartaz img{ width:100%; border-radius:10px; box-shadow:0 18px 40px -18px rgba(0,0,0,.55); }
 
-  footer{ padding:56px 26px 88px; text-align:center; }
+  footer{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:56px 26px; text-align:center; scroll-snap-align:start; }
   footer .closing{ font-family:var(--disp); font-weight:700; font-size:1.5rem; line-height:1.15; color:var(--amarelo); }
 </style>
 </head>
@@ -78,7 +81,6 @@
     </header>
 
     <main>
-      <p class="note">— cartazes (placeholder) · próximos a virar nativos —</p>
       <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_1.webp" alt="O que é DançaDestino" loading="lazy" /></section>
       <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_2.webp" alt="Micro-reocupação" loading="lazy" /></section>
       <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_3.jpg" alt="Um agora e um lugar para nosso destino" loading="lazy" /></section>
