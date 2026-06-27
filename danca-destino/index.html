@@ -28,8 +28,8 @@
   .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden; scroll-snap-align:start;
     background:radial-gradient(130% 92% at 50% 44%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
   /* borrifada de tinta (acento de fundo, sutil) */
-  .cv-paint{ position:absolute; bottom:-8%; left:-6%; width:70%; height:auto; opacity:.9; z-index:0;
-    transform:scaleY(-1); pointer-events:none; }   /* tinta na BASE (equilibra o topo cheio); flip p/ concentrar no rodapé */
+  .cv-paint{ position:absolute; bottom:-7%; left:33%; width:66%; height:auto; opacity:.92; z-index:2;
+    transform:scaleY(-1); pointer-events:none; }   /* tinta forte sob a VELA (centro-baixo); flip p/ concentrar o borrão denso no rodapé */
   /* wordmark vertical = espinha na borda direita (lê de baixo p/ cima) */
   .cv-wm{ position:absolute; right:1vw; top:50%; transform:translateY(-50%);
     height:92svh; width:10.6svh; display:flex; align-items:center; justify-content:center; z-index:4; }
@@ -57,7 +57,7 @@
   .cv-tag .r2{ font-family:var(--disp); font-weight:500; font-size:1.02rem; color:var(--branco); margin-top:6px; }
 
   /* ── CARTAZES nativos (manifesto) — composição de quadro cheio ── */
-  .poster{ position:relative; width:100%; height:100vh; height:100svh; min-height:560px; overflow:hidden;
+  .poster{ position:relative; width:100%; height:100svh; height:100dvh; min-height:560px; overflow:hidden;
     scroll-snap-align:start;
     background:radial-gradient(135% 95% at 50% 42%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
   .p-disp{ font-family:var(--disp); font-weight:700; text-transform:uppercase; line-height:.92; letter-spacing:-.012em; }
@@ -110,7 +110,7 @@
   /* CARTAZ 5 — RESTAURAR A MAGIA DO COMUM / COMPANHIA (coluna amarela central) */
   .c5-title{ position:absolute; top:2%; left:3%; right:3%; z-index:5; color:var(--amarelo);
     font-size:clamp(2rem,11.5vw,3.7rem); }
-  .c5-yb{ left:17%; right:17%; top:7%; bottom:9%; }
+  .c5-yb{ left:17%; right:17%; top:16%; bottom:9%; }
   .c5-t1{ position:absolute; top:20%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
     font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.64rem,2.8vw,.9rem); }
   .c5-col{ position:absolute; left:50%; top:51%; width:74%; transform:translate(-50%,-50%); z-index:3; }
@@ -167,7 +167,7 @@
       <section class="poster c1">
         <p class="c1-top">TODA SEXTA, 20H, UMA MÚSICA.<br>VOCÊ DANÇA. ONDE ESTIVER.<br>SEM CÂMERAS. SEM TELAS.<br>APENAS MOVIMENTO E A SENSAÇÃO<br>SILENCIOSA DE QUE NÃO ESTÁ SOZINHA.</p>
         <div class="yb c1-yb" aria-hidden="true"></div>
-        <img class="c1-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_1.webp" alt="Mulher dançando entre flores" loading="lazy" />
+        <img class="c1-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_1.webp" alt="Mulher dançando entre flores" />
         <p class="c1-big p-disp">O QUE É? OQÉ?<br>O QUE É? OQÉ?</p>
       </section>
 
@@ -177,7 +177,7 @@
         <p class="c2-sub">TRANSFORME SUA SALA,<br>QUARTO OU VARANDA EM:</p>
         <p class="c2-body">Um palco;<br>Um templo;<br>Um território da presença.</p>
         <div class="yb c2-yb" aria-hidden="true"></div>
-        <img class="c2-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_2.webp" alt="Casa com flores e mãos que abraçam" loading="lazy" />
+        <img class="c2-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_2.webp" alt="Casa com flores e mãos que abraçam" />
       </section>
 
       <!-- CARTAZ 3 — UM AGORA E UM LUGAR PARA NOSSO DESTINO -->
@@ -187,7 +187,7 @@
           <p>Outras formas de convívio são necessárias. Outras formas de convívio são possíveis.</p>
           <p>Ressignificar o espaço privado através de convívios inusitados.</p>
         </div>
-        <img class="c3-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_3.webp" alt="Mãos idosas entrelaçadas" loading="lazy" />
+        <img class="c3-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_3.webp" alt="Mãos idosas entrelaçadas" />
       </section>
 
       <!-- CARTAZ 4 — DANÇA / MÚSICA -->
@@ -196,7 +196,7 @@
         <p class="c4-t1">Invocar uma rede de presença invisível através da dANÇADESTINO para movimentar o intangível.</p>
         <div class="yb c4-yb1" aria-hidden="true"></div>
         <div class="yb c4-yb2" aria-hidden="true"></div>
-        <img class="c4-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_4.webp" alt="Boca, olho, ouvido, nariz, mão e cérebro conectados por linhas" loading="lazy" />
+        <img class="c4-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_4.webp" alt="Boca, olho, ouvido, nariz, mão e cérebro conectados por linhas" />
         <p class="c4-t2">Para vibrar intenções. Investigar ritmos coletivos. E gerar pertencimento poético.</p>
         <h2 class="c4-musica p-disp">Música</h2>
       </section>
@@ -206,7 +206,7 @@
         <h2 class="c5-title p-disp">Restaurar<br>a magia do comum</h2>
         <div class="yb c5-yb" aria-hidden="true"></div>
         <p class="c5-t1">Reencontrar o extraordinário através de outras formas de estar junto.</p>
-        <img class="c5-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_5.webp" alt="Duas mãos de dedinho dado" loading="lazy" />
+        <img class="c5-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_5.webp" alt="Duas mãos de dedinho dado" />
         <p class="c5-t2">O agora nutrido por gestos simultâneos contra o isolamento. Para imaginar o seu, o meu, os nossos e outros destinos.</p>
         <h2 class="c5-comp p-disp">Companhia</h2>
       </section>
@@ -217,7 +217,7 @@
         <div class="c6-acc2" aria-hidden="true"></div>
         <h2 class="c6-title p-disp">A economia política<br>do íntimo</h2>
         <p class="c6-body">Por uma pausa no Espetáculo, pela não transformação do lazer e da emoção em commodity. Para não desistirmos do nós, por expormos tanto o eu.</p>
-        <img class="c6-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_6.webp" alt="Cabeça clássica dividida entre tela e presença" loading="lazy" />
+        <img class="c6-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_6.webp" alt="Cabeça clássica dividida entre tela e presença" />
         <p class="c6-left">Um ritual para</p>
         <p class="c6-right">Nosso tempo.</p>
       </section>
@@ -230,7 +230,7 @@
         <span class="c7-star" style="bottom:15%;left:13%;font-size:1rem;">✦</span>
         <h2 class="c7-title p-disp">Dançar o presente<br>com a presença<br>que nos falta.</h2>
         <div class="c7-tag"><span>#ProjetoDançaDestino</span></div>
-        <img class="c7-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_7.webp" alt="Mão segurando uma tulipa" loading="lazy" />
+        <img class="c7-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_7.webp" alt="Mão segurando uma tulipa" />
       </section>
 
     </main>
