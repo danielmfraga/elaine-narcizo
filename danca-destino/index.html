@@ -79,24 +79,25 @@
   .c1-big{ position:absolute; left:4%; bottom:2%; z-index:2; color:var(--amarelo);
     white-space:nowrap; font-size:clamp(1.75rem,11vw,3.5rem); line-height:.92; }   /* cabe inteiro, estoura na margem SEM cortar */
 
-  /* CARTAZ 2 — MICRO-REOCUPAÇÃO (título SVG) */
-  .c2-title{ position:absolute; top:4%; left:5%; width:90%; z-index:5; }   /* dentro das margens p/ não cortar o M (MICRO) nem o R (REOCUPAÇÃO) */
-  .c2-sub{ position:absolute; top:23%; left:6%; right:6%; z-index:5; color:var(--amarelo);
-    font-family:var(--mono); font-weight:700; line-height:1.4; font-size:clamp(.95rem,4.3vw,1.32rem); }
-  .c2-body{ position:absolute; top:34%; left:6%; right:6%; z-index:5; color:var(--branco);
-    font-family:var(--mono); font-weight:700; line-height:1.6; font-size:clamp(.85rem,3.7vw,1.08rem); }
-  .c2-yb{ right:4%; bottom:6%; width:33%; height:38%; transform:rotate(2.5deg); }
-  .c2-col{ position:absolute; left:50%; bottom:0; width:86%; transform:translateX(-50%); z-index:3; }
+  /* CARTAZ 2 — MICRO-REOCUPAÇÃO (texto em FLUXO p/ ritmo consistente) */
+  .c2-head{ position:absolute; top:5.5%; left:6%; right:6%; z-index:5; }
+  .c2-title{ display:block; width:100%; }   /* SVG dentro das margens, sem cortar M/R */
+  .c2-sub{ margin-top:1.15em; color:var(--amarelo); font-family:var(--mono); font-weight:700;
+    line-height:1.4; font-size:clamp(.95rem,4.3vw,1.32rem); }
+  .c2-body{ margin-top:.95em; color:var(--branco); font-family:var(--mono); font-weight:700;
+    line-height:1.75; font-size:clamp(.85rem,3.7vw,1.08rem); }
+  .c2-yb{ right:5%; bottom:7%; width:32%; height:36%; transform:rotate(2.5deg); }
+  .c2-col{ position:absolute; left:50%; bottom:0; width:84%; transform:translateX(-50%); z-index:3; }
 
   /* CARTAZ 3 — UM AGORA E UM LUGAR PARA NOSSO DESTINO */
   .c3-title{ position:absolute; top:1.5%; left:4%; right:2%; z-index:5; color:var(--amarelo);
     font-size:clamp(1.7rem,10vw,3.2rem); }
-  .c3-box{ position:absolute; top:26%; left:50%; transform:translateX(-50%); width:76%; z-index:4;
-    background:var(--amarelo); padding:7% 7% 8%; text-align:center; }
+  .c3-box{ position:absolute; top:25%; left:50%; transform:translateX(-50%) rotate(-1.5deg); width:80%; z-index:4;
+    background:var(--amarelo); padding:8% 7% 9%; text-align:center; box-shadow:0 14px 30px rgba(0,0,0,.3); }
   .c3-box p{ color:var(--roxo); font-family:var(--mono); font-weight:700; line-height:1.55;
-    font-size:clamp(.72rem,3.2vw,1rem); }
+    font-size:clamp(.82rem,3.7vw,1.12rem); }
   .c3-box p + p{ margin-top:1em; }
-  .c3-col{ position:absolute; left:50%; bottom:4%; width:96%; transform:translateX(-50%); z-index:3; }
+  .c3-col{ position:absolute; left:50%; bottom:4%; width:98%; transform:translateX(-50%); z-index:3; }
 
   /* CARTAZ 4 — DANÇA / MÚSICA (rede de sentidos) */
   .c4-danca{ position:absolute; top:1%; right:4%; z-index:5; color:var(--amarelo);
@@ -114,10 +115,10 @@
   /* CARTAZ 5 — RESTAURAR A MAGIA DO COMUM / COMPANHIA (coluna amarela central) */
   .c5-title{ position:absolute; top:2.5%; left:3%; right:3%; z-index:5; color:var(--amarelo);
     font-size:clamp(1.55rem,8.8vw,2.9rem); }
-  .c5-yb{ left:17%; right:17%; top:22%; bottom:9%; }   /* coluna desce p/ não cobrir o título */
-  .c5-t1{ position:absolute; top:25%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
+  .c5-yb{ left:17%; right:17%; top:13%; bottom:5%; }   /* sobe até a base do título; desce um pouco ATRÁS do COMPANHIA */
+  .c5-t1{ position:absolute; top:14.5%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
     font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.64rem,2.8vw,.9rem); }
-  .c5-col{ position:absolute; left:50%; top:51%; width:74%; transform:translate(-50%,-50%); z-index:3; }
+  .c5-col{ position:absolute; left:50%; top:50%; width:70%; transform:translate(-50%,-50%); z-index:3; }
   .c5-t2{ position:absolute; bottom:13%; left:20%; right:20%; z-index:4; text-align:center; color:var(--roxo);
     font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.62rem,2.75vw,.88rem); }
   .c5-comp{ position:absolute; bottom:2%; left:50%; transform:translateX(-50%); white-space:nowrap; z-index:5;
@@ -134,18 +135,23 @@
   .c6-col{ position:absolute; left:50%; bottom:3%; width:78%; transform:translateX(-50%); z-index:3; }
   .c6-left{ position:absolute; left:1.5%; bottom:25%; z-index:5; writing-mode:vertical-rl; transform:rotate(180deg);
     color:var(--branco); font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.04em;
-    font-size:clamp(.85rem,3.9vw,1.2rem); }
+    font-size:clamp(1rem,4.7vw,1.45rem); }
   .c6-right{ position:absolute; right:1.5%; bottom:14%; z-index:5; writing-mode:vertical-rl; transform:rotate(180deg);
     color:var(--branco); font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.04em;
-    font-size:clamp(.85rem,3.9vw,1.2rem); }
+    font-size:clamp(1rem,4.7vw,1.45rem); }
+
+  /* C6: onda leve letra-a-letra nos textos verticais (spans criados via JS) */
+  @keyframes wavefloat{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(.3em); } }
+  .c6-left span, .c6-right span{ display:inline-block; animation:wavefloat 2.8s ease-in-out infinite; }
+  @media (prefers-reduced-motion:reduce){ .c6-left span, .c6-right span{ animation:none; } }
 
   /* CARTAZ 7 — DANÇAR O PRESENTE (final, com hashtag e estrelas) */
   .c7-title{ position:absolute; top:5.5%; left:6%; right:6%; z-index:5; color:var(--amarelo);
     font-family:var(--disp); font-weight:700; font-size:clamp(1.65rem,8.5vw,2.7rem); line-height:1.08; }
-  .c7-tag{ position:absolute; top:33%; left:50%; transform:translateX(-50%) rotate(-2deg); z-index:4;
+  .c7-tag{ position:absolute; top:30%; left:50%; transform:translateX(-50%) rotate(-2deg); z-index:4;
     background:var(--amarelo); padding:.5em 1.1em; white-space:nowrap; }
   .c7-tag span{ color:var(--roxo); font-family:var(--mono); font-weight:700; font-size:clamp(.82rem,3.7vw,1.1rem); }
-  .c7-col{ position:absolute; left:50%; bottom:2%; width:62%; transform:translateX(-50%); z-index:3; }
+  .c7-col{ position:absolute; left:50%; bottom:0; width:68%; transform:translateX(-50%); z-index:3; }
   .c7-star{ position:absolute; color:var(--branco); z-index:5; line-height:1; opacity:.9; }
 </style>
 </head>
@@ -178,9 +184,11 @@
 
       <!-- CARTAZ 2 — MICRO-REOCUPAÇÃO -->
       <section class="poster c2">
-        <img class="c2-title" src="../assets/Dancadestino/SVG/Lettering%20micro-reocupacao.svg" alt="Micro-reocupação" />
-        <p class="c2-sub">TRANSFORME SUA SALA,<br>QUARTO OU VARANDA EM:</p>
-        <p class="c2-body">Um palco;<br>Um templo;<br>Um território da presença.</p>
+        <div class="c2-head">
+          <img class="c2-title" src="../assets/Dancadestino/SVG/Lettering%20micro-reocupacao.svg" alt="Micro-reocupação" />
+          <p class="c2-sub">TRANSFORME SUA SALA,<br>QUARTO OU VARANDA EM:</p>
+          <p class="c2-body">Um palco;<br>Um templo;<br>Um território da presença.</p>
+        </div>
         <div class="yb c2-yb" aria-hidden="true"></div>
         <img class="c2-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_2.webp" alt="Casa com flores e mãos que abraçam" />
       </section>
@@ -241,7 +249,19 @@
     </main>
 
   </div>
-  <script>if(window!==window.top)document.documentElement.classList.add('embedded');</script>
+  <script>
+    if(window!==window.top)document.documentElement.classList.add('embedded');
+    /* C6 — "Um ritual para" / "Nosso tempo": quebra em letras p/ a onda leve escalonada */
+    document.querySelectorAll('.c6-left,.c6-right').forEach(function(el){
+      var t=el.textContent; el.textContent='';
+      [].forEach.call(t,function(ch,i){
+        var s=document.createElement('span');
+        s.textContent = (ch===' ') ? ' ' : ch;
+        s.style.animationDelay = (i*0.1)+'s';
+        el.appendChild(s);
+      });
+    });
+  </script>
   <style>html.embedded,html.embedded body{ overscroll-behavior-y:contain; }</style>
 </body>
 </html>
