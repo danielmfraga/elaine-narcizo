@@ -56,16 +56,92 @@
     color:var(--amarelo); text-transform:uppercase; }
   .cv-tag .r2{ font-family:var(--disp); font-weight:500; font-size:1.02rem; color:var(--branco); margin-top:6px; }
 
-  /* ── CARTAZES (placeholder) — viram nativos a seguir ── */
-  .note{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase;
-    text-align:center; color:rgba(255,255,255,.4); padding:30px 20px 12px; }
-  .cartaz{ min-height:100svh; display:flex; align-items:center; justify-content:center;
-    padding:24px 16px; scroll-snap-align:start; background:var(--bg) center/cover, var(--roxo-fundo); }
-  .cartaz img{ width:100%; border-radius:10px; box-shadow:0 18px 40px -18px rgba(0,0,0,.55); }
+  /* ── CARTAZES nativos (manifesto) — composição de quadro cheio ── */
+  .poster{ position:relative; width:100%; height:100vh; height:100svh; min-height:560px; overflow:hidden;
+    scroll-snap-align:start;
+    background:radial-gradient(135% 95% at 50% 42%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
+  .p-disp{ font-family:var(--disp); font-weight:700; text-transform:uppercase; line-height:.92; letter-spacing:-.012em; }
+  .yb{ position:absolute; background:var(--amarelo); z-index:1; }     /* bloco amarelo de fundo */
+  .shadow{ filter:drop-shadow(0 16px 24px rgba(0,0,0,.32)); }
+  /* contorno "adesivo" branco p/ recortes p&b (cartaz 3 e 5) */
+  .sticker{ filter:drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 14px 20px rgba(0,0,0,.3)); }
 
-  footer{ min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:56px 26px; text-align:center; scroll-snap-align:start; background:var(--bg) center/cover, var(--roxo-fundo); }
-  footer .closing{ font-family:var(--disp); font-weight:700; font-size:1.5rem; line-height:1.15; color:var(--amarelo); }
+  /* CARTAZ 1 — O QUE É? (corpo no topo, colagem dançante, título gigante na base) */
+  .c1-top{ position:absolute; top:4.5%; left:6%; right:6%; z-index:5; color:var(--amarelo);
+    font-family:var(--mono); font-weight:700; line-height:1.5; font-size:clamp(.6rem,2.9vw,.9rem); }
+  .c1-yb{ left:13%; top:23%; width:66%; height:46%; transform:rotate(-2.2deg); }
+  .c1-col{ position:absolute; left:50%; bottom:9%; width:90%; transform:translateX(-50%); z-index:3;
+    filter:drop-shadow(0 16px 24px rgba(0,0,0,.32)); }
+  .c1-big{ position:absolute; left:-3%; bottom:-1.5%; width:106%; z-index:2; color:var(--amarelo);
+    white-space:nowrap; font-size:clamp(2.4rem,16.5vw,5rem); line-height:.84; }
+
+  /* CARTAZ 2 — MICRO-REOCUPAÇÃO (título SVG) */
+  .c2-title{ position:absolute; top:3.5%; left:-3%; width:99%; z-index:5; }
+  .c2-sub{ position:absolute; top:23%; left:6%; right:6%; z-index:5; color:var(--amarelo);
+    font-family:var(--mono); font-weight:700; line-height:1.4; font-size:clamp(.95rem,4.3vw,1.32rem); }
+  .c2-body{ position:absolute; top:34%; left:6%; right:6%; z-index:5; color:var(--branco);
+    font-family:var(--mono); font-weight:700; line-height:1.6; font-size:clamp(.85rem,3.7vw,1.08rem); }
+  .c2-yb{ right:4%; bottom:6%; width:33%; height:38%; transform:rotate(2.5deg); }
+  .c2-col{ position:absolute; left:50%; bottom:0; width:86%; transform:translateX(-50%); z-index:3; }
+
+  /* CARTAZ 3 — UM AGORA E UM LUGAR PARA NOSSO DESTINO */
+  .c3-title{ position:absolute; top:1.5%; left:4%; right:2%; z-index:5; color:var(--amarelo);
+    font-size:clamp(1.9rem,11vw,3.5rem); }
+  .c3-box{ position:absolute; top:26%; left:50%; transform:translateX(-50%); width:76%; z-index:4;
+    background:var(--amarelo); padding:7% 7% 8%; text-align:center; }
+  .c3-box p{ color:var(--roxo); font-family:var(--mono); font-weight:700; line-height:1.55;
+    font-size:clamp(.72rem,3.2vw,1rem); }
+  .c3-box p + p{ margin-top:1em; }
+  .c3-col{ position:absolute; left:50%; bottom:4%; width:96%; transform:translateX(-50%); z-index:3; }
+
+  /* CARTAZ 4 — DANÇA / MÚSICA (rede de sentidos) */
+  .c4-danca{ position:absolute; top:1%; right:4%; z-index:5; color:var(--amarelo);
+    font-size:clamp(2.6rem,14.5vw,4.6rem); }
+  .c4-musica{ position:absolute; bottom:-1%; left:3%; z-index:5; color:var(--amarelo);
+    font-size:clamp(2.7rem,15.5vw,4.8rem); }
+  .c4-t1{ position:absolute; top:14%; left:7%; right:7%; z-index:5; text-align:center; color:var(--branco);
+    font-family:var(--mono); font-weight:700; line-height:1.5; font-size:clamp(.78rem,3.4vw,1.02rem); }
+  .c4-t2{ position:absolute; bottom:13%; left:7%; right:7%; z-index:5; text-align:center; color:var(--branco);
+    font-family:var(--mono); font-weight:700; line-height:1.5; font-size:clamp(.78rem,3.4vw,1.02rem); }
+  .c4-col{ position:absolute; left:50%; top:50%; width:98%; transform:translate(-50%,-50%); z-index:3; }
+  .c4-yb1{ left:0; top:31%; width:6%; height:12%; }
+  .c4-yb2{ right:0; bottom:25%; width:8%; height:10%; }
+
+  /* CARTAZ 5 — RESTAURAR A MAGIA DO COMUM / COMPANHIA (coluna amarela central) */
+  .c5-title{ position:absolute; top:2%; left:3%; right:3%; z-index:5; color:var(--amarelo);
+    font-size:clamp(2rem,11.5vw,3.7rem); }
+  .c5-yb{ left:17%; right:17%; top:7%; bottom:9%; }
+  .c5-t1{ position:absolute; top:20%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
+    font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.64rem,2.8vw,.9rem); }
+  .c5-col{ position:absolute; left:50%; top:51%; width:74%; transform:translate(-50%,-50%); z-index:3; }
+  .c5-t2{ position:absolute; bottom:13%; left:20%; right:20%; z-index:4; text-align:center; color:var(--roxo);
+    font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.62rem,2.75vw,.88rem); }
+  .c5-comp{ position:absolute; bottom:-1%; left:50%; transform:translateX(-50%); white-space:nowrap; z-index:5;
+    color:var(--branco); font-size:clamp(2.6rem,16vw,5rem); }
+
+  /* CARTAZ 6 — A ECONOMIA POLÍTICA DO ÍNTIMO (texto vertical nas bordas) */
+  .c6-acc1{ position:absolute; background:var(--amarelo); z-index:6; top:2.5%; right:5%; width:15%; height:4.5%; transform:rotate(17deg); opacity:.92; }
+  .c6-acc2{ position:absolute; background:var(--amarelo); z-index:6; top:31%; left:-3%; width:13%; height:5%; transform:rotate(-13deg); opacity:.92; }
+  .c6-title{ position:absolute; top:4%; left:8%; right:8%; z-index:5; text-align:center; color:var(--branco);
+    font-size:clamp(1.5rem,7.5vw,2.4rem); line-height:1.02; }
+  .c6-body{ position:absolute; top:21%; left:9%; right:9%; z-index:5; text-align:center; color:var(--branco);
+    font-family:var(--mono); font-weight:700; line-height:1.55; font-size:clamp(.72rem,3.15vw,.96rem); }
+  .c6-col{ position:absolute; left:50%; bottom:3%; width:78%; transform:translateX(-50%); z-index:3; }
+  .c6-left{ position:absolute; left:1.5%; bottom:25%; z-index:5; writing-mode:vertical-rl; transform:rotate(180deg);
+    color:var(--branco); font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    font-size:clamp(.85rem,3.9vw,1.2rem); }
+  .c6-right{ position:absolute; right:1.5%; bottom:14%; z-index:5; writing-mode:vertical-rl; transform:rotate(180deg);
+    color:var(--branco); font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    font-size:clamp(.85rem,3.9vw,1.2rem); }
+
+  /* CARTAZ 7 — DANÇAR O PRESENTE (final, com hashtag e estrelas) */
+  .c7-title{ position:absolute; top:5.5%; left:6%; right:6%; z-index:5; color:var(--amarelo);
+    font-size:clamp(1.7rem,8.2vw,2.7rem); line-height:1.05; }
+  .c7-tag{ position:absolute; top:33%; left:50%; transform:translateX(-50%) rotate(-2deg); z-index:4;
+    background:var(--amarelo); padding:.5em 1.1em; white-space:nowrap; }
+  .c7-tag span{ color:var(--roxo); font-family:var(--mono); font-weight:700; font-size:clamp(.82rem,3.7vw,1.1rem); }
+  .c7-col{ position:absolute; left:50%; bottom:2%; width:62%; transform:translateX(-50%); z-index:3; }
+  .c7-star{ position:absolute; color:var(--branco); z-index:5; line-height:1; opacity:.9; }
 </style>
 </head>
 <body>
@@ -86,18 +162,78 @@
     </header>
 
     <main>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_1.webp" alt="O que é DançaDestino" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_2.webp" alt="Micro-reocupação" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_3.jpg" alt="Um agora e um lugar para nosso destino" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_4.webp" alt="Dança e música" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_5.webp" alt="Restaurar a magia do comum" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_6.webp" alt="A economia política do íntimo" loading="lazy" /></section>
-      <section class="cartaz"><img src="../assets/Dancadestino/Cartaz_7.webp" alt="Dançar o presente com a presença que nos falta" loading="lazy" /></section>
-    </main>
 
-    <footer>
-      <p class="closing">Dançar o presente<br>com a presença<br>que nos falta.</p>
-    </footer>
+      <!-- CARTAZ 1 — O QUE É? -->
+      <section class="poster c1">
+        <p class="c1-top">TODA SEXTA, 20H, UMA MÚSICA.<br>VOCÊ DANÇA. ONDE ESTIVER.<br>SEM CÂMERAS. SEM TELAS.<br>APENAS MOVIMENTO E A SENSAÇÃO<br>SILENCIOSA DE QUE NÃO ESTÁ SOZINHA.</p>
+        <div class="yb c1-yb" aria-hidden="true"></div>
+        <img class="c1-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_1.webp" alt="Mulher dançando entre flores" loading="lazy" />
+        <p class="c1-big p-disp">O QUE É? OQÉ?<br>O QUE É? OQÉ?</p>
+      </section>
+
+      <!-- CARTAZ 2 — MICRO-REOCUPAÇÃO -->
+      <section class="poster c2">
+        <img class="c2-title" src="../assets/Dancadestino/SVG/Lettering%20micro-reocupacao.svg" alt="Micro-reocupação" />
+        <p class="c2-sub">TRANSFORME SUA SALA,<br>QUARTO OU VARANDA EM:</p>
+        <p class="c2-body">Um palco;<br>Um templo;<br>Um território da presença.</p>
+        <div class="yb c2-yb" aria-hidden="true"></div>
+        <img class="c2-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_2.webp" alt="Casa com flores e mãos que abraçam" loading="lazy" />
+      </section>
+
+      <!-- CARTAZ 3 — UM AGORA E UM LUGAR PARA NOSSO DESTINO -->
+      <section class="poster c3">
+        <h2 class="c3-title p-disp">Um agora e um<br>lugar para<br>nosso destino</h2>
+        <div class="c3-box">
+          <p>Outras formas de convívio são necessárias. Outras formas de convívio são possíveis.</p>
+          <p>Ressignificar o espaço privado através de convívios inusitados.</p>
+        </div>
+        <img class="c3-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_3.webp" alt="Mãos idosas entrelaçadas" loading="lazy" />
+      </section>
+
+      <!-- CARTAZ 4 — DANÇA / MÚSICA -->
+      <section class="poster c4">
+        <h2 class="c4-danca p-disp">Dança</h2>
+        <p class="c4-t1">Invocar uma rede de presença invisível através da dANÇADESTINO para movimentar o intangível.</p>
+        <div class="yb c4-yb1" aria-hidden="true"></div>
+        <div class="yb c4-yb2" aria-hidden="true"></div>
+        <img class="c4-col" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_4.webp" alt="Boca, olho, ouvido, nariz, mão e cérebro conectados por linhas" loading="lazy" />
+        <p class="c4-t2">Para vibrar intenções. Investigar ritmos coletivos. E gerar pertencimento poético.</p>
+        <h2 class="c4-musica p-disp">Música</h2>
+      </section>
+
+      <!-- CARTAZ 5 — RESTAURAR A MAGIA DO COMUM / COMPANHIA -->
+      <section class="poster c5">
+        <h2 class="c5-title p-disp">Restaurar<br>a magia do comum</h2>
+        <div class="yb c5-yb" aria-hidden="true"></div>
+        <p class="c5-t1">Reencontrar o extraordinário através de outras formas de estar junto.</p>
+        <img class="c5-col sticker" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_5.webp" alt="Duas mãos de dedinho dado" loading="lazy" />
+        <p class="c5-t2">O agora nutrido por gestos simultâneos contra o isolamento. Para imaginar o seu, o meu, os nossos e outros destinos.</p>
+        <h2 class="c5-comp p-disp">Companhia</h2>
+      </section>
+
+      <!-- CARTAZ 6 — A ECONOMIA POLÍTICA DO ÍNTIMO -->
+      <section class="poster c6">
+        <div class="c6-acc1" aria-hidden="true"></div>
+        <div class="c6-acc2" aria-hidden="true"></div>
+        <h2 class="c6-title p-disp">A economia política<br>do íntimo</h2>
+        <p class="c6-body">Por uma pausa no Espetáculo, pela não transformação do lazer e da emoção em commodity. Para não desistirmos do nós, por expormos tanto o eu.</p>
+        <img class="c6-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_6.webp" alt="Cabeça clássica dividida entre tela e presença" loading="lazy" />
+        <p class="c6-left">Um ritual para</p>
+        <p class="c6-right">Nosso tempo.</p>
+      </section>
+
+      <!-- CARTAZ 7 — DANÇAR O PRESENTE (final) -->
+      <section class="poster c7">
+        <span class="c7-star" style="top:8%;right:11%;font-size:1.7rem;">✦</span>
+        <span class="c7-star" style="top:27%;left:8%;font-size:1.1rem;">✦</span>
+        <span class="c7-star" style="bottom:32%;right:7%;font-size:1.4rem;">✦</span>
+        <span class="c7-star" style="bottom:15%;left:13%;font-size:1rem;">✦</span>
+        <h2 class="c7-title p-disp">Dançar o presente<br>com a presença<br>que nos falta.</h2>
+        <div class="c7-tag"><span>#ProjetoDançaDestino</span></div>
+        <img class="c7-col shadow" src="../assets/Dancadestino/Imagem%20principal%20Cartaz_7.webp" alt="Mão segurando uma tulipa" loading="lazy" />
+      </section>
+
+    </main>
 
   </div>
   <script>if(window!==window.top)document.documentElement.classList.add('embedded');</script>
