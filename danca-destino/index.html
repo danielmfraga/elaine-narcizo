@@ -16,16 +16,18 @@
     --bg:url('../assets/Dancadestino/FUNDO%20PADR%C3%83O.webp');   /* textura papel amassado roxo */
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
-  html,body{ background:var(--roxo-fundo); color:var(--branco); font-family:var(--mono);
+  html,body{ height:100%; background:var(--roxo-fundo); color:var(--branco); font-family:var(--mono);
     -webkit-font-smoothing:antialiased; }
-  html{ scroll-snap-type:y mandatory; }    /* cada tela roda pra próxima (uma de cada vez) */
+  body{ overflow:hidden; }                  /* trava o scroll do documento → a barra do Safari não recolhe (acaba a tremida) */
   img{ display:block; max-width:100%; }
-  .wrap{ max-width:540px; margin:0 auto; }
+  /* .wrap É o scroller interno: viewport ESTÁVEL (barra não mexe) = snap liso, e cada tela preenche */
+  .wrap{ height:100vh; height:100svh; height:100dvh; overflow-y:auto; -webkit-overflow-scrolling:touch;
+    scroll-snap-type:y mandatory; overscroll-behavior-y:contain; max-width:540px; margin:0 auto; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
   @keyframes bob{ 0%,100%{ transform:translateY(0); opacity:.55; } 50%{ transform:translateY(7px); opacity:1; } }
 
   /* ── CAPA (composição fiel ao Capa_0: quadro cheio, elementos em sinergia) ── */
-  .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden; scroll-snap-align:start;
+  .capa{ position:relative; height:100vh; height:100svh; min-height:560px; overflow:hidden; scroll-snap-align:start; scroll-snap-stop:always;
     background:radial-gradient(130% 92% at 50% 44%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
   /* borrifada de tinta (acento de fundo, sutil) */
   .cv-paint{ position:absolute; bottom:-7%; left:33%; width:66%; height:auto; opacity:.92; z-index:2;
@@ -58,7 +60,7 @@
 
   /* ── CARTAZES nativos (manifesto) — composição de quadro cheio ── */
   .poster{ position:relative; width:100%; height:100svh; height:100dvh; min-height:560px; overflow:hidden;
-    scroll-snap-align:start;
+    scroll-snap-align:start; scroll-snap-stop:always;
     background:radial-gradient(135% 95% at 50% 42%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
   .p-disp{ font-family:var(--disp); font-weight:700; text-transform:uppercase; line-height:.92; letter-spacing:-.012em; }
   .yb{ position:absolute; background:var(--amarelo); z-index:1; }     /* bloco amarelo de fundo */
