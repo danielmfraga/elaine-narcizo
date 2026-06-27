@@ -76,8 +76,8 @@
   .c1-yb{ left:13%; top:23%; width:66%; height:46%; transform:rotate(-2.2deg); }
   .c1-col{ position:absolute; left:50%; bottom:9%; width:90%; transform:translateX(-50%); z-index:3;
     filter:drop-shadow(0 16px 24px rgba(0,0,0,.32)); }
-  .c1-big{ position:absolute; left:-3%; bottom:-1.5%; width:106%; z-index:2; color:var(--amarelo);
-    white-space:nowrap; font-size:clamp(2.2rem,15vw,4.6rem); line-height:.92; }
+  .c1-big{ position:absolute; left:4%; bottom:2%; z-index:2; color:var(--amarelo);
+    white-space:nowrap; font-size:clamp(1.75rem,11vw,3.5rem); line-height:.92; }   /* cabe inteiro, estoura na margem SEM cortar */
 
   /* CARTAZ 2 — MICRO-REOCUPAÇÃO (título SVG) */
   .c2-title{ position:absolute; top:4%; left:5%; width:90%; z-index:5; }   /* dentro das margens p/ não cortar o M (MICRO) nem o R (REOCUPAÇÃO) */
@@ -120,14 +120,15 @@
   .c5-col{ position:absolute; left:50%; top:51%; width:74%; transform:translate(-50%,-50%); z-index:3; }
   .c5-t2{ position:absolute; bottom:13%; left:20%; right:20%; z-index:4; text-align:center; color:var(--roxo);
     font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.62rem,2.75vw,.88rem); }
-  .c5-comp{ position:absolute; bottom:-1%; left:50%; transform:translateX(-50%); white-space:nowrap; z-index:5;
-    color:var(--branco); font-size:clamp(2.6rem,16vw,5rem); }
+  .c5-comp{ position:absolute; bottom:2%; left:50%; transform:translateX(-50%); white-space:nowrap; z-index:5;
+    color:var(--branco); font-size:clamp(2rem,14vw,4.4rem); }   /* COMPANHIA inteiro dentro da margem, sem cortar */
 
   /* CARTAZ 6 — A ECONOMIA POLÍTICA DO ÍNTIMO (texto vertical nas bordas) */
   .c6-acc1{ position:absolute; background:var(--amarelo); z-index:6; top:2.5%; right:5%; width:15%; height:4.5%; transform:rotate(17deg); opacity:.92; }
   .c6-acc2{ position:absolute; background:var(--amarelo); z-index:6; top:31%; left:-3%; width:13%; height:5%; transform:rotate(-13deg); opacity:.92; }
-  .c6-title{ position:absolute; top:4%; left:8%; right:8%; z-index:5; text-align:center; color:var(--branco);
-    font-size:clamp(1.35rem,6.8vw,2.15rem); line-height:1.04; }
+  /* C6 e C7 usam a display MAIS FINA (Space Grotesk 700), como nos cartazes-modelo 6 e 7 — não a Archivo Black */
+  .c6-title{ position:absolute; top:4%; left:7%; right:7%; z-index:5; text-align:center; color:var(--branco);
+    font-family:var(--disp); font-weight:700; font-size:clamp(1.55rem,8vw,2.4rem); line-height:1.04; }
   .c6-body{ position:absolute; top:21%; left:9%; right:9%; z-index:5; text-align:center; color:var(--branco);
     font-family:var(--mono); font-weight:700; line-height:1.55; font-size:clamp(.72rem,3.15vw,.96rem); }
   .c6-col{ position:absolute; left:50%; bottom:3%; width:78%; transform:translateX(-50%); z-index:3; }
@@ -140,7 +141,7 @@
 
   /* CARTAZ 7 — DANÇAR O PRESENTE (final, com hashtag e estrelas) */
   .c7-title{ position:absolute; top:5.5%; left:6%; right:6%; z-index:5; color:var(--amarelo);
-    font-size:clamp(1.5rem,7.4vw,2.4rem); line-height:1.08; }
+    font-family:var(--disp); font-weight:700; font-size:clamp(1.65rem,8.5vw,2.7rem); line-height:1.08; }
   .c7-tag{ position:absolute; top:33%; left:50%; transform:translateX(-50%) rotate(-2deg); z-index:4;
     background:var(--amarelo); padding:.5em 1.1em; white-space:nowrap; }
   .c7-tag span{ color:var(--roxo); font-family:var(--mono); font-weight:700; font-size:clamp(.82rem,3.7vw,1.1rem); }
