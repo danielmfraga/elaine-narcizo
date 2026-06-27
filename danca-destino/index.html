@@ -7,12 +7,13 @@
 <meta name="description" content="DançaDestino — um ritual para nosso tempo. Toda sexta, 20h." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --roxo:#6C28D6; --roxo-fundo:#5A1FB8; --roxo-escuro:#3D1185;
     --amarelo:#F5D933; --branco:#FDFBFF;
     --disp:"Space Grotesk",sans-serif; --mono:"Space Mono",ui-monospace,monospace;
+    --letter:"Archivo Black","Space Grotesk",sans-serif;   /* lettering pesado dos cartazes (≈ display black dos modelos) */
     --bg:url('../assets/Dancadestino/FUNDO%20PADR%C3%83O.webp');   /* textura papel amassado roxo */
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
@@ -62,7 +63,8 @@
   .poster{ position:relative; width:100%; height:100svh; height:100dvh; min-height:560px; overflow:hidden;
     scroll-snap-align:start; scroll-snap-stop:always;
     background:radial-gradient(135% 95% at 50% 42%, rgba(0,0,0,0) 50%, rgba(38,9,86,.42) 100%), var(--bg) center/cover, var(--roxo-fundo); }
-  .p-disp{ font-family:var(--disp); font-weight:700; text-transform:uppercase; line-height:.92; letter-spacing:-.012em; }
+  /* títulos dos cartazes = lettering pesado. Archivo Black só tem peso 400 (já é "black") → weight:400 evita faux-bold */
+  .p-disp{ font-family:var(--letter); font-weight:400; text-transform:uppercase; line-height:.95; letter-spacing:-.01em; }
   .yb{ position:absolute; background:var(--amarelo); z-index:1; }     /* bloco amarelo de fundo */
   .shadow{ filter:drop-shadow(0 16px 24px rgba(0,0,0,.32)); }
   /* contorno "adesivo" branco p/ recortes p&b (cartaz 3 e 5) */
@@ -75,10 +77,10 @@
   .c1-col{ position:absolute; left:50%; bottom:9%; width:90%; transform:translateX(-50%); z-index:3;
     filter:drop-shadow(0 16px 24px rgba(0,0,0,.32)); }
   .c1-big{ position:absolute; left:-3%; bottom:-1.5%; width:106%; z-index:2; color:var(--amarelo);
-    white-space:nowrap; font-size:clamp(2.4rem,16.5vw,5rem); line-height:.84; }
+    white-space:nowrap; font-size:clamp(2.2rem,15vw,4.6rem); line-height:.92; }
 
   /* CARTAZ 2 — MICRO-REOCUPAÇÃO (título SVG) */
-  .c2-title{ position:absolute; top:3.5%; left:-3%; width:99%; z-index:5; }
+  .c2-title{ position:absolute; top:4%; left:5%; width:90%; z-index:5; }   /* dentro das margens p/ não cortar o M (MICRO) nem o R (REOCUPAÇÃO) */
   .c2-sub{ position:absolute; top:23%; left:6%; right:6%; z-index:5; color:var(--amarelo);
     font-family:var(--mono); font-weight:700; line-height:1.4; font-size:clamp(.95rem,4.3vw,1.32rem); }
   .c2-body{ position:absolute; top:34%; left:6%; right:6%; z-index:5; color:var(--branco);
@@ -88,7 +90,7 @@
 
   /* CARTAZ 3 — UM AGORA E UM LUGAR PARA NOSSO DESTINO */
   .c3-title{ position:absolute; top:1.5%; left:4%; right:2%; z-index:5; color:var(--amarelo);
-    font-size:clamp(1.9rem,11vw,3.5rem); }
+    font-size:clamp(1.7rem,10vw,3.2rem); }
   .c3-box{ position:absolute; top:26%; left:50%; transform:translateX(-50%); width:76%; z-index:4;
     background:var(--amarelo); padding:7% 7% 8%; text-align:center; }
   .c3-box p{ color:var(--roxo); font-family:var(--mono); font-weight:700; line-height:1.55;
@@ -110,10 +112,10 @@
   .c4-yb2{ right:0; bottom:25%; width:8%; height:10%; }
 
   /* CARTAZ 5 — RESTAURAR A MAGIA DO COMUM / COMPANHIA (coluna amarela central) */
-  .c5-title{ position:absolute; top:2%; left:3%; right:3%; z-index:5; color:var(--amarelo);
-    font-size:clamp(2rem,11.5vw,3.7rem); }
-  .c5-yb{ left:17%; right:17%; top:16%; bottom:9%; }
-  .c5-t1{ position:absolute; top:20%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
+  .c5-title{ position:absolute; top:2.5%; left:3%; right:3%; z-index:5; color:var(--amarelo);
+    font-size:clamp(1.55rem,8.8vw,2.9rem); }
+  .c5-yb{ left:17%; right:17%; top:22%; bottom:9%; }   /* coluna desce p/ não cobrir o título */
+  .c5-t1{ position:absolute; top:25%; left:21%; right:21%; z-index:4; text-align:center; color:var(--roxo);
     font-family:var(--mono); font-weight:700; line-height:1.45; font-size:clamp(.64rem,2.8vw,.9rem); }
   .c5-col{ position:absolute; left:50%; top:51%; width:74%; transform:translate(-50%,-50%); z-index:3; }
   .c5-t2{ position:absolute; bottom:13%; left:20%; right:20%; z-index:4; text-align:center; color:var(--roxo);
@@ -125,7 +127,7 @@
   .c6-acc1{ position:absolute; background:var(--amarelo); z-index:6; top:2.5%; right:5%; width:15%; height:4.5%; transform:rotate(17deg); opacity:.92; }
   .c6-acc2{ position:absolute; background:var(--amarelo); z-index:6; top:31%; left:-3%; width:13%; height:5%; transform:rotate(-13deg); opacity:.92; }
   .c6-title{ position:absolute; top:4%; left:8%; right:8%; z-index:5; text-align:center; color:var(--branco);
-    font-size:clamp(1.5rem,7.5vw,2.4rem); line-height:1.02; }
+    font-size:clamp(1.35rem,6.8vw,2.15rem); line-height:1.04; }
   .c6-body{ position:absolute; top:21%; left:9%; right:9%; z-index:5; text-align:center; color:var(--branco);
     font-family:var(--mono); font-weight:700; line-height:1.55; font-size:clamp(.72rem,3.15vw,.96rem); }
   .c6-col{ position:absolute; left:50%; bottom:3%; width:78%; transform:translateX(-50%); z-index:3; }
@@ -138,7 +140,7 @@
 
   /* CARTAZ 7 — DANÇAR O PRESENTE (final, com hashtag e estrelas) */
   .c7-title{ position:absolute; top:5.5%; left:6%; right:6%; z-index:5; color:var(--amarelo);
-    font-size:clamp(1.7rem,8.2vw,2.7rem); line-height:1.05; }
+    font-size:clamp(1.5rem,7.4vw,2.4rem); line-height:1.08; }
   .c7-tag{ position:absolute; top:33%; left:50%; transform:translateX(-50%) rotate(-2deg); z-index:4;
     background:var(--amarelo); padding:.5em 1.1em; white-space:nowrap; }
   .c7-tag span{ color:var(--roxo); font-family:var(--mono); font-weight:700; font-size:clamp(.82rem,3.7vw,1.1rem); }
